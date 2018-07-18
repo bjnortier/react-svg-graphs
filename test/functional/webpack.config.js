@@ -5,6 +5,7 @@ module.exports = {
   mode: 'development',
   entry: {
     'scalar-x-axis': [
+      'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/dev-server',
       path.resolve(__dirname, 'scalar-x-axis.js')
     ],

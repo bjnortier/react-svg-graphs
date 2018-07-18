@@ -1,13 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { getScalarAxisLayout } from '../../src/axes/layout'
+import { getScalarYAxisLayout } from '../../src/axes/layout'
 import { ScalarYAxis } from '../..'
 
 const examples = [
-  // [],
-  // [10],
-  // [0, 1],
+  [],
+  [10],
+  [0, 1],
   [0, 0.1],
   [0, 10],
   [0, 11],
@@ -20,21 +20,19 @@ const examples = [
   [16, 28],
   [-40, 7],
   [1000, 2000],
-  // [1000, 2001],
-  // [1000, 1999],
-  // [-1000, -20],
-  // [-10000, 10000],
-  // [-100000, 1000000],
-  // [0, 0.01],
-  // [0, 0.001]
+  [1000, 2001],
+  [1000, 1999],
+  [-1000, -20],
+  [-10000, 10000],
+  [-100000, 1000000],
+  [0, 0.01],
+  [0, 0.001]
 ]
 
 render(
-  <div style={{
-    fontFamily: 'Roboto Mono'
-  }}>
+  <div>
     {examples.map((limits, i) => {
-      const layout = getScalarAxisLayout(limits)
+      const layout = getScalarYAxisLayout(limits)
       const width = 120
       return <div
         key={i}

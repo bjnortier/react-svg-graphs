@@ -8,8 +8,7 @@ class ScalarYAxis extends Component {
     const { width, height, layout } = this.props
     const { min, max, order, tickSize } = layout
     const ticks = []
-    for (let tickValue = min; tickValue <= max; tickValue += tickSize) {
-      // let label = round10(min + i * range / 10, order - 1)
+    for (let tickValue = min; tickValue <= max; tickValue = round10(tickValue + tickSize, order - 1)) {
       let label
       if ((order > 3) || (order < -2)) {
         label = tickValue.toExponential()

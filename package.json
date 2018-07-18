@@ -2,8 +2,9 @@
   "name": "rsg",
   "version": "0.1.0",
   "description": "React SVG Graphs",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "functional": "cd test/functional && webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ben Nortier <ben@bjnortier.com>",
@@ -11,9 +12,25 @@
   "engines": {
     "node": ">= 8.11.3"
   },
+  "peerDependencies": {
+    "react": "16.x",
+    "prop-types": "15.x"
+  },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "standard": "^11.0.1",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
-    "webpack-serve": "^2.0.2"
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "round10": "^1.0.3",
+    "uuid": "^3.3.2"
   }
 }

@@ -1,0 +1,19 @@
+{
+  "name": "rsg",
+  "version": "0.1.0",
+  "description": "React SVG Graphs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Nortier <ben@bjnortier.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 8.11.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-serve": "^2.0.2"
+  }
+}

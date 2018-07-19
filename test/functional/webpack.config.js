@@ -13,6 +13,11 @@ module.exports = {
       'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/dev-server',
       path.resolve(__dirname, 'scalar-y-axis.js')
+    ],
+    'scalar-xy': [
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/dev-server',
+      path.resolve(__dirname, 'scalar-xy.js')
     ]
   },
   // entry: path.resolve(__dirname, 'scalar-y-axis.js'),

@@ -28,34 +28,34 @@ const examples = [
   [0, 0.01],
   [0, 0.001]
 ]
+const widths = [800, 640, 480, 320, 240]
+const height = 50
+const padding = 25
 
 render(
   <div>
     {examples.map((limits, i) => {
-      return <div
-        key={i}
-        style={{
-          margin: 20
-        }}
-      >
+      return <div key={i} style={{margin: 20}}>
         <div style={{padding: '10px 0'}}>{JSON.stringify(limits)}</div>
-        {[800, 300].map(width => {
+        {widths.map(width => {
           const layout = getScalarXAxisLayout(limits, width)
           return <div
             key={width}
             style={{
               backgroundColor: 'white',
-              height: 150,
-              width
+              width: width + padding * 2
             }}
           >
-            <svg width={width} height={150}>
-              <rect x={25} y={0} width={width - 50} height={2} />
-              <ScalarXAxis
-                width={width - 50}
-                height={100}
-                layout={layout}
-              />
+            <div style={{padding: '10px 25px'}}>{width}px</div>
+            <svg width={width + padding * 2} height={height}>
+              <g transform={`translate(${padding}, 0)`}>
+                <rect x={0} y={0} width={width} height={2} />
+                <ScalarXAxis
+                  width={width}
+                  height={height}
+                  layout={layout}
+                />
+              </g>
             </svg>
           </div>
         })}

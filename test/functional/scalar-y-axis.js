@@ -5,11 +5,11 @@ import { getScalarYAxisLayout } from '../../src/axes/layout'
 import { ScalarYAxis } from '../..'
 
 const examples = [
+  [0, 10],
   [],
   [10],
   [0, 1],
   [0, 0.1],
-  [0, 10],
   [0, 11],
   [0, 50],
   [0, 100],
@@ -29,44 +29,43 @@ const examples = [
   [0, 0.001]
 ]
 
+const heights = [320, 240, 180, 120, 80]
+const width = 50
+const padding = 50
+
 render(
   <div>
     {examples.map((limits, i) => {
-      const layout = getScalarYAxisLayout(limits)
-      const width = 120
       return <div
         key={i}
         style={{
-          display: 'inline-block',
           margin: 20
         }}
       >
-        <div
-          key={i}
-          style={{
-            margin: '50px auto',
-            height: 320,
-            width,
-            fontSize: 12
-          }}
-        >
-          <div style={{padding: '10px 0'}}>{JSON.stringify(limits)}</div>
-          <div
+        <div style={{padding: '10px 0'}}>{JSON.stringify(limits)}</div>
+        {heights.map(height => {
+          const layout = getScalarYAxisLayout(limits, height)
+          return <div
+            key={height}
             style={{
+              display: 'inline-block',
               backgroundColor: 'white',
-              height: 320,
-              width: 100
+              width: width + padding
             }}
           >
-            <svg width={100} height={320}>
-              <ScalarYAxis
-                width={100}
-                height={300}
-                layout={layout}
-              />
+            <div style={{padding: '10px 25px'}}>{height}px</div>
+            <svg width={width} height={height + padding * 2}>
+              <g transform={`translate(0, ${padding})`}>
+                <rect x={width - 2} y={0} width={2} height={height} />
+                <ScalarYAxis
+                  width={width}
+                  height={height}
+                  layout={layout}
+                />
+              </g>
             </svg>
           </div>
-        </div>
+        })}
       </div>
     })}
   </div>,

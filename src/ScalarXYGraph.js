@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { min, max } from 'lodash'
 
-import ScalarXAxis from './axes/x/ScalarXAxis'
-import ScalarYAxis from './axes/y/ScalarYAxis'
-import ScalarValues from './values/ScalarValues'
-import { getScalarXAxisLayout, getScalarYAxisLayout } from './axes/layout'
+import ScalarXAxis from './ScalarXAxis'
+import ScalarYAxis from './ScalarYAxis'
+import ScalarValues from './ScalarValues'
+import getLayout from './getLayout'
 
 class ScalarXYGraph extends Component {
   render () {
@@ -15,8 +15,8 @@ class ScalarXYGraph extends Component {
     const [yMin, yMax] = [min(yValues), max(yValues)]
     const contentsWidth = width - padding * 2
     const contentsHeight = height - padding * 2
-    const xLayout = getScalarXAxisLayout([xMin, xMax], contentsWidth)
-    const yLayout = getScalarYAxisLayout([yMin, yMax], contentsHeight)
+    const xLayout = getLayout('x', [xMin, xMax], contentsWidth)
+    const yLayout = getLayout('y', [yMin, yMax], contentsHeight)
     const layout = {x: xLayout, y: yLayout}
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines

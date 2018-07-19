@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { getScalarYAxisLayout } from '../../src/axes/layout'
+import getLayout from '../../src/getLayout'
 import { ScalarYAxis } from '../..'
 
 const examples = [
@@ -44,7 +44,7 @@ render(
       >
         <div style={{padding: '10px 0'}}>{JSON.stringify(limits)}</div>
         {heights.map(height => {
-          const layout = getScalarYAxisLayout(limits, height)
+          const layout = getLayout('y', limits, height)
           return <div
             key={height}
             style={{

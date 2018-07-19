@@ -1,5 +1,5 @@
-import ScalarXAxis from './axes/x/ScalarXAxis'
-import ScalarYAxis from './axes/y/ScalarYAxis'
+import ScalarXAxis from './ScalarXAxis'
+import ScalarYAxis from './ScalarYAxis'
 import ScalarXYGraph from './ScalarXYGraph'
 
 export { ScalarXAxis, ScalarYAxis, ScalarXYGraph }

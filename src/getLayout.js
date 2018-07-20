@@ -9,6 +9,9 @@ const getMinMaxFromLimits = limits => {
   } else if (limits.length === 1) {
     min = limits[0] - 0.5
     max = min + 1
+  } else if (limits[0] === limits[1]) {
+    min = limits[0] - 0.5
+    max = min + 1
   } else {
     min = limits[0]
     max = limits[1]

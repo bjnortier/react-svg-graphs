@@ -7,6 +7,7 @@ import { ScalarYAxis } from '../..'
 const examples = [
   [0, 10],
   [],
+  [0],
   [10],
   [0, 1],
   [0, 0.1],

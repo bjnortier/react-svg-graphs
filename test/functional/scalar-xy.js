@@ -13,7 +13,7 @@ const start = temporalData[0].t
 const xValues = temporalData.map(d => round10((d.t - start) / 100000, 0)).slice(100, 200)
 const yValues1 = temporalData.map(d => d.v).slice(100, 200)
 const yValues2 = temporalData.map(d => d.v).slice(200, 300)
-const data = {
+const data1 = {
   x: {
     label: 'Iterations',
     values: xValues
@@ -26,11 +26,23 @@ const data = {
     values: yValues2
   }]
 }
+const data2 = {
+  x: {
+    label: 'Iterations',
+    values: [0]
+  },
+  y: [{
+    label: 'foo',
+    values: [1]
+  }]
+}
 
 // The dimensions of the actual data, excluding titles, axes etc.
 // const contentsWidths = [800, 640, 480, 320, 240]
-const contentsWidths = [640, 320]
-const contentsHeights = [320, 160]
+// const contentsWidths = [640, 320]
+// const contentsHeights = [320, 160]
+const contentsWidths = []
+const contentsHeights = []
 const padding = 80
 
 render(
@@ -43,7 +55,7 @@ render(
         return <div key={key} style={{margin: 20}}>
           <div style={{width: svgWidth, height: svgHeight, backgroundColor: '#fff'}}>
             <ScalarXYGraph
-              data={data}
+              data={data1}
               width={svgWidth}
               height={svgHeight}
               padding={padding}
@@ -53,6 +65,15 @@ render(
         </div>
       })
     })}
+    <div style={{width: 640, height: 320, backgroundColor: '#fff'}}>
+      <ScalarXYGraph
+        data={data2}
+        width={640}
+        height={320}
+        padding={50}
+        title={`x: [0], y: [1]`}
+      />
+    </div>
   </div>,
   document.getElementById('contents')
 )

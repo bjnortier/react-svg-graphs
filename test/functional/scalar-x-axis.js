@@ -54,6 +54,7 @@ render(
                   width={width}
                   height={height}
                   layout={layout}
+                  label='X'
                 />
               </g>
             </svg>

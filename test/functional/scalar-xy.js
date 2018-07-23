@@ -26,23 +26,11 @@ const data1 = {
     values: yValues2
   }]
 }
-const data2 = {
-  x: {
-    label: 'Iterations',
-    values: [0]
-  },
-  y: [{
-    label: 'foo',
-    values: [1]
-  }]
-}
 
 // The dimensions of the actual data, excluding titles, axes etc.
 // const contentsWidths = [800, 640, 480, 320, 240]
-// const contentsWidths = [640, 320]
-// const contentsHeights = [320, 160]
-const contentsWidths = []
-const contentsHeights = []
+const contentsWidths = [640, 320]
+const contentsHeights = [320, 160]
 const padding = 80
 
 render(
@@ -65,15 +53,6 @@ render(
         </div>
       })
     })}
-    <div style={{width: 640, height: 320, backgroundColor: '#fff'}}>
-      <ScalarXYGraph
-        data={data2}
-        width={640}
-        height={320}
-        padding={50}
-        title={`x: [0], y: [1]`}
-      />
-    </div>
   </div>,
   document.getElementById('contents')
 )

@@ -27,6 +27,20 @@ class ScalarXYGraph extends Component {
         <text style={{textAnchor: 'middle'}} x={padding + contentsWidth / 2} y={padding / 2 + 10} >
           {title}
         </text>
+        {data.y.map((y, i) => {
+          const r1 = 1.5
+          const r2 = 3
+          return <g key={i} transform={`translate(${padding}, ${padding + i * 20})`}>
+            <line stroke={colors[i]} x1={3} x2={17} y1={10} y2={10} />
+            <g transform={`translate(10, 10)`}>
+              <circle stroke='none' x={5} y={5} fill={colors[i]} r={r2} />
+              <circle stroke='none' fill='white' r={r1} />
+            </g>
+            <text style={{textAnchor: 'left'}} x={20} y={14} >
+              {y.label}
+            </text>
+          </g>
+        })}
         <g transform={`translate(${padding}, ${height - padding})`}>
           <ScalarXAxis
             width={width - padding * 2}

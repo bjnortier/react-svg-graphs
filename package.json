@@ -1,5 +1,5 @@
 {
-  "name": "rsg",
+  "name": "react-svg-graphs",
   "version": "0.1.0",
   "description": "React SVG Graphs",
   "main": "lib/index.js",

@@ -6,6 +6,7 @@ import ScalarYAxis from './ScalarYAxis'
 import ScalarValues from './ScalarValues'
 import getLayout from './getLayout'
 import minmax from './minmax'
+import colors from './colors10'
 
 class ScalarXYGraph extends Component {
   render () {
@@ -18,7 +19,6 @@ class ScalarXYGraph extends Component {
     const xLayout = getLayout('x', [xMin, xMax], contentsWidth)
     const yLayout = getLayout('y', [yMin, yMax], contentsHeight)
     const layout = {x: xLayout, y: yLayout}
-    const colors = ['#463ecc', '#cc3e46']
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
     // https://kilianvalkhof.com/2010/design/the-problem-with-svg-and-canvas/

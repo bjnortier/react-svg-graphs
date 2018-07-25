@@ -2,6 +2,11 @@
   "name": "react-svg-graphs",
   "version": "0.2.1",
   "description": "React SVG Graphs",
+  "keywords": [
+    "React",
+    "SVG",
+    "Graph"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "unit": "mocha --require babel-core/register --recursive test/unit/**",

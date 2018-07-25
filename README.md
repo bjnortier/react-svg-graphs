@@ -4,7 +4,7 @@ React SVG graphs.
 
 ## Status
 
-This is a first release, so take care. Currently supports scalar X and multiple scalar Y values.
+This is a first prototype, so take care. Currently supports scalar X and multiple scalar Y values.
 
 ## How to use
 

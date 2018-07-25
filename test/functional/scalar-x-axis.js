@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import getLayout from '../../src/getLayout'
-import { ScalarXAxis } from '../..'
+import { ScalarXAxis } from '../../src'
 
 const examples = [
   [],

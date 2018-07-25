@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { round10 } from 'round10'
 
-import { ScalarXYGraph } from '../..'
+import { ScalarXYGraph } from '../../src'
 
 // Re-map the data form timestamps to millisecs from start
 // Temporal Data is in the form {t: <timestamp>, v: <value>} an in

@@ -2,12 +2,14 @@
   "name": "rsg",
   "version": "0.1.0",
   "description": "React SVG Graphs",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "unit": "mocha --require babel-core/register --recursive test/unit/**",
     "unit:watch": "npm run unit -- --watch",
     "functional": "cd test/functional && webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run unit",
+    "compile": "babel --optional runtime -d lib/ src/",
+    "prepublishOnly": "npm run compile"
   },
   "author": "Ben Nortier <ben@bjnortier.com>",
   "license": "MIT",

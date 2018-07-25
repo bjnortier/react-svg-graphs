@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import getLayout from '../../src/getLayout'
-import { ScalarYAxis } from '../..'
+import { ScalarYAxis } from '../../src'
 
 const examples = [
   [0, 10],

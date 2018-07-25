@@ -43,6 +43,3 @@ render(
 Will result in:
 
 ![Example 1](https://github.com/bjnortier/rsg/blob/master/doc/example1.png?raw=true)
-
-!<img src="https://cdn.rawgit.com/NNTin/test/fbe3b4e3/test/animateddiscord.svg">
-!<img src="https://cdn.rawgit.com/bjnortier/rsg/master/doc/example1.svg">

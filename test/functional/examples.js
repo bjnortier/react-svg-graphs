@@ -26,8 +26,8 @@ const data2 = {
     label: 'Bar',
     values: xValues
   },
-  y: [0,1,2,3,4,5,6,7,8,9].map(m => ({
-    label: m,
+  y: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(m => ({
+    label: ['', '', '', '', '', '', '', '', '', ''].fill(m, 9 - m).join(''),
     values: xValues.map(x => m * Math.exp(x / 10))
   }))
 }

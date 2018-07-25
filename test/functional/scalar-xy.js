@@ -33,8 +33,34 @@ const contentsWidths = [640, 320]
 const contentsHeights = [320, 160]
 const padding = 80
 
+const data = {
+  x: {
+    label: 'X',
+    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  },
+  y: [
+    {
+      label: 'A',
+      values: [ 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 ]
+    },
+    {
+      label: 'B',
+      values: [ 10, 11, 12, 14, 16, 18, 21, 24, 28, 32, 37 ]
+    }
+  ]
+}
+
 render(
   <div>
+    <div style={{backgroundColor: '#fff'}}>
+      <ScalarXYGraph
+        data={data}
+        width={600}
+        height={400}
+        padding={50}
+        title={`Example Graph`}
+      />
+    </div>
     {contentsWidths.map(contentsWidth => {
       return contentsHeights.map(contentsHeight => {
         const svgWidth = contentsWidth + 2 * padding

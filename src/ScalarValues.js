@@ -15,6 +15,9 @@ class PointSet extends Component {
     for (let i = 0; i < data.x.length; ++i) {
       const x = data.x[i]
       const y = data.y[i]
+      if ((y === null) || (y === undefined)) {
+        continue
+      }
       points.push({
         x: (x - xMin) / (xMax - xMin) * width,
         y: height - (y - yMin) / (yMax - yMin) * height

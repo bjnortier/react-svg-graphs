@@ -1,7 +1,7 @@
 import { round10 } from 'round10'
 
-const getMinMaxFromLimits = limits => {
-  limits.sort()
+export const padLimits = limits => {
+  limits.sort((a, b) => a - b)
   let min, max
   if (limits.length === 0) {
     min = -0.5
@@ -51,7 +51,7 @@ export default (dimension, limits, size) => {
   if (limits.length > 2) {
     throw new Error('limits should be of length {0|1|2}')
   }
-  const [min, max] = getMinMaxFromLimits(limits)
+  const [min, max] = padLimits(limits)
 
   // Order is not exact because of floating point errors
   const diff = max - min

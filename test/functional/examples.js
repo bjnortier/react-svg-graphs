@@ -32,22 +32,52 @@ const data2 = {
   }))
 }
 
+const data3a = [
+  {x: 1, y: 65},
+  {x: 2, y: 39},
+  {x: 3, y: 40},
+  {x: 4, y: 27},
+  {x: 5, y: 43},
+  {x: 6, y: 22},
+  {x: 7, y: 23},
+  {x: 8, y: 70},
+  {x: 9, y: 100},
+  {x: 10, y: 85},
+  {x: 11, y: 52},
+  {x: 12, y: 55}
+]
+const data3b = {
+  x: {
+    values: data3a.map(s => s.x),
+    label: 'X'
+  },
+  y: [{label: 'Y', values: data3a.map(s => s.y)}]
+}
+
+// <ScalarXYGraph
+//   data={data1}
+//   width={600}
+//   height={400}
+//   padding={50}
+//   title={`Basic Example`}
+// />
+// <ScalarXYGraph
+//   data={data2}
+//   width={600}
+//   height={400}
+//   padding={50}
+//   title={`Colors Example`}
+// />
+
 render(
   <div>
     <div style={{backgroundColor: '#fff'}}>
       <ScalarXYGraph
-        data={data1}
-        width={600}
-        height={400}
+        data={data3b}
+        width={640}
+        height={320}
         padding={50}
-        title={`Basic Example`}
-      />
-      <ScalarXYGraph
-        data={data2}
-        width={600}
-        height={400}
-        padding={50}
-        title={`Colors Example`}
+        title={`Minotaur`}
       />
     </div>
   </div>,

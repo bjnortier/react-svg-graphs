@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bjnortier/dxf.svg?branch=master)](https://travis-ci.org/bjnortier/rsg)
+[![Build Status](https://travis-ci.org/bjnortier/react-svg-graphs.svg?branch=master)](https://travis-ci.org/bjnortier/react-svg-graphs)
 
 # rsg
 

@@ -54,30 +54,29 @@ const data3b = {
   y: [{label: 'Y', values: data3a.map(s => s.y)}]
 }
 
-// <ScalarXYGraph
-//   data={data1}
-//   width={600}
-//   height={400}
-//   padding={50}
-//   title={`Basic Example`}
-// />
-// <ScalarXYGraph
-//   data={data2}
-//   width={600}
-//   height={400}
-//   padding={50}
-//   title={`Colors Example`}
-// />
-
 render(
   <div>
     <div style={{backgroundColor: '#fff'}}>
       <ScalarXYGraph
         data={data3b}
-        width={640}
+        width={600}
         height={320}
         padding={50}
         title={`Minotaur`}
+      />
+      <ScalarXYGraph
+        data={data1}
+        width={600}
+        height={400}
+        padding={50}
+        title={`Basic Example`}
+      />
+      <ScalarXYGraph
+        data={data2}
+        width={600}
+        height={400}
+        padding={50}
+        title={`Colors Example`}
       />
     </div>
   </div>,

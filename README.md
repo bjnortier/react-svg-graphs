@@ -8,6 +8,12 @@ React SVG graphs.
 
 This is a first prototype, so take care.
 
+## Installation
+
+```
+$ npm i react-svg-graphs
+```
+
 # Features
 
 - Supports scalar X and multiple scalar Y values.
@@ -17,7 +23,19 @@ This is a first prototype, so take care.
 - Y value sets limited to 10.
 - No styling of markers & lines yet.
 
-## Usage examples:
+## Usage:
+
+There are 5 parameters:
+- data
+- width
+- height
+- padding
+- title
+
+All except ```data``` are self-explanatory. ```data``` must be in the form shown in the examples below (single x array, multiple y arrays, each with their own labels).
+
+X and Y axes scales are automatic and not configurable (if you have examples where they look terrible, please submit as an issue).
+
 
 ```
 import React from 'react'

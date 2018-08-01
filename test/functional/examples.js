@@ -26,7 +26,7 @@ const data2 = {
     label: 'Bar',
     values: xValues
   },
-  y: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(m => ({
+  y: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(m => ({
     label: ['', '', '', '', '', '', '', '', '', ''].fill(m, 9 - m).join(''),
     values: xValues.map(x => m * Math.exp(x / 10))
   }))
@@ -66,6 +66,7 @@ render(
       />
       <ScalarXYGraph
         data={data1}
+        colorOffset={1}
         width={600}
         height={400}
         padding={50}

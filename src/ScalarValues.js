@@ -49,7 +49,7 @@ class PointSet extends Component {
 
 class ScalarValues extends Component {
   render () {
-    const { width, height, data, layout, colors } = this.props
+    const { width, height, data, layout, palette } = this.props
     return <g>
       <rect style={{stroke: '#ddd', fill: 'none'}} x='0px' y='0' width={width} height={height} />
       {data.y.map((yValueSet, i) => {
@@ -58,7 +58,7 @@ class ScalarValues extends Component {
           width={width}
           height={height}
           layout={layout}
-          color={colors[i]}
+          color={palette[i % 10]}
           data={{x: data.x.values, y: yValueSet.values}}
         />
       })}
@@ -71,7 +71,7 @@ ScalarValues.propTypes = {
   height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-  colors: PropTypes.array.isRequired
+  palette: PropTypes.array.isRequired
 }
 
 export default ScalarValues

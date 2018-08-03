@@ -31,7 +31,7 @@ const getTicksRequired = (dimension, size) => {
   } else if (dimension === 'y') {
     if (size <= 120) {
       return 2
-    } else if (size <= 180) {
+    } else if (size <= 300) {
       return 5
     } else {
       return 10

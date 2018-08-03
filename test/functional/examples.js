@@ -54,6 +54,17 @@ const data3b = {
   y: [{label: 'Y', values: data3a.map(s => s.y)}]
 }
 
+const data4 = {
+  x: {
+    values: [1, 2],
+    label: 'iterarions'
+  },
+  y: [{
+    label: 'rew',
+    values: [-5291165.188978182, -2632850.206962444]
+  }]
+}
+
 render(
   <div>
     <div style={{backgroundColor: '#fff'}}>
@@ -77,6 +88,13 @@ render(
         width={600}
         height={400}
         padding={50}
+        title={`Colors Example`}
+      />
+      <ScalarXYGraph
+        data={data4}
+        width={640}
+        height={400}
+        padding={70}
         title={`Colors Example`}
       />
     </div>

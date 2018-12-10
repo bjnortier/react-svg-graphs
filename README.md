@@ -8,7 +8,7 @@ React SVG graphs.
 
 ## Status
 
-This is a first prototype, so take care.
+This is a first release - caveat emptor.
 
 ## Installation
 
@@ -23,7 +23,7 @@ $ npm i react-svg-graphs
 ## Limitations
 
 - Y value sets limited to 10.
-- No styling of markers & lines yet.
+- No styling of markers & lines.
 
 ## Usage:
 

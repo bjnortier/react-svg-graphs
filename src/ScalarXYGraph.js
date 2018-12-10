@@ -19,7 +19,7 @@ class ScalarXYGraph extends Component {
     const contentsHeight = height - padding * 2
     const xLayout = getLayout('x', [xMin, xMax], contentsWidth)
     const yLayout = getLayout('y', [yMin, yMax], contentsHeight)
-    const layout = {x: xLayout, y: yLayout}
+    const layout = { x: xLayout, y: yLayout }
     const maxYLabelLength = max(data.y.map(y => y.label.length))
     let palette = colors.slice(0)
     if (colorOffset) {
@@ -34,7 +34,7 @@ class ScalarXYGraph extends Component {
     // https://kilianvalkhof.com/2010/design/the-problem-with-svg-and-canvas/
     return <svg width={width} height={height}>
       <g transform='translate(0.5, 0.5)'>
-        <text style={{textAnchor: 'middle'}} x={padding + contentsWidth / 2} y={padding / 2 + 10} >
+        <text style={{ textAnchor: 'middle' }} x={padding + contentsWidth / 2} y={padding / 2 + 10} >
           {title}
         </text>
         <g transform={`translate(${padding}, ${height - padding})`}>
@@ -73,7 +73,7 @@ class ScalarXYGraph extends Component {
                 <circle stroke='none' x={5} y={5} fill={palette[paletteIndex]} r={r2} />
                 <circle stroke='none' fill='white' r={r1} />
               </g>
-              <text style={{textAnchor: 'left'}} x={20} y={14} >
+              <text style={{ textAnchor: 'left' }} x={20} y={14} >
                 {y.label}
               </text>
             </g>

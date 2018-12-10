@@ -15,10 +15,10 @@ class ScalarXAxis extends Component {
         label = round10(tickValue, order - 1)
       }
       const dx = (tickValue - min) / (max - min) * width
-      ticks.push({dx, label: label})
+      ticks.push({ dx, label: label })
     }
 
-    return <g style={{textAnchor: 'middle'}}>
+    return <g style={{ textAnchor: 'middle' }}>
       <text x={width / 2} y={45} >{label}</text>
       {ticks.map((tick, i) =>
         <g key={i} transform={`translate(${tick.dx}, 0)`}>

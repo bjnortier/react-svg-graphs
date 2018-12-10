@@ -33,25 +33,25 @@ const data2 = {
 }
 
 const data3a = [
-  {x: 1, y: 65},
-  {x: 2, y: 39},
-  {x: 3, y: 40},
-  {x: 4, y: 27},
-  {x: 5, y: 43},
-  {x: 6, y: 22},
-  {x: 7, y: 23},
-  {x: 8, y: 70},
-  {x: 9, y: 100},
-  {x: 10, y: 85},
-  {x: 11, y: 52},
-  {x: 12, y: 55}
+  { x: 1, y: 65 },
+  { x: 2, y: 39 },
+  { x: 3, y: 40 },
+  { x: 4, y: 27 },
+  { x: 5, y: 43 },
+  { x: 6, y: 22 },
+  { x: 7, y: 23 },
+  { x: 8, y: 70 },
+  { x: 9, y: 100 },
+  { x: 10, y: 85 },
+  { x: 11, y: 52 },
+  { x: 12, y: 55 }
 ]
 const data3b = {
   x: {
     values: data3a.map(s => s.x),
     label: 'X'
   },
-  y: [{label: 'Y', values: data3a.map(s => s.y)}]
+  y: [{ label: 'Y', values: data3a.map(s => s.y) }]
 }
 
 const data4 = {

@@ -23,8 +23,8 @@ class PointSet extends Component {
         y: height - (y - yMin) / (yMax - yMin) * height
       })
     }
-    return <React.Fragment>
-      {points.map((to, i) => {
+    return <>
+      { points.map((to, i) => {
         if (i > 0) {
           const from = points[i - 1]
           return <line
@@ -43,7 +43,7 @@ class PointSet extends Component {
         <circle stroke='none' fill={color} r={r2} />
         <circle stroke='none' fill='white' r={r1} />
       </g>)}
-    </React.Fragment>
+    </>
   }
 }
 
@@ -51,7 +51,7 @@ class ScalarValues extends Component {
   render () {
     const { width, height, data, layout, palette } = this.props
     return <g>
-      <rect style={{stroke: '#ddd', fill: 'none'}} x='0px' y='0' width={width} height={height} />
+      <rect style={{ stroke: '#ddd', fill: 'none' }} x='0px' y='0' width={width} height={height} />
       {data.y.map((yValueSet, i) => {
         return <PointSet
           key={i}
@@ -59,7 +59,7 @@ class ScalarValues extends Component {
           height={height}
           layout={layout}
           color={palette[i % 10]}
-          data={{x: data.x.values, y: yValueSet.values}}
+          data={{ x: data.x.values, y: yValueSet.values }}
         />
       })}
     </g>

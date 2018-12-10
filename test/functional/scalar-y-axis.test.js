@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 
 import getLayout from '../../src/getLayout'
@@ -60,7 +60,7 @@ export default (props) => <div>
       <Limits>limits={JSON.stringify(limits)}</Limits>
       {heights.map(height => {
         const layout = getLayout('y', limits, height)
-        return <React.Fragment key={height}>
+        return <Fragment>
           <Height width={width + padding}>{height}</Height>
           <SVGContainer
             width={width + padding}
@@ -77,7 +77,7 @@ export default (props) => <div>
               </g>
             </svg>
           </SVGContainer>
-        </React.Fragment>
+        </Fragment>
       })}
     </div>
   })}

@@ -1,31 +1,18 @@
-var webpack = require('webpack')
+const webpack = require('webpack')
 const path = require('path')
+const fs = require('fs')
+
+const port = 8085
 
 module.exports = {
   mode: 'development',
   entry: {
-    'scalar-x-axis': [
-      'webpack-dev-server/client?http://localhost:8080',
+    'index': [
+      `webpack-dev-server/client?http://localhost:${port}`,
       'webpack/hot/dev-server',
-      path.resolve(__dirname, 'scalar-x-axis.js')
-    ],
-    'scalar-y-axis': [
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/dev-server',
-      path.resolve(__dirname, 'scalar-y-axis.js')
-    ],
-    'scalar-xy': [
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/dev-server',
-      path.resolve(__dirname, 'scalar-xy.js')
-    ],
-    'examples': [
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/dev-server',
-      path.resolve(__dirname, 'examples.js')
+      path.resolve(__dirname, 'index.js')
     ]
   },
-  // entry: path.resolve(__dirname, 'scalar-y-axis.js'),
   output: {
     path: path.resolve(__dirname),
     filename: '[name].bundle.js'
@@ -33,20 +20,28 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
+  devServer: {
+    port
+  },
+  resolve: {
+    modules: [path.resolve('..', '..', 'node_modules'), 'node_modules']
+  },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/react', '@babel/env']
+            }
           }
         ],
         include: [
-          path.resolve(__dirname, '..', '..', 'src'),
-          path.resolve(__dirname)
-        ],
-        exclude: /node_modules/
+          fs.realpathSync(path.resolve(__dirname)),
+          fs.realpathSync(path.resolve(__dirname, '..', '..', 'src'))
+        ]
       }
     ]
   }

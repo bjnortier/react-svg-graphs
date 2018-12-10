@@ -1,6 +1,6 @@
 import React from 'react'
-import { render } from 'react-dom'
 import { round10 } from 'round10'
+import styled from 'styled-components'
 
 import { ScalarXYGraph } from '../../src'
 
@@ -33,26 +33,28 @@ const contentsWidths = [640, 320]
 const contentsHeights = [320, 160]
 const padding = 80
 
-render(
-  <div>
-    {contentsWidths.map(contentsWidth => {
-      return contentsHeights.map(contentsHeight => {
-        const svgWidth = contentsWidth + 2 * padding
-        const svgHeight = contentsHeight + 2 * padding
-        const key = `${contentsWidth}:${contentsHeight}`
-        return <div key={key} style={{margin: 20}}>
-          <div style={{width: svgWidth, height: svgHeight, backgroundColor: '#fff'}}>
-            <ScalarXYGraph
-              data={data1}
-              width={svgWidth}
-              height={svgHeight}
-              padding={padding}
-              title={`RSG Scalar XY Graph ${key}`}
-            />
-          </div>
-        </div>
-      })
-    })}
-  </div>,
-  document.getElementById('contents')
-)
+const GraphContainer = styled.div`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height};
+  background-color: #fff;
+  margin: 20px;
+`
+
+export default (props) => <div>
+  {contentsWidths.map(contentsWidth => {
+    return contentsHeights.map(contentsHeight => {
+      const svgWidth = contentsWidth + 2 * padding
+      const svgHeight = contentsHeight + 2 * padding
+      const key = `${contentsWidth}:${contentsHeight}`
+      return <GraphContainer key={key} width={svgWidth} height={svgHeight} >
+        <ScalarXYGraph
+          data={data1}
+          width={svgWidth}
+          height={svgHeight}
+          padding={padding}
+          title={`RSG Scalar XY Graph ${key}`}
+        />
+      </GraphContainer>
+    })
+  })}
+</div>

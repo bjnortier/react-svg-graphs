@@ -41,7 +41,7 @@ X and Y axes scales are automatic and not configurable (if you have examples whe
 import React from 'react'
 import { render } from 'react-dom'
 
-import { ScalarXYGraph } from 'rsg'
+import { ScalarXYGraph } from 'react-svg-graphs'
 
 const data1 = {
   x: {
@@ -74,7 +74,7 @@ render(
 
 Result:
 
-![Basic Example](https://github.com/bjnortier/rsg/blob/master/doc/basic_example.png?raw=true)
+![Basic Example](https://github.com/bjnortier/react-svg-graphs/blob/master/doc/basic_example.png?raw=true)
 
 
 
@@ -82,7 +82,7 @@ Result:
 import React from 'react'
 import { render } from 'react-dom'
 
-import { ScalarXYGraph } from 'rsg'
+import { ScalarXYGraph } from 'react-svg-graphs'
 
 const xValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const data2 = {
@@ -110,4 +110,4 @@ render(
 
 Result:
 
-![Colors Example](https://github.com/bjnortier/rsg/blob/master/doc/colors_example.png?raw=true)
+![Colors Example](https://github.com/bjnortier/react-svg-graphs/blob/master/doc/colors_example.png?raw=true)

@@ -20,7 +20,7 @@
   "author": "Ben Nortier <ben@bjnortier.com>",
   "license": "MIT",
   "engines": {
-    "node": ">= 8.11.3"
+    "node": "^8.11.3 || ^10.14.1"
   },
   "peerDependencies": {
     "react": "16.x",
@@ -46,7 +46,7 @@
     "styled-normalize": "^8.0.4",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
     "lodash": "^4.17.10",

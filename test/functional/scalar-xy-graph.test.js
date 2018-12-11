@@ -1,7 +1,9 @@
 import React from 'react'
+import { round10 } from 'round10'
 import styled from 'styled-components'
 
 import { ScalarXYGraph } from '../../src'
+import temporalData from '../resources/flow.json'
 
 const data1 = {
   x: {
@@ -20,41 +22,19 @@ const data1 = {
   ]
 }
 
-const xValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const xValues2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]
 const data2 = {
   x: {
     label: 'Bar',
-    values: xValues
+    values: xValues2
   },
   y: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(m => ({
     label: ['', '', '', '', '', '', '', '', '', ''].fill(m, 9 - m).join(''),
-    values: xValues.map(x => m * Math.exp(x / 10))
+    values: xValues2.map(x => m * Math.exp(x / 10))
   }))
 }
 
-const data3a = [
-  { x: 1, y: 65 },
-  { x: 2, y: 39 },
-  { x: 3, y: 40 },
-  { x: 4, y: 27 },
-  { x: 5, y: 43 },
-  { x: 6, y: 22 },
-  { x: 7, y: 23 },
-  { x: 8, y: 70 },
-  { x: 9, y: 100 },
-  { x: 10, y: 85 },
-  { x: 11, y: 52 },
-  { x: 12, y: 55 }
-]
-const data3b = {
-  x: {
-    values: data3a.map(s => s.x),
-    label: 'X'
-  },
-  y: [{ label: 'Y', values: data3a.map(s => s.y) }]
-}
-
-const data4 = {
+const data3 = {
   x: {
     values: [1, 2],
     label: 'iterarions'
@@ -65,20 +45,31 @@ const data4 = {
   }]
 }
 
-const data5 = {
+// Re-map the data form timestamps to millisecs from start
+// Temporal Data is in the form {t: <timestamp>, v: <value>} an in
+// reverse chronological order
+const orderedData = temporalData.slice().reverse()
+const start = orderedData[0].t
+const xValues4 = orderedData.map(d => round10((d.t - start) / 100000, 0)).slice(100, 200)
+const yValues4a = orderedData.map(d => d.v).slice(100, 200)
+const yValues4b = orderedData.map(d => d.v).slice(200, 300)
+const data4 = {
   x: {
-    label: 'Bar',
-    values: xValues
+    label: 'Iterations',
+    values: xValues4
   },
-  y: [1, 2, 3, 4].map(m => ({
-    label: ['', '', '', ''].fill(m, 3 - m).join(''),
-    values: xValues.map(x => m * Math.exp(x / 10))
-  }))
+  y: [{
+    label: 'foo',
+    values: yValues4a
+  }, {
+    label: 'bar',
+    values: yValues4b
+  }]
 }
 
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
-  height: ${({ height }) => height};
+  height: ${({ height }) => height}px;
   background-color: #fff;
   margin: 20px;
 `
@@ -86,17 +77,8 @@ const GraphContainer = styled.div`
 export default (props) => <div>
   <GraphContainer>
     <ScalarXYGraph
-      data={data3b}
-      width={600}
-      height={320}
-      padding={50}
-      title={`Minotaur`}
-    />
-  </GraphContainer>
-  <GraphContainer>
-    <ScalarXYGraph
       data={data1}
-      width={600}
+      width={640}
       height={400}
       padding={50}
       title={`Basic Example`}
@@ -105,7 +87,7 @@ export default (props) => <div>
   <GraphContainer>
     <ScalarXYGraph
       data={data2}
-      width={600}
+      width={640}
       height={400}
       padding={50}
       title={`Colors Example`}
@@ -113,7 +95,7 @@ export default (props) => <div>
   </GraphContainer>
   <GraphContainer>
     <ScalarXYGraph
-      data={data4}
+      data={data3}
       width={640}
       height={400}
       padding={70}
@@ -122,11 +104,11 @@ export default (props) => <div>
   </GraphContainer>
   <GraphContainer>
     <ScalarXYGraph
-      data={data5}
+      data={data4}
       width={640}
       height={400}
       padding={70}
-      title={`Advanced Example`}
+      title={`Large Dataset Example`}
     />
   </GraphContainer>
 </div>

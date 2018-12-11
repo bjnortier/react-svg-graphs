@@ -4,6 +4,6 @@ export default (dataSets) => {
   if (!Array.isArray(dataSets)) {
     dataSets = [dataSets]
   }
-  let allValues = flatten(dataSets.map(s => s.values))
+  let allValues = flatten(dataSets)
   return [min(allValues), max(allValues)]
 }

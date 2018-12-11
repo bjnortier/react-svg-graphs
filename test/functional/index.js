@@ -7,6 +7,7 @@ import styledNormalize from 'styled-normalize'
 import ScalarXAxisTests from './scalar-x-axis.test'
 import ScalarYAxisTests from './scalar-y-axis.test'
 import ScalarXYGraphTests from './scalar-xy-graph.test'
+import SparklineTests from './sparkline.test'
 
 const GlobalStyle = createGlobalStyle`
   ${styledNormalize}
@@ -56,6 +57,8 @@ const Nav = () => <NavBar>
   <Link to={'/scalar-y-axis'}>{'<ScalarYAxis />'}</Link>
   <HSpace />
   <Link to={'/scalar-xy-graph'}>{'<ScalarXYGraph />'}</Link>
+  <HSpace />
+  <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
 </NavBar>
 
 render(<HashRouter>
@@ -65,6 +68,7 @@ render(<HashRouter>
       <Route exact path='/scalar-x-axis' component={ScalarXAxisTests} />
       <Route exact path='/scalar-y-axis' component={ScalarYAxisTests} />
       <Route exact path='/scalar-xy-graph' component={ScalarXYGraphTests} />
+      <Route exact path='/sparkline' component={SparklineTests} />
     </Switch>
     <GlobalStyle />
   </div>

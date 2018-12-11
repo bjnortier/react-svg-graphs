@@ -13,8 +13,8 @@ class ScalarXYGraph extends Component {
   render () {
     const { width, height, padding, data, title, colorOffset } = this.props
     // There's one set of x values
-    const [xMin, xMax] = minmax(data.x)
-    const [yMin, yMax] = minmax(data.y)
+    const [xMin, xMax] = minmax(data.x.values)
+    const [yMin, yMax] = minmax(data.y.map(y => y.values))
     const contentsWidth = width - padding * 2
     const contentsHeight = height - padding * 2
     const xLayout = getLayout('x', [xMin, xMax], contentsWidth)

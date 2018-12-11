@@ -22,7 +22,7 @@ const data1 = {
   ]
 }
 
-const xValues2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const xValues2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]
 const data2 = {
   x: {
     label: 'Bar',
@@ -69,7 +69,7 @@ const data4 = {
 
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
-  height: ${({ height }) => height};
+  height: ${({ height }) => height}px;
   background-color: #fff;
   margin: 20px;
 `

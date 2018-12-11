@@ -60,7 +60,7 @@ export default (props) => <div>
       <Limits>limits={JSON.stringify(limits)}</Limits>
       {heights.map(height => {
         const layout = getLayout('y', limits, height)
-        return <Fragment>
+        return <div key={height}>
           <Height width={width + padding}>{height}</Height>
           <SVGContainer
             width={width + padding}
@@ -77,7 +77,7 @@ export default (props) => <div>
               </g>
             </svg>
           </SVGContainer>
-        </Fragment>
+        </div>
       })}
     </div>
   })}

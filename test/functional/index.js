@@ -6,8 +6,7 @@ import styledNormalize from 'styled-normalize'
 
 import ScalarXAxisTests from './scalar-x-axis.test'
 import ScalarYAxisTests from './scalar-y-axis.test'
-import ScalarXYTests from './scalar-xy.test'
-import Variations from './variations.test'
+import ScalarXYGraphTests from './scalar-xy-graph.test'
 
 const GlobalStyle = createGlobalStyle`
   ${styledNormalize}
@@ -52,13 +51,11 @@ const NavBar = styled.div`
 `
 
 const Nav = () => <NavBar>
-  <Link to={'/scalar-x-axis'}>scalar x axis</Link>
+  <Link to={'/scalar-x-axis'}>{'<ScalarXAxis />'}</Link>
   <HSpace />
-  <Link to={'/scalar-y-axis'}>scalar y axis</Link>
+  <Link to={'/scalar-y-axis'}>{'<ScalarYAxis />'}</Link>
   <HSpace />
-  <Link to={'/scalar-xy'}>scalar XY</Link>
-  <HSpace />
-  <Link to={'/variations'}>variations</Link>
+  <Link to={'/scalar-xy-graph'}>{'<ScalarXYGraph />'}</Link>
 </NavBar>
 
 render(<HashRouter>
@@ -67,8 +64,7 @@ render(<HashRouter>
     <Switch>
       <Route exact path='/scalar-x-axis' component={ScalarXAxisTests} />
       <Route exact path='/scalar-y-axis' component={ScalarYAxisTests} />
-      <Route exact path='/scalar-xy' component={ScalarXYTests} />
-      <Route exact path='/variations' component={Variations} />
+      <Route exact path='/scalar-xy-graph' component={ScalarXYGraphTests} />
     </Switch>
     <GlobalStyle />
   </div>

@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -15,7 +15,7 @@
     "test:functional": "cd test/functional && webpack-dev-server",
     "test": "npm run lint && npm run test:unit",
     "compile": "babel --optional runtime -d lib/ src/",
-    "prepublishOnly": "npm audit && npm run compile"
+    "prepublishOnly": "npm audit && rimraf lib/ && npm run compile"
   },
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-router-dom": "^4.3.1",
+    "rimraf": "^2.6.3",
     "standard": "^12.0.1",
     "styled-components": "^4.1.2",
     "styled-normalize": "^8.0.4",

@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -15,7 +15,11 @@
     "test:functional": "cd test/functional && webpack-dev-server",
     "test": "npm run lint && npm run test:unit",
     "compile": "babel --optional runtime -d lib/ src/",
-    "prepublishOnly": "npm run compile"
+    "prepublishOnly": "npm audit && npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjnortier/react-svg-graphs.git"
   },
   "author": "Ben Nortier <ben@bjnortier.com>",
   "license": "MIT",
@@ -46,7 +50,7 @@
     "styled-normalize": "^8.0.4",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
     "lodash": "^4.17.10",

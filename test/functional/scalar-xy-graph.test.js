@@ -45,6 +45,23 @@ const data3 = {
   }]
 }
 
+const data5 = {
+  x: {
+    label: 'Foo',
+    values: [0, 1, 2, 3, 4, 5, 10, 8, 9, 7, 6]
+  },
+  y: [
+    {
+      label: 'A',
+      values: [ 0, 1, null, 9, 16, 25, 36, 49, 64, 81, 100 ]
+    },
+    {
+      label: 'B',
+      values: [ 10, 11, 12, 14, 16, 18, 21, 24, null, null, 37 ]
+    }
+  ]
+}
+
 // Re-map the data form timestamps to millisecs from start
 // Temporal Data is in the form {t: <timestamp>, v: <value>} an in
 // reverse chronological order
@@ -109,6 +126,15 @@ export default (props) => <div>
       height={400}
       padding={70}
       title={`Large Dataset Example`}
+    />
+  </GraphContainer>
+  <GraphContainer>
+    <ScalarXYGraph
+      data={data5}
+      width={640}
+      height={400}
+      padding={70}
+      title={`Unordered Dataset Example`}
     />
   </GraphContainer>
 </div>

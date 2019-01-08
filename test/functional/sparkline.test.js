@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { round10 } from 'round10'
 
@@ -26,47 +26,56 @@ const data3 = {
 }
 
 const GraphContainer = styled.div`
+  display: inline-block;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: #fff;
   margin: 20px;
 `
 
-const width = 100
-const height = 20
+const Value = styled.div`
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  text-align: right;
+
+`
+
+class GraphWithValue extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      highlightIndex: null
+    }
+  }
+
+  render () {
+    const { data, color } = this.props
+    const { highlightIndex } = this.state
+    const width = 300
+    const height = 50
+    return <div>
+      <Value>{highlightIndex !== null ? round10(data.y[highlightIndex], -2) : null}</Value>
+      <GraphContainer
+        width={width}
+        height={height}
+      >
+        <Sparkline
+          data={data}
+          width={width}
+          height={height}
+          color={color}
+          onHighlightIndex={highlightIndex => this.setState({ highlightIndex })}
+        />
+      </GraphContainer>
+    </div>
+  }
+}
 
 export default (props) => <div>
-  <GraphContainer
-    width={width}
-    height={height}
-  >
-    <Sparkline
-      data={data1}
-      width={width}
-      height={height}
-      color={colors10[0]}
-    />
-  </GraphContainer>
-  <GraphContainer
-    width={width}
-    height={height}
-  >
-    <Sparkline
-      data={data2}
-      width={width}
-      height={height}
-      color={colors10[1]}
-    />
-  </GraphContainer>
-  <GraphContainer
-    width={width}
-    height={height}
-  >
-    <Sparkline
-      data={data3}
-      width={width}
-      height={height}
-      color={colors10[2]}
-    />
-  </GraphContainer>
+  <GraphWithValue data={{ x: [], y: [] }} color={colors10[0]} />
+  <GraphWithValue data={data1} color={colors10[0]} />
+  <GraphWithValue data={data2} color={colors10[1]} />
+  <GraphWithValue data={data3} color={colors10[2]} />
 </div>

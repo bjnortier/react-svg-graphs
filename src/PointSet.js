@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 class PointSet extends Component {
   render () {
-    const { width, height, data, layout, color, showPoints, highlightLast } = this.props
+    const { width, height, data, layout, color, highlightIndex } = this.props
     const xMin = layout.x.min
     const xMax = layout.x.max
     const yMin = layout.y.min
@@ -39,17 +39,15 @@ class PointSet extends Component {
           return null
         }
       })}
-      {showPoints
-        ? points.map((p, i) => <g key={i} transform={`translate(${p.x},${p.y})`}>
+      {points.map((p, i) => <g key={i} transform={`translate(${p.x},${p.y})`}>
+        <circle stroke='none' fill={color} r={r2} />
+        <circle stroke='none' fill='white' r={r1} />
+      </g>)}
+      {highlightIndex === undefined || highlightIndex === null
+        ? null
+        : <g transform={`translate(${points[highlightIndex].x},${points[highlightIndex].y})`}>
           <circle stroke='none' fill={color} r={r2} />
-          <circle stroke='none' fill='white' r={r1} />
-        </g>)
-        : null}
-      {highlightLast
-        ? <g transform={`translate(${points[points.length - 1].x},${points[points.length - 1].y})`}>
-          <circle stroke='none' fill={color} r={r1} />
-        </g>
-        : null}
+        </g>}
     </>
   }
 }
@@ -60,13 +58,11 @@ PointSet.propTypes = {
   layout: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   color: PropTypes.string.isRequired,
-  showPoints: PropTypes.bool.isRequired,
-  highlightLast: PropTypes.bool.isRequired
+  highlightIndex: PropTypes.number
 }
 
 PointSet.defaultProps = {
-  showPoints: true,
-  highlightLast: false
+  showPoints: true
 }
 
 export default PointSet

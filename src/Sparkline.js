@@ -8,7 +8,7 @@ class Sparkline extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      mouseOver: null
+      closest: null
     }
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseMove = this.handleMouseMove.bind(this)
@@ -77,6 +77,7 @@ class Sparkline extends Component {
       yMin = yMin - 1
       yMax = yMax + 1
     }
+    // Add padding for the <circle/> elements
     const contentsWidth = width - 7
     const contentsHeight = height - 7
     return { xMin, xMax, yMin, yMax, contentsWidth, contentsHeight }
@@ -85,10 +86,6 @@ class Sparkline extends Component {
   render () {
     const { width, height, data, color } = this.props
     const { xMin, xMax, yMin, yMax, contentsWidth, contentsHeight, closest } = this.state
-
-    // One pixel of margin at the top, right & bottom
-    // as the last highlighted point will always be on the right
-
     const layout = { x: { min: xMin, max: xMax }, y: { min: yMin, max: yMax } }
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
@@ -107,7 +104,7 @@ class Sparkline extends Component {
           height={contentsHeight}
           layout={layout}
           color={color}
-          highlightIndex={closest && closest.index}
+          highlightIndex={closest !== null ? closest.index : data.x.length ? data.x.length - 1 : null}
           data={data}
         />
       </g>

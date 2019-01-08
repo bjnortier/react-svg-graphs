@@ -67,8 +67,16 @@ class Sparkline extends Component {
 
   static getDerivedStateFromProps (props, state) {
     const { data, width, height } = props
-    const [xMin, xMax] = minmax(data.x)
-    const [yMin, yMax] = minmax(data.y)
+    let [xMin, xMax] = minmax(data.x)
+    let [yMin, yMax] = minmax(data.y)
+    if (xMin === xMax) {
+      xMin = xMin - 1
+      xMax = xMax + 1
+    }
+    if (yMin === yMax) {
+      yMin = yMin - 1
+      yMax = yMax + 1
+    }
     const contentsWidth = width - 7
     const contentsHeight = height - 7
     return { xMin, xMax, yMin, yMax, contentsWidth, contentsHeight }

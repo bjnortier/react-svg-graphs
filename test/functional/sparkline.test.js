@@ -75,6 +75,7 @@ class GraphWithValue extends Component {
 
 export default (props) => <div>
   <GraphWithValue data={{ x: [], y: [] }} color={colors10[0]} />
+  <GraphWithValue data={{ x: [1, 1], y: [0, 0] }} color={colors10[0]} />
   <GraphWithValue data={data1} color={colors10[0]} />
   <GraphWithValue data={data2} color={colors10[1]} />
   <GraphWithValue data={data3} color={colors10[2]} />

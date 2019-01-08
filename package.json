@@ -15,7 +15,7 @@
     "test:functional": "cd test/functional && webpack-dev-server",
     "test": "npm run lint && npm run test:unit",
     "compile": "babel --optional runtime -d lib/ src/",
-    "prepublishOnly": "npm run compile"
+    "prepublishOnly": "npm audit && npm run compile"
   },
   "author": "Ben Nortier <ben@bjnortier.com>",
   "license": "MIT",

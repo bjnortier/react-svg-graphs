@@ -32,7 +32,14 @@ class ScalarXYGraph extends Component {
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
     // https://kilianvalkhof.com/2010/design/the-problem-with-svg-and-canvas/
-    return <svg width={width} height={height}>
+    return <svg
+      style={{
+        fontFamily: '"Roboto Mono"',
+        fontSize: 12,
+        fontWeight: 400
+      }}
+      width={width}
+      height={height}>
       <g transform='translate(0.5, 0.5)'>
         <text style={{ textAnchor: 'middle' }} x={padding + contentsWidth / 2} y={padding / 2 + 10} >
           {title}

@@ -34,7 +34,6 @@ class ScalarXAxis extends Component {
 
 ScalarXAxis.propTypes = {
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired
 }

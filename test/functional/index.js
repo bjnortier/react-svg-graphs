@@ -17,8 +17,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: #e4e4e4;
     font-family: 'Roboto', Serif;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 17px;
+    -webkit-font-smoothing: antialiased;
     color: black;
   }
   h1, h2, h3 {

@@ -51,7 +51,7 @@ export default (maxWindowT, periodLabel) => {
             return (tickDate.getHours() % 24 === 0)
           }
         },
-        tickLabelFormat: (width) => '%m/%d',
+        tickLabelFormat: (width) => '%d/%m',
         contextLabelTest: (tickDate) => {
           return ((tickDate.getHours() === 0) &&
                   (tickDate.getDate() === 1) &&

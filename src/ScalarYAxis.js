@@ -22,7 +22,7 @@ class ScalarYAxis extends Component {
       {ticks.map((tick, i) =>
         <g key={i} transform={`translate(0, ${tick.dy})`}>
           <line stroke='#ddd' x1={40} x2={48} y1={0} y2={0} />
-          <text transform={`translate(${48 - 15}, 4)`} >
+          <text transform={`translate(${48 - 12}, 4)`} >
             {tick.label}
           </text>
         </g>

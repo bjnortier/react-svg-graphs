@@ -29,8 +29,6 @@ class TimeXScalarYGraph extends Component {
       }
     }
 
-    const debug = true
-
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
     // https://kilianvalkhof.com/2010/design/the-problem-with-svg-and-canvas/
@@ -46,14 +44,6 @@ class TimeXScalarYGraph extends Component {
         <text style={{ textAnchor: 'middle' }} x={64 + contentsWidth / 2} y={30} >
           {title}
         </text>
-        {debug
-          ? <>
-            <rect x={64} width={width - 80} y={48} height={height - 96} stroke='#f00' fill='none' />
-            <rect x={16} width={48} y={48} height={height - 96} stroke='#f00' fill='none' />
-            <rect x={64} width={width - 80} y={height - 48} height={47} stroke='#f00' fill='none' />
-            <rect x={64} width={width - 80} y={0} height={48} stroke='#f00' fill='none' />
-          </>
-          : null}
         <g transform={`translate(${64}, ${height - 48})`}>
           <TimeXAxis
             width={width - 80}
@@ -98,7 +88,6 @@ class TimeXScalarYGraph extends Component {
     </svg>
   }
 }
-
 
 TimeXScalarYGraph.propTypes = {
   width: PropTypes.number.isRequired,

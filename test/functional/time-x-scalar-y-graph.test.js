@@ -34,8 +34,8 @@ export default (props) => <div>
   <GraphContainer width={width} height={height} >
     <TimeXScalarYGraph
       data={data1}
-      width={640}
-      height={400}
+      width={width}
+      height={height}
       title={`Basic Example`}
       periodLabel='24h'
     />

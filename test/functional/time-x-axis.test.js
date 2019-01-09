@@ -5,35 +5,14 @@ import computeTimeLayout from '../../src/computeTimeLayout'
 import { TimeXAxis } from '../../src'
 
 const timeBounds = [
-  [new Date('2018-06-19').getTime(), '1w']
-  // [day * 31, 7],
-  // [day * 40, 7],
-  // [day * 72, 7],
-  // [day * 7, 6],
-  // [day * 6, 6],
-  // [day * 1, 6],
-  // [day * 36, 6],
-  // [day + hour * 6, 5],
-  // [day + hour * 12, 5],
-  // [day, 4],
-  // [day + hour * 9.5, 4],
-  // [day + hour * 17.2, 4],
-  // [day + hour * 22.7, 4],
-  // [0, 3],
-  // [day + hour * 12, 3],
-  // [day + hour * 25, 3],
-  // [day + hour * 24.5, 3],
-  // [0, 2],
-  // [day + hour * 13.75, 2],
-  // [day + hour * 22.7, 2],
-  // [hour * 0, 1],
-  // [day + hour * 1, 1],
-  // [day + hour * 6, 1],
-  // [day + hour * 22, 1],
-  // [day + hour * 0, 0],
-  // [day + hour * 0.75, 0],
-  // [day + hour * 9, 0],
-  // [day + hour * 13.75, 0]
+  [new Date('2018-06-19').getTime(), '1mo'],
+  [new Date('2018-06-19').getTime(), '1w'],
+  [new Date('2018-06-19').getTime(), '2d'],
+  [new Date('2018-06-19').getTime(), '1d'],
+  [new Date('2018-06-19').getTime(), '12h'],
+  [new Date('2018-06-19').getTime(), '6h'],
+  [new Date('2018-06-19').getTime(), '3h'],
+  [new Date('2018-06-19').getTime(), '1h']
 ]
 const widths = [800, 640, 480, 320, 240]
 

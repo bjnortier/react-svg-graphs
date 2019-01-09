@@ -5,6 +5,7 @@ import { max } from 'lodash'
 import ScalarXAxis from './ScalarXAxis'
 import ScalarYAxis from './ScalarYAxis'
 import ScalarValues from './ScalarValues'
+import Legend from './Legend'
 import computeScalarLayout from './computeScalarLayout'
 import minmax from './minmax'
 import colors from './colors10'
@@ -19,7 +20,7 @@ class ScalarXScalarYGraph extends Component {
     const contentsHeight = height - 96
     const xLayout = computeScalarLayout('x', [xMin, xMax], contentsWidth)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
-    const maxYLabelLength = max(data.y.map(y => y.label.length))
+    const maxLegendLength = max(data.y.map(y => y.label.length))
     let palette = colors.slice(0)
     if (colorOffset) {
       for (let i = 0; i < colorOffset; ++i) {
@@ -27,8 +28,6 @@ class ScalarXScalarYGraph extends Component {
         palette.push(c)
       }
     }
-
-    const debug = true
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
@@ -45,14 +44,6 @@ class ScalarXScalarYGraph extends Component {
         <text style={{ textAnchor: 'middle' }} x={64 + contentsWidth / 2} y={30} >
           {title}
         </text>
-        {debug
-          ? <>
-            <rect x={64} width={width - 80} y={48} height={height - 96} stroke='#f00' fill='none' />
-            <rect x={16} width={48} y={48} height={height - 96} stroke='#f00' fill='none' />
-            <rect x={64} width={width - 80} y={height - 48} height={47} stroke='#f00' fill='none' />
-            <rect x={64} width={width - 80} y={0} height={48} stroke='#f00' fill='none' />
-          </>
-          : null}
         <g transform={`translate(${64}, ${height - 48})`}>
           <ScalarXAxis
             width={width - 80}
@@ -76,22 +67,7 @@ class ScalarXScalarYGraph extends Component {
           />
         </g>
         <g transform='translate(64, 48)'>
-          <rect x={0} y={0} width={20 + maxYLabelLength * 7.5 + 10} height={data.y.length * 20} fill='#fff' stroke='#ddd' fillOpacity={0.5} />
-          {data.y.map((y, i) => {
-            const paletteIndex = i % 10
-            const r1 = 1.5
-            const r2 = 3
-            return <g key={i} transform={`translate(0, ${i * 20})`}>
-              <line stroke={palette[paletteIndex]} x1={3} x2={17} y1={10} y2={10} />
-              <g transform={`translate(10, 10)`}>
-                <circle stroke='none' x={5} y={5} fill={palette[paletteIndex]} r={r2} />
-                <circle stroke='none' fill='white' r={r1} />
-              </g>
-              <text style={{ textAnchor: 'left' }} x={20} y={14} >
-                {y.label}
-              </text>
-            </g>
-          })}
+          <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
         </g>
       </g>
     </svg>

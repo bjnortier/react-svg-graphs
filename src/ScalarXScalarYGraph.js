@@ -16,7 +16,7 @@ class ScalarXScalarYGraph extends Component {
     // There's one set of x values
     const [xMin, xMax] = minmax(data.x.values)
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
-    const contentsWidth = width - 80
+    const contentsWidth = width - 128
     const contentsHeight = height - 96
     const xLayout = computeScalarLayout('x', [xMin, xMax], contentsWidth)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
@@ -46,7 +46,7 @@ class ScalarXScalarYGraph extends Component {
         </text>
         <g transform={`translate(${64}, ${height - 48})`}>
           <ScalarXAxis
-            width={width - 80}
+            width={contentsWidth}
             layout={xLayout}
             label={data.x.label}
           />

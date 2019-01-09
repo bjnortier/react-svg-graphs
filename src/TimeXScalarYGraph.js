@@ -5,6 +5,7 @@ import { max } from 'lodash'
 import TimeXAxis from './TimeXAxis'
 import ScalarYAxis from './ScalarYAxis'
 import ScalarValues from './ScalarValues'
+import Legend from './Legend'
 import computeTimeLayout from './computeTimeLayout'
 import computeScalarLayout from './computeScalarLayout'
 import minmax from './minmax'
@@ -16,11 +17,11 @@ class TimeXScalarYGraph extends Component {
     // There's one set of x values
     const xMax = minmax(data.x.values)[1]
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
-    const contentsWidth = width - 80
+    const contentsWidth = width - 128
     const contentsHeight = height - 96
     const xLayout = computeTimeLayout(xMax, periodLabel)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
-    const maxYLabelLength = max(data.y.map(y => y.label.length))
+    const maxLegendLength = max(data.y.map(y => y.label.length))
     let palette = colors.slice(0)
     if (colorOffset) {
       for (let i = 0; i < colorOffset; ++i) {
@@ -46,7 +47,7 @@ class TimeXScalarYGraph extends Component {
         </text>
         <g transform={`translate(${64}, ${height - 48})`}>
           <TimeXAxis
-            width={width - 80}
+            width={contentsWidth}
             layout={xLayout}
             label={data.x.label}
           />
@@ -67,22 +68,7 @@ class TimeXScalarYGraph extends Component {
           />
         </g>
         <g transform='translate(64, 48)'>
-          <rect x={0} y={0} width={20 + maxYLabelLength * 7.5 + 10} height={data.y.length * 20} fill='#fff' stroke='#ddd' fillOpacity={0.5} />
-          {data.y.map((y, i) => {
-            const paletteIndex = i % 10
-            const r1 = 1.5
-            const r2 = 3
-            return <g key={i} transform={`translate(0, ${i * 20})`}>
-              <line stroke={palette[paletteIndex]} x1={3} x2={17} y1={10} y2={10} />
-              <g transform={`translate(10, 10)`}>
-                <circle stroke='none' x={5} y={5} fill={palette[paletteIndex]} r={r2} />
-                <circle stroke='none' fill='white' r={r1} />
-              </g>
-              <text style={{ textAnchor: 'left' }} x={20} y={14} >
-                {y.label}
-              </text>
-            </g>
-          })}
+          <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
         </g>
       </g>
     </svg>

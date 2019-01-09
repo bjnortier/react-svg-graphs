@@ -54,8 +54,10 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "jstz": "^2.1.1",
     "lodash": "^4.17.10",
-    "round10": "^1.0.3"
+    "round10": "^1.0.3",
+    "timezone": "^1.0.20"
   },
   "standard": {
     "parser": "babel-eslint",

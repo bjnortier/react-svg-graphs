@@ -2,22 +2,23 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { max } from 'lodash'
 
-import ScalarXAxis from './ScalarXAxis'
+import TimeXAxis from './TimeXAxis'
 import ScalarYAxis from './ScalarYAxis'
 import ScalarValues from './ScalarValues'
+import computeTimeLayout from './computeTimeLayout'
 import computeScalarLayout from './computeScalarLayout'
 import minmax from './minmax'
 import colors from './colors10'
 
-class ScalarXScalarYGraph extends Component {
+class TimeXScalarYGraph extends Component {
   render () {
-    const { width, height, data, title, colorOffset } = this.props
+    const { width, height, data, title, colorOffset, periodLabel } = this.props
     // There's one set of x values
-    const [xMin, xMax] = minmax(data.x.values)
+    const xMax = minmax(data.x.values)[1]
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
     const contentsWidth = width - 80
     const contentsHeight = height - 96
-    const xLayout = computeScalarLayout('x', [xMin, xMax], contentsWidth)
+    const xLayout = computeTimeLayout(xMax, periodLabel)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
     const maxYLabelLength = max(data.y.map(y => y.label.length))
     let palette = colors.slice(0)
@@ -54,7 +55,7 @@ class ScalarXScalarYGraph extends Component {
           </>
           : null}
         <g transform={`translate(${64}, ${height - 48})`}>
-          <ScalarXAxis
+          <TimeXAxis
             width={width - 80}
             layout={xLayout}
             label={data.x.label}
@@ -98,11 +99,13 @@ class ScalarXScalarYGraph extends Component {
   }
 }
 
-ScalarXScalarYGraph.propTypes = {
+
+TimeXScalarYGraph.propTypes = {
   width: PropTypes.number.isRequired,
   colorOffset: PropTypes.number,
   height: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  periodLabel: PropTypes.string.isRequired
 }
 
-export default ScalarXScalarYGraph
+export default TimeXScalarYGraph

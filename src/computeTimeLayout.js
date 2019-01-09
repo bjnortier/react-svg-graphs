@@ -85,6 +85,8 @@ export default (maxWindowT, periodLabel) => {
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 26,
+        min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
+        max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
         maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate) => (tickDate.getHours() % 3 === 0),

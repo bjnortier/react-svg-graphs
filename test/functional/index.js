@@ -8,6 +8,7 @@ import ScalarXAxisTest from './scalar-x-axis.test'
 import TimeXAxisTest from './time-x-axis.test'
 import ScalarYAxisTest from './scalar-y-axis.test'
 import ScalarXScalarYGraphTest from './scalar-x-scalar-y-graph.test'
+import TimeXScalarYGraphTest from './time-x-scalar-y-graph.test'
 import SparklineTest from './sparkline.test'
 
 const GlobalStyle = createGlobalStyle`
@@ -60,6 +61,8 @@ const Nav = () => <NavBar>
   <HSpace />
   <Link to={'/scalar-x-scalar-y-graph'}>{'<ScalarXScalarYGraph />'}</Link>
   <HSpace />
+  <Link to={'/time-x-scalar-y-graph'}>{'<TimeXScalarYGraph />'}</Link>
+  <HSpace />
   <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
 </NavBar>
 
@@ -71,6 +74,7 @@ render(<HashRouter>
       <Route exact path='/time-x-axis' component={TimeXAxisTest} />
       <Route exact path='/scalar-y-axis' component={ScalarYAxisTest} />
       <Route exact path='/scalar-x-scalar-y-graph' component={ScalarXScalarYGraphTest} />
+      <Route exact path='/time-x-scalar-y-graph' component={TimeXScalarYGraphTest} />
       <Route exact path='/sparkline' component={SparklineTest} />
     </Switch>
     <GlobalStyle />

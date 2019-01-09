@@ -91,50 +91,40 @@ const GraphContainer = styled.div`
   margin: 20px;
 `
 
+const width = 640
+const height = 480
+
 export default (props) => <div>
-  <GraphContainer>
+  <GraphContainer width={width} height={height} >
     <ScalarXScalarYGraph
       data={data1}
-      width={640}
-      height={400}
-      padding={50}
+      width={width}
+      height={height}
       title={`Basic Example`}
     />
   </GraphContainer>
-  <GraphContainer>
+  <GraphContainer width={width} height={height} >
     <ScalarXScalarYGraph
       data={data2}
-      width={640}
-      height={400}
-      padding={50}
+      width={width}
+      height={height}
       title={`Colors Example`}
     />
   </GraphContainer>
-  <GraphContainer>
+  <GraphContainer width={width} height={height} >
     <ScalarXScalarYGraph
       data={data3}
-      width={640}
-      height={400}
-      padding={70}
+      width={width}
+      height={height}
       title={`Limits Example`}
     />
   </GraphContainer>
-  <GraphContainer>
+  <GraphContainer width={width} height={height} >
     <ScalarXScalarYGraph
       data={data4}
-      width={640}
-      height={400}
-      padding={70}
+      width={width}
+      height={height}
       title={`Large Dataset Example`}
-    />
-  </GraphContainer>
-  <GraphContainer>
-    <ScalarXScalarYGraph
-      data={data5}
-      width={640}
-      height={400}
-      padding={70}
-      title={`Unordered Dataset Example`}
     />
   </GraphContainer>
 </div>

@@ -41,35 +41,29 @@ class TimeXAxis extends Component {
     const clipId = v4()
     return <g>
       <clipPath id={clipId}>
-        <rect x='0px' y='0' width={width} height='50' />
+        <rect x='0px' y='0' width={width} height='48' />
       </clipPath>
       <g
-        style={{
-          textAnchor: 'middle'
-        }}
+        style={{ textAnchor: 'middle' }}
         clipPath={`url(#${clipId})`}
       >
         {ticks.map((tick, i) =>
           <g key={i} transform={`translate(${tick.dx}, 0)`}>
             {tick.label
               ? <g>
-                <line stroke='#888' x1={0.5} x2={0.5} y1={0} y2={10} />
+                <line stroke='#ccc' x1={0} x2={0} y1={0} y2={8} />
                 <text
                   transform='translate(0, 22)'
-                  fill='#444'
                 >
                   {tick.label}
                 </text>
               </g>
-              : <line stroke='#888' x1={0.5} x2={0.5} y1={0} y2={6} />}
+              : <line stroke='#ccc' x1={0} x2={0} y1={0} y2={4} />}
           </g>
         )}
         {contexts.map((context, i) =>
-          <g key={i} transform={`translate(${context.dx}, 14)`}>
-            <text
-              transform='translate(0, 24)'
-              fill='#444'
-            >{context.label}</text>
+          <g key={i} transform={`translate(${context.dx}, 36)`}>
+            <text>{context.label}</text>
           </g>
         )}
       </g>

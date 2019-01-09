@@ -2,7 +2,7 @@ import React from 'react'
 import { round10 } from 'round10'
 import styled from 'styled-components'
 
-import { ScalarXYGraph } from '../../src'
+import { ScalarXScalarYGraph } from '../../src'
 import temporalData from '../resources/flow.json'
 
 const data1 = {
@@ -93,7 +93,7 @@ const GraphContainer = styled.div`
 
 export default (props) => <div>
   <GraphContainer>
-    <ScalarXYGraph
+    <ScalarXScalarYGraph
       data={data1}
       width={640}
       height={400}
@@ -102,7 +102,7 @@ export default (props) => <div>
     />
   </GraphContainer>
   <GraphContainer>
-    <ScalarXYGraph
+    <ScalarXScalarYGraph
       data={data2}
       width={640}
       height={400}
@@ -111,7 +111,7 @@ export default (props) => <div>
     />
   </GraphContainer>
   <GraphContainer>
-    <ScalarXYGraph
+    <ScalarXScalarYGraph
       data={data3}
       width={640}
       height={400}
@@ -120,7 +120,7 @@ export default (props) => <div>
     />
   </GraphContainer>
   <GraphContainer>
-    <ScalarXYGraph
+    <ScalarXScalarYGraph
       data={data4}
       width={640}
       height={400}
@@ -129,7 +129,7 @@ export default (props) => <div>
     />
   </GraphContainer>
   <GraphContainer>
-    <ScalarXYGraph
+    <ScalarXScalarYGraph
       data={data5}
       width={640}
       height={400}

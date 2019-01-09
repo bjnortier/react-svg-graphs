@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import getLayout from '../../src/getLayout'
+import computeScalarLayout from '../../src/computeScalarLayout'
 import { ScalarXAxis } from '../../src'
 
 const examples = [
@@ -50,7 +50,7 @@ export default (props) => <div>
     return <div key={i}>
       <Limits>limits={JSON.stringify(limits)}</Limits>
       {widths.map(width => {
-        const layout = getLayout('x', limits, width)
+        const layout = computeScalarLayout('x', limits, width)
         return <SVGContainer
           key={width}
           width={width + 48}

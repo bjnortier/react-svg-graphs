@@ -5,11 +5,11 @@ import { max } from 'lodash'
 import ScalarXAxis from './ScalarXAxis'
 import ScalarYAxis from './ScalarYAxis'
 import ScalarValues from './ScalarValues'
-import getLayout from './getLayout'
+import computeScalarLayout from './computeScalarLayout'
 import minmax from './minmax'
 import colors from './colors10'
 
-class ScalarXYGraph extends Component {
+class ScalarXScalarYGraph extends Component {
   render () {
     const { width, height, padding, data, title, colorOffset } = this.props
     // There's one set of x values
@@ -17,8 +17,8 @@ class ScalarXYGraph extends Component {
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
     const contentsWidth = width - padding * 2
     const contentsHeight = height - padding * 2
-    const xLayout = getLayout('x', [xMin, xMax], contentsWidth)
-    const yLayout = getLayout('y', [yMin, yMax], contentsHeight)
+    const xLayout = computeScalarLayout('x', [xMin, xMax], contentsWidth)
+    const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
     const layout = { x: xLayout, y: yLayout }
     const maxYLabelLength = max(data.y.map(y => y.label.length))
     let palette = colors.slice(0)
@@ -91,7 +91,7 @@ class ScalarXYGraph extends Component {
   }
 }
 
-ScalarXYGraph.propTypes = {
+ScalarXScalarYGraph.propTypes = {
   width: PropTypes.number.isRequired,
   colorOffset: PropTypes.number,
   height: PropTypes.number.isRequired,
@@ -99,4 +99,4 @@ ScalarXYGraph.propTypes = {
   data: PropTypes.object.isRequired
 }
 
-export default ScalarXYGraph
+export default ScalarXScalarYGraph

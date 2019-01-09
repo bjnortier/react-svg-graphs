@@ -1,32 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import getLayout from '../../src/getLayout'
-import { ScalarXAxis } from '../../src'
+import computeTimeLayout from '../../src/computeTimeLayout'
+import { TimeXAxis } from '../../src'
 
-const examples = [
-  [],
-  [10],
-  [0, 1],
-  [0, 0.1],
-  [0, 10],
-  [0, 11],
-  [0, 50],
-  [0, 100],
-  [1, 11],
-  [0, 4.5],
-  [0, 9.9],
-  [-2, 10],
-  [16, 28],
-  [-40, 7],
-  [1000, 2000],
-  [1000, 2001],
-  [1000, 1999],
-  [-1000, -20],
-  [-10000, 10000],
-  [-100000, 1000000],
-  [0, 0.01],
-  [0, 0.001]
+const timeBounds = [
+  [new Date('2018-06-19').getTime(), '1w']
+  // [day * 31, 7],
+  // [day * 40, 7],
+  // [day * 72, 7],
+  // [day * 7, 6],
+  // [day * 6, 6],
+  // [day * 1, 6],
+  // [day * 36, 6],
+  // [day + hour * 6, 5],
+  // [day + hour * 12, 5],
+  // [day, 4],
+  // [day + hour * 9.5, 4],
+  // [day + hour * 17.2, 4],
+  // [day + hour * 22.7, 4],
+  // [0, 3],
+  // [day + hour * 12, 3],
+  // [day + hour * 25, 3],
+  // [day + hour * 24.5, 3],
+  // [0, 2],
+  // [day + hour * 13.75, 2],
+  // [day + hour * 22.7, 2],
+  // [hour * 0, 1],
+  // [day + hour * 1, 1],
+  // [day + hour * 6, 1],
+  // [day + hour * 22, 1],
+  // [day + hour * 0, 0],
+  // [day + hour * 0.75, 0],
+  // [day + hour * 9, 0],
+  // [day + hour * 13.75, 0]
 ]
 const widths = [800, 640, 480, 320, 240]
 
@@ -46,11 +53,11 @@ const SVGContainer = styled.div`
 `
 
 export default (props) => <div>
-  {examples.map((limits, i) => {
+  {timeBounds.map(([maxTimestamp, periodLabel], i) => {
     return <div key={i}>
-      <Limits>limits={JSON.stringify(limits)}</Limits>
+      <Limits>{periodLabel}</Limits>
       {widths.map(width => {
-        const layout = getLayout('x', limits, width)
+        const layout = computeTimeLayout(maxTimestamp, periodLabel)
         return <SVGContainer
           key={width}
           width={width + 48}
@@ -59,7 +66,7 @@ export default (props) => <div>
           <svg width={width + 48} height={48}>
             <g transform={`translate(24, 0)`}>
               <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
-              <ScalarXAxis
+              <TimeXAxis
                 width={width}
                 layout={layout}
                 label='X'

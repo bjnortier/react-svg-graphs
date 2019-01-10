@@ -8,15 +8,15 @@ export default (maxWindowT, periodLabel) => {
   switch (periodLabel) {
     case ('1mo'): {
       const tickPeriod = hr * 24
-      let minT = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod
-      let maxT = Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod
-      minT += tzOffset * 60 * 1000
-      maxT += tzOffset * 60 * 1000
+      let min = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod
+      let max = Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod
+      min += tzOffset * 60 * 1000
+      max += tzOffset * 60 * 1000
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 15,
-        minT,
-        maxT,
+        min,
+        max,
         tickLabelTest: (tickDate, width) => {
           if (width < 440) {
             return (tickDate.getDate() % 3 === 1) &&
@@ -33,15 +33,15 @@ export default (maxWindowT, periodLabel) => {
     }
     case ('1w'): {
       const tickPeriod = hr * 6
-      let minT = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod
-      let maxT = Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod
-      minT += tzOffset * 60 * 1000
-      maxT += tzOffset * 60 * 1000
+      let min = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod
+      let max = Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod
+      min += tzOffset * 60 * 1000
+      max += tzOffset * 60 * 1000
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 15,
-        minT,
-        maxT,
+        min,
+        max,
         tickLabelTest: (tickDate, width) => {
           if (width < 500) {
             return (tickDate.getHours() % 24 === 0) &&
@@ -65,8 +65,8 @@ export default (maxWindowT, periodLabel) => {
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 26,
-        minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
-        maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
+        min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
+        max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => {
           if (width < 400) {
             return (tickDate.getHours() % 6 === 0)
@@ -87,8 +87,6 @@ export default (maxWindowT, periodLabel) => {
         numTicks: 26,
         min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
-        minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
-        maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate) => (tickDate.getHours() % 3 === 0),
         tickLabelFormat: (width) => '%H',
         contextLabelTest: (tickDate) => (tickDate.getHours() === 0),
@@ -100,8 +98,8 @@ export default (maxWindowT, periodLabel) => {
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 26,
-        minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
-        maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
+        min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
+        max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => {
           if (width < 400) {
             return ((tickDate.getHours() % 2 === 0) &&
@@ -121,8 +119,8 @@ export default (maxWindowT, periodLabel) => {
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 26,
-        minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
-        maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
+        min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
+        max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate) => (tickDate.getMinutes() === 0),
         tickLabelFormat: (width) => width >= 600 ? '%H:%M' : '%H',
         contextLabelTest: (tickDate) =>
@@ -135,8 +133,8 @@ export default (maxWindowT, periodLabel) => {
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 26,
-        minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
-        maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
+        min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
+        max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => (width >= 260)
           ? (tickDate.getMinutes() % 30 === 0)
           : (tickDate.getMinutes() === 0),
@@ -151,8 +149,8 @@ export default (maxWindowT, periodLabel) => {
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 14,
-        minT: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
-        maxT: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
+        min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
+        max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => (width >= 600)
           ? (tickDate.getMinutes() % 5 === 0)
           : (tickDate.getMinutes() % 15 === 0),

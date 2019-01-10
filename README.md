@@ -16,6 +16,10 @@ This is a first release - caveat emptor.
 $ npm i react-svg-graphs
 ```
 
+## Requirements
+
+You need to import Roboto Mono into your stylesheets 
+
 # Features
 
 - Supports scalar X and multiple scalar Y values.

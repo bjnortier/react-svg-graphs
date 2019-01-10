@@ -2,7 +2,7 @@ import React from 'react'
 import { round10 } from 'round10'
 import styled from 'styled-components'
 
-import { ScalarXYGraph } from '../../src'
+import { ScalarXScalarYGraph } from '../../src'
 import temporalData from '../resources/flow.json'
 
 const data1 = {
@@ -45,23 +45,6 @@ const data3 = {
   }]
 }
 
-const data5 = {
-  x: {
-    label: 'Foo',
-    values: [0, 1, 2, 3, 4, 5, 10, 8, 9, 7, 6]
-  },
-  y: [
-    {
-      label: 'A',
-      values: [ 0, 1, null, 9, 16, 25, 36, 49, 64, 81, 100 ]
-    },
-    {
-      label: 'B',
-      values: [ 10, 11, 12, 14, 16, 18, 21, 24, null, null, 37 ]
-    }
-  ]
-}
-
 // Re-map the data form timestamps to millisecs from start
 // Temporal Data is in the form {t: <timestamp>, v: <value>} an in
 // reverse chronological order
@@ -91,50 +74,40 @@ const GraphContainer = styled.div`
   margin: 20px;
 `
 
+const width = 640
+const height = 480
+
 export default (props) => <div>
-  <GraphContainer>
-    <ScalarXYGraph
+  <GraphContainer width={width} height={height} >
+    <ScalarXScalarYGraph
       data={data1}
-      width={640}
-      height={400}
-      padding={50}
+      width={width}
+      height={height}
       title={`Basic Example`}
     />
   </GraphContainer>
-  <GraphContainer>
-    <ScalarXYGraph
+  <GraphContainer width={width} height={height} >
+    <ScalarXScalarYGraph
       data={data2}
-      width={640}
-      height={400}
-      padding={50}
+      width={width}
+      height={height}
       title={`Colors Example`}
     />
   </GraphContainer>
-  <GraphContainer>
-    <ScalarXYGraph
+  <GraphContainer width={width} height={height} >
+    <ScalarXScalarYGraph
       data={data3}
-      width={640}
-      height={400}
-      padding={70}
+      width={width}
+      height={height}
       title={`Limits Example`}
     />
   </GraphContainer>
-  <GraphContainer>
-    <ScalarXYGraph
+  <GraphContainer width={width} height={height} >
+    <ScalarXScalarYGraph
       data={data4}
-      width={640}
-      height={400}
-      padding={70}
+      width={width}
+      height={height}
       title={`Large Dataset Example`}
-    />
-  </GraphContainer>
-  <GraphContainer>
-    <ScalarXYGraph
-      data={data5}
-      width={640}
-      height={400}
-      padding={70}
-      title={`Unordered Dataset Example`}
     />
   </GraphContainer>
 </div>

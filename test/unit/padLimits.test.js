@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import { padLimits } from '../../src/getLayout'
+import { padLimits } from '../../src/computeScalarLayout'
 
 describe('Pad limits', () => {
   it('values', () => {

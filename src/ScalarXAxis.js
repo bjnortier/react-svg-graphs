@@ -19,11 +19,11 @@ class ScalarXAxis extends Component {
     }
 
     return <g style={{ textAnchor: 'middle' }}>
-      <text x={width / 2} y={45} >{label}</text>
+      <text x={width / 2} y={36} >{label}</text>
       {ticks.map((tick, i) =>
         <g key={i} transform={`translate(${tick.dx}, 0)`}>
-          <line stroke='#ddd' x1={0} x2={0} y1={0} y2={10} />
-          <text transform='translate(0, 25)'>
+          <line stroke='#ccc' x1={0} x2={0} y1={0} y2={8} />
+          <text transform='translate(0, 22)'>
             {tick.label}
           </text>
         </g>
@@ -34,7 +34,6 @@ class ScalarXAxis extends Component {
 
 ScalarXAxis.propTypes = {
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired
 }

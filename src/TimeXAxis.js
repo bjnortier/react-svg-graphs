@@ -9,17 +9,17 @@ const timezone = jstz.determine().name()
 class TimeXAxis extends Component {
   render () {
     const { width, layout } = this.props
-    const { minT, maxT, timeAxisTickPeriod } = layout
+    const { min, max, timeAxisTickPeriod } = layout
     const { tickLabelTest, tickLabelFormat, contextLabelTest, contextLabelFormat } = layout
     const formatDateTime = (date, format) => tz(date, format, 'en_GB', timezone)
 
-    const firstTick = minT
-    const lastTick = maxT
+    const firstTick = min
+    const lastTick = max
 
     const ticks = []
     const contexts = []
     for (let tickTime = firstTick, tickIndex = 0; tickTime <= lastTick; tickTime += timeAxisTickPeriod, ++tickIndex) {
-      const dx = (tickTime - minT) / (maxT - minT) * width
+      const dx = (tickTime - min) / (max - min) * width
       const tickDate = new Date(tickTime)
       if (Math.abs(dx - (width / 2)) < (width / 2 - 10)) {
         const label = tickLabelTest(tickDate, width) ? formatDateTime(tickDate, tickLabelFormat(width)) : ''

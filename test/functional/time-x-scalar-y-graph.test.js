@@ -6,7 +6,7 @@ import { TimeXScalarYGraph } from '../../src'
 const data1 = {
   x: {
     label: 'Foo',
-    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
+    values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
   },
   y: [
     {
@@ -38,6 +38,15 @@ export default (props) => <div>
       height={height}
       title={`Basic Example`}
       periodLabel='24h'
+    />
+  </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <TimeXScalarYGraph
+      data={data1}
+      width={width}
+      height={height}
+      title={`Overflow Example`}
+      periodLabel='6h'
     />
   </GraphContainer>
 </div>

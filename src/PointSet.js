@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { v4 } from 'uuid'
 
 class PointSet extends Component {
   render () {
@@ -23,26 +24,38 @@ class PointSet extends Component {
         y: height - (y - yMin) / (yMax - yMin) * height
       })
     }
+
+    // Clipping: We clip the lines to the graph contents rectangle,
+    // but allow circles on the peripheries
+    const clipId = v4()
     return <>
-      { points.map((to, i) => {
-        if (i > 0) {
-          const from = points[i - 1]
-          return <line
-            key={`${i - 1}_${i}`}
-            stroke={color}
-            x1={from.x}
-            x2={to.x}
-            y1={from.y}
-            y2={to.y}
-          />
-        } else {
-          return null
-        }
-      })}
-      {points.map((p, i) => <g key={i} transform={`translate(${p.x},${p.y})`}>
-        <circle stroke='none' fill={color} r={r2} />
-        <circle stroke='none' fill='white' r={r1} />
-      </g>)}
+      <clipPath id={clipId}>
+        <rect x='0px' y='0' width={width} height={height} />
+      </clipPath>
+      <g
+        clipPath={`url(#${clipId})`}
+      >
+        { points.map((to, i) => {
+          if (i > 0) {
+            const from = points[i - 1]
+            return <line
+              key={`${i - 1}_${i}`}
+              stroke={color}
+              x1={from.x}
+              x2={to.x}
+              y1={from.y}
+              y2={to.y}
+            />
+          } else {
+            return null
+          }
+        })}
+      </g>
+      {points.map((p, i) => (p.x >= 0 && p.x <= width && p.y >= 0 && p.y <= height)
+        ? <g key={i} transform={`translate(${p.x},${p.y})`}>
+          <circle stroke='none' fill={color} r={r2} />
+          <circle stroke='none' fill='white' r={r1} />
+        </g> : null)}
       {highlightIndex === undefined || highlightIndex === null
         ? null
         : <g transform={`translate(${points[highlightIndex].x},${points[highlightIndex].y})`}>

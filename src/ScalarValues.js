@@ -11,8 +11,9 @@ class ScalarValues extends Component {
   }
 
   handleHoverPoint (hoverPoint) {
+    const { xInfoFormatter } = this.props
     if (hoverPoint) {
-      const xInfo = `${hoverPoint.xLabel}: ${hoverPoint.xValue}`
+      const xInfo = `${hoverPoint.xLabel}: ${xInfoFormatter(hoverPoint.xValue)}`
       const yInfo = `${hoverPoint.yLabel}: ${hoverPoint.yValue}`
       this.setState({
         hoverPoint: {
@@ -30,9 +31,8 @@ class ScalarValues extends Component {
   render () {
     const { width, height, data, layout, palette } = this.props
     const { hoverPoint } = this.state
-    console.log('@@', hoverPoint)
     return <g>
-      <rect stroke='#ddd' fill='none' x='0px' y='0' width={width} height={height} />
+      <rect stroke='#ddd' fill='none' x='0' y='0' width={width} height={height} />
       {data.y.map((yValueSet, i) => {
         return <PointSet
           key={i}
@@ -68,9 +68,9 @@ class ScalarValues extends Component {
               y={0}
               width={hoverPoint.infoWidth}
               height={33}
-              stroke='black'
+              stroke='#ddd'
               fill='white'
-              fillOpacity={0.5}
+              fillOpacity={0.8}
             />
             <text textAnchor='left' x={4} y={14} >
               {hoverPoint.yInfo}
@@ -89,7 +89,8 @@ ScalarValues.propTypes = {
   height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-  palette: PropTypes.array.isRequired
+  palette: PropTypes.array.isRequired,
+  xInfoFormatter: PropTypes.func.isRequired
 }
 
 export default ScalarValues

@@ -90,7 +90,7 @@ export default (props) => <div>
     <ScalarXScalarYGraph
       data={data2}
       width={width}
-      height={height}
+      height={350}
       title={`Colors Example`}
     />
   </GraphContainer>

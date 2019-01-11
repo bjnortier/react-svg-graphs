@@ -47,8 +47,11 @@ class PointSet extends Component {
         continue
       }
       points.push({
-        x: (x - xMin) / (xMax - xMin) * width,
-        y: height - (y - yMin) / (yMax - yMin) * height
+        xPos: (x - xMin) / (xMax - xMin) * width,
+        yPos: height - (y - yMin) / (yMax - yMin) * height,
+        xValue: x,
+        yValue: y,
+        color
       })
     }
 
@@ -68,27 +71,27 @@ class PointSet extends Component {
             return <line
               key={`${i - 1}_${i}`}
               stroke={color}
-              x1={from.x}
-              x2={to.x}
-              y1={from.y}
-              y2={to.y}
+              x1={from.xPos}
+              x2={to.xPos}
+              y1={from.yPos}
+              y2={to.yPos}
             />
           } else {
             return null
           }
         })}
       </g>
-      {points.map((p, i) => (p.x >= 0 && p.x <= width && p.y >= 0 && p.y <= height)
-        ? <g key={i} transform={`translate(${p.x},${p.y})`}>
+      {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
+        ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
           <circle stroke='none' fill={color} r={r2} />
           <circle stroke='none' fill='white' r={r1} />
         </g> : null)}
       {hoverPoint
-        ? <g transform={`translate(${hoverPoint.x},${hoverPoint.y})`}>
+        ? <g transform={`translate(${hoverPoint.xPos},${hoverPoint.yPos})`}>
           <circle stroke='none' fill={color} r={r2} />
         </g> : null}
-      {points.map((p, i) => (p.x >= 0 && p.x <= width && p.y >= 0 && p.y <= height)
-        ? <g key={i} transform={`translate(${p.x},${p.y})`}>
+      {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
+        ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
           <circle stroke='none' fill='transparent' r={r3}
             onMouseMove={() => this.handleMouseMove(p)}
             onMouseLeave={() => this.handleMouseLeave(p)}

@@ -20,7 +20,7 @@ export default ({ data, maxLegendLength, palette }) => <>
         <circle stroke='none' x={5} y={5} fill={palette[paletteIndex]} r={r2} />
         <circle stroke='none' fill='white' r={r1} />
       </g>
-      <text textAnchor='left' x={20} y={14} >
+      <text x={20} y={14} >
         {y.label}
       </text>
     </g>

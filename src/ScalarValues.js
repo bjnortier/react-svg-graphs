@@ -13,14 +13,14 @@ class ScalarValues extends Component {
   handleHoverPoint (hoverPoint) {
     const { xInfoFormatter } = this.props
     if (hoverPoint) {
-      const xInfo = `${hoverPoint.xLabel}: ${xInfoFormatter(hoverPoint.xValue)}`
-      const yInfo = `${hoverPoint.yLabel}: ${hoverPoint.yValue}`
+      const xInfo = `${xInfoFormatter(hoverPoint.xValue)}:`
+      const yInfo = `${hoverPoint.yValue}`
       this.setState({
         hoverPoint: {
           ...hoverPoint,
           xInfo,
           yInfo,
-          infoWidth: Math.round(Math.max(xInfo.length, yInfo.length) * 7.3 + 8)
+          infoWidth: Math.round((xInfo.length + yInfo.length) * 7.3 + 8)
         }
       })
     } else {
@@ -72,11 +72,11 @@ class ScalarValues extends Component {
               fill='white'
               fillOpacity={0.8}
             />
-            <text textAnchor='left' x={4} y={14} >
-              {hoverPoint.yInfo}
-            </text>
-            <text textAnchor='left' x={4} y={28} >
+            <text textAnchor='start' x={4} y={14} fill='#888'>
               {hoverPoint.xInfo}
+            </text>
+            <text textAnchor='end' x={hoverPoint.infoWidth - 4} y={14} >
+              {hoverPoint.yInfo}
             </text>
           </g>
         </g> : null}

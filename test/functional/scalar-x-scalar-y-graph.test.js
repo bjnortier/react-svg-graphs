@@ -7,7 +7,7 @@ import temporalData from '../resources/flow.json'
 
 const data1 = {
   x: {
-    label: 'Foo',
+    label: 'iterations',
     values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   },
   y: [
@@ -25,12 +25,12 @@ const data1 = {
 const xValues2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]
 const data2 = {
   x: {
-    label: 'Bar',
+    label: 'x',
     values: xValues2
   },
   y: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(m => ({
     label: ['', '', '', '', '', '', '', '', '', ''].fill(m, 9 - m).join(''),
-    values: xValues2.map(x => m * Math.exp(x / 10))
+    values: xValues2.map(x => round10(m * Math.exp(x / 10), -2))
   }))
 }
 

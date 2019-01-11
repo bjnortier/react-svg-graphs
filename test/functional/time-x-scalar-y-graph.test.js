@@ -5,7 +5,7 @@ import { TimeXScalarYGraph } from '../../src'
 
 const data1 = {
   x: {
-    label: 'Foo',
+    label: 't',
     values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
   },
   y: [

@@ -3,8 +3,34 @@ import PropTypes from 'prop-types'
 import { v4 } from 'uuid'
 
 class PointSet extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      hoverPoint: null
+    }
+    this.handleMouseMove = this.handleMouseMove.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
+  }
+
+  handleMouseMove (hoverPoint) {
+    this.setState({ hoverPoint }, () => {
+      if (this.props.onHoverPoint) {
+        this.props.onHoverPoint(hoverPoint)
+      }
+    })
+  }
+
+  handleMouseLeave () {
+    this.setState({ hoverPoint: null }, () => {
+      if (this.props.onHoverPoint) {
+        this.props.onHoverPoint(null)
+      }
+    })
+  }
+
   render () {
-    const { width, height, data, layout, color, highlightIndex } = this.props
+    const { width, height, data, layout, color } = this.props
+    const { hoverPoint } = this.state
     const xMin = layout.x.min
     const xMax = layout.x.max
     const yMin = layout.y.min
@@ -12,6 +38,7 @@ class PointSet extends Component {
 
     const r1 = 1.5
     const r2 = 3
+    const r3 = 5
     const points = []
     for (let i = 0; i < data.x.length; ++i) {
       const x = data.x[i]
@@ -20,8 +47,11 @@ class PointSet extends Component {
         continue
       }
       points.push({
-        x: (x - xMin) / (xMax - xMin) * width,
-        y: height - (y - yMin) / (yMax - yMin) * height
+        xPos: (x - xMin) / (xMax - xMin) * width,
+        yPos: height - (y - yMin) / (yMax - yMin) * height,
+        xValue: x,
+        yValue: y,
+        color
       })
     }
 
@@ -41,26 +71,32 @@ class PointSet extends Component {
             return <line
               key={`${i - 1}_${i}`}
               stroke={color}
-              x1={from.x}
-              x2={to.x}
-              y1={from.y}
-              y2={to.y}
+              x1={from.xPos}
+              x2={to.xPos}
+              y1={from.yPos}
+              y2={to.yPos}
             />
           } else {
             return null
           }
         })}
       </g>
-      {points.map((p, i) => (p.x >= 0 && p.x <= width && p.y >= 0 && p.y <= height)
-        ? <g key={i} transform={`translate(${p.x},${p.y})`}>
+      {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
+        ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
           <circle stroke='none' fill={color} r={r2} />
           <circle stroke='none' fill='white' r={r1} />
         </g> : null)}
-      {highlightIndex === undefined || highlightIndex === null
-        ? null
-        : <g transform={`translate(${points[highlightIndex].x},${points[highlightIndex].y})`}>
+      {hoverPoint
+        ? <g transform={`translate(${hoverPoint.xPos},${hoverPoint.yPos})`}>
           <circle stroke='none' fill={color} r={r2} />
-        </g>}
+        </g> : null}
+      {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
+        ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
+          <circle stroke='none' fill='transparent' r={r3}
+            onMouseMove={() => this.handleMouseMove(p)}
+            onMouseLeave={() => this.handleMouseLeave(p)}
+          />
+        </g> : null)}
     </>
   }
 }
@@ -71,7 +107,7 @@ PointSet.propTypes = {
   layout: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   color: PropTypes.string.isRequired,
-  highlightIndex: PropTypes.number
+  onHoverPoint: PropTypes.func.isRequired
 }
 
 PointSet.defaultProps = {

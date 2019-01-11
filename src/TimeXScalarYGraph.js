@@ -14,6 +14,7 @@ class TimeXScalarYGraph extends Component {
       {...this.props}
       computeXLayout={() => computeTimeLayout(xMax, periodLabel)}
       renderXAxis={(props) => <TimeXAxis {...props} />}
+      xInfoFormatter={(timestamp) => `${new Date(timestamp).toLocaleString()}`}
     />
   }
 }

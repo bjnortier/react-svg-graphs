@@ -19,6 +19,7 @@ const data1 = {
     }
   ]
 }
+const colors = ['#906', '#609']
 
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
@@ -47,6 +48,8 @@ export default (props) => <div>
       height={height}
       title={`Overflow Example`}
       periodLabel='6h'
+      colors={colors}
+      colorOffset={12}
     />
   </GraphContainer>
 </div>

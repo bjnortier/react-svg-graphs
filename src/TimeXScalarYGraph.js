@@ -22,6 +22,7 @@ class TimeXScalarYGraph extends Component {
 TimeXScalarYGraph.propTypes = {
   width: PropTypes.number.isRequired,
   colorOffset: PropTypes.number,
+  colors: PropTypes.array,
   height: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   periodLabel: PropTypes.string.isRequired

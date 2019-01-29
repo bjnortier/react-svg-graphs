@@ -66,6 +66,7 @@ const data4 = {
     values: yValues4b
   }]
 }
+const colors4 = ['#906', '#609']
 
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
@@ -108,6 +109,7 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Large Dataset Example`}
+      colors={colors4}
     />
   </GraphContainer>
 </div>

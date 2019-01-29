@@ -7,11 +7,11 @@ import ScalarValues from './ScalarValues'
 import Legend from './Legend'
 import computeScalarLayout from './computeScalarLayout'
 import minmax from './minmax'
-import colors from './colors10'
+import colors10 from './colors10'
 
 class Graph extends Component {
   render () {
-    const { width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter } = this.props
+    const { width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors } = this.props
     // There's one set of x values
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
     const contentsWidth = width - 128
@@ -84,7 +84,8 @@ Graph.propTypes = {
 }
 
 Graph.defaultProps = {
-  xInfoFormatter: x => `${x}`
+  xInfoFormatter: x => `${x}`,
+  colors: colors10
 }
 
 export default Graph

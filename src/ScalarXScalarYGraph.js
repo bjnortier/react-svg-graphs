@@ -21,6 +21,7 @@ class ScalarXScalarYGraph extends Component {
 ScalarXScalarYGraph.propTypes = {
   width: PropTypes.number.isRequired,
   colorOffset: PropTypes.number,
+  colors: PropTypes.array,
   height: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired
 }

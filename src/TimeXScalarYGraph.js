@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import tz from 'timezone/loaded'
+import jstz from 'jstz'
 
 import TimeXAxis from './TimeXAxis'
 import Graph from './Graph'
 import computeTimeLayout from './computeTimeLayout'
 import minmax from './minmax'
+
+const timezone = jstz.determine().name()
 
 class TimeXScalarYGraph extends Component {
   render () {
@@ -14,7 +18,7 @@ class TimeXScalarYGraph extends Component {
       {...this.props}
       computeXLayout={() => computeTimeLayout(xMax, periodLabel)}
       renderXAxis={(props) => <TimeXAxis {...props} />}
-      xInfoFormatter={(timestamp) => `${new Date(timestamp).toLocaleString()}`}
+      xInfoFormatter={(timestamp) => `${tz(new Date(timestamp), '%Y/%m/%d %H:%M:%S', 'en_GB', timezone)}`}
     />
   }
 }

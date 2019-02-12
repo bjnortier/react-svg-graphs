@@ -107,7 +107,7 @@ PointSet.propTypes = {
   layout: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   color: PropTypes.string.isRequired,
-  onHoverPoint: PropTypes.func.isRequired
+  onHoverPoint: PropTypes.func
 }
 
 PointSet.defaultProps = {

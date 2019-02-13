@@ -45,6 +45,7 @@ class ScalarValues extends Component {
             if (hoverPoint) {
               this.handleHoverPoint({
                 ...hoverPoint,
+                color: palette[i % 10],
                 xLabel: data.x.label,
                 yLabel: data.y[i].label
               })
@@ -72,10 +73,10 @@ class ScalarValues extends Component {
               fill='white'
               fillOpacity={0.8}
             />
-            <text textAnchor='start' x={4} y={14} fill='#888'>
+            <text textAnchor='start' x={4} y={14} fill='#000'>
               {hoverPoint.xInfo}
             </text>
-            <text textAnchor='end' x={hoverPoint.infoWidth - 4} y={14} >
+            <text textAnchor='end' x={hoverPoint.infoWidth - 4} y={14} fill={hoverPoint.color}>
               {hoverPoint.yInfo}
             </text>
           </g>

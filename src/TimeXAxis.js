@@ -2,13 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { v4 } from 'uuid'
 import tz from 'timezone/loaded'
-import jstz from 'jstz'
-
-const timezone = jstz.determine().name()
 
 class TimeXAxis extends Component {
   render () {
-    const { width, layout } = this.props
+    const { width, layout, timezone } = this.props
     const { min, max, timeAxisTickPeriod } = layout
     const { tickLabelTest, tickLabelFormat, contextLabelTest, contextLabelFormat } = layout
     const formatDateTime = (date, format) => tz(date, format, 'en_GB', timezone)
@@ -22,12 +19,17 @@ class TimeXAxis extends Component {
       const dx = (tickTime - min) / (max - min) * width
       const tickDate = new Date(tickTime)
       if (Math.abs(dx - (width / 2)) < (width / 2 - 10)) {
-        const label = tickLabelTest(tickDate, width) ? formatDateTime(tickDate, tickLabelFormat(width)) : ''
+        const label = tickLabelTest(tickDate, width)
+          ? formatDateTime(tickDate, tickLabelFormat(width))
+          : ''
         ticks.push({ dx, label })
       }
       if (Math.abs(dx - (width / 2)) < (width / 2 - 60)) {
         if (contextLabelTest(tickDate)) {
-          contexts.push({ dx, label: formatDateTime(tickDate, contextLabelFormat) })
+          contexts.push({
+            dx,
+            label: formatDateTime(tickDate, contextLabelFormat)
+          })
         }
       }
     }
@@ -74,7 +76,8 @@ class TimeXAxis extends Component {
 TimeXAxis.propTypes = {
   width: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
-  period: PropTypes.oneOf(['1hr', '3hr', '6hr', '12hr', '24hr', '1d', '2d', '1wk', '1mo'])
+  period: PropTypes.oneOf(['1hr', '3hr', '6hr', '12hr', '24hr', '1d', '2d', '1wk', '1mo']),
+  timezone: PropTypes.string.isRequired
 }
 
 export default TimeXAxis

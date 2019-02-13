@@ -1,17 +1,16 @@
 import timePeriods from './timePeriods'
 
-const tzOffset = new Date().getTimezoneOffset()
-
-export default (maxWindowT, periodLabel) => {
+export default (maxWindowT, periodLabel, localOrUTC) => {
   const hr = 3600 * 1000
   const minWindowT = maxWindowT - timePeriods[periodLabel]
+  const getDate = (date) => localOrUTC === 'local' ? date.getDate() : date.getUTCDate()
+  const getHours = (date) => localOrUTC === 'local' ? date.getHours() : date.getUTCHours()
+  const getMinutes = (date) => localOrUTC === 'local' ? date.getMinutes() : date.getUTCMinutes()
   switch (periodLabel) {
     case ('1mo'): {
       const tickPeriod = hr * 24
       let min = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod
       let max = Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod
-      min += tzOffset * 60 * 1000
-      max += tzOffset * 60 * 1000
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 15,
@@ -19,15 +18,15 @@ export default (maxWindowT, periodLabel) => {
         max,
         tickLabelTest: (tickDate, width) => {
           if (width < 440) {
-            return (tickDate.getDate() % 3 === 1) &&
-              (tickDate.getDate() < 30)
+            return (getDate(tickDate) % 3 === 1) &&
+              (getDate(tickDate) < 30)
           } else {
-            return (tickDate.getDate() % 2 === 1) &&
-              (tickDate.getDate() < 30)
+            return (getDate(tickDate) % 2 === 1) &&
+              (getDate(tickDate) < 30)
           }
         },
         tickLabelFormat: (width) => '%d',
-        contextLabelTest: (tickDate) => (tickDate.getDate() === 1),
+        contextLabelTest: (tickDate) => (getDate(tickDate) === 1),
         contextLabelFormat: '%Y/%m'
       }
     }
@@ -35,8 +34,6 @@ export default (maxWindowT, periodLabel) => {
       const tickPeriod = hr * 6
       let min = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod
       let max = Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod
-      min += tzOffset * 60 * 1000
-      max += tzOffset * 60 * 1000
       return {
         timeAxisTickPeriod: tickPeriod,
         numTicks: 15,
@@ -44,18 +41,18 @@ export default (maxWindowT, periodLabel) => {
         max,
         tickLabelTest: (tickDate, width) => {
           if (width < 500) {
-            return (tickDate.getHours() % 24 === 0) &&
-              (tickDate.getDate() % 2 === 1) &&
-              (tickDate.getDate() < 30)
+            return (getHours(tickDate) % 24 === 0) &&
+              (getDate(tickDate) % 2 === 1) &&
+              (getDate(tickDate) < 30)
           } else {
-            return (tickDate.getHours() % 24 === 0)
+            return (getHours(tickDate) % 24 === 0)
           }
         },
         tickLabelFormat: (width) => '%d/%m',
         contextLabelTest: (tickDate) => {
-          return ((tickDate.getHours() === 0) &&
-                  (tickDate.getDate() === 1) &&
-                  (tickDate.getMonth() === 0))
+          return ((getHours(tickDate) === 0) &&
+                  (getDate(tickDate) === 1) &&
+                  (tickDate.getUTCMonth() === 0))
         },
         contextLabelFormat: '%Y'
       }
@@ -69,13 +66,13 @@ export default (maxWindowT, periodLabel) => {
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => {
           if (width < 400) {
-            return (tickDate.getHours() % 6 === 0)
+            return (getHours(tickDate) % 6 === 0)
           } else {
-            return (tickDate.getHours() % 3 === 0)
+            return (getHours(tickDate) % 3 === 0)
           }
         },
         tickLabelFormat: (width) => '%H',
-        contextLabelTest: (tickDate) => (tickDate.getHours() === 0),
+        contextLabelTest: (tickDate) => (getHours(tickDate) === 0),
         contextLabelFormat: '%Y/%m/%d'
       }
     }
@@ -87,9 +84,9 @@ export default (maxWindowT, periodLabel) => {
         numTicks: 26,
         min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
-        tickLabelTest: (tickDate) => (tickDate.getHours() % 3 === 0),
+        tickLabelTest: (tickDate) => (getHours(tickDate) % 3 === 0),
         tickLabelFormat: (width) => '%H',
-        contextLabelTest: (tickDate) => (tickDate.getHours() === 0),
+        contextLabelTest: (tickDate) => (getHours(tickDate) === 0),
         contextLabelFormat: '%Y/%m/%d'
       }
     }
@@ -102,15 +99,15 @@ export default (maxWindowT, periodLabel) => {
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => {
           if (width < 400) {
-            return ((tickDate.getHours() % 2 === 0) &&
-              (tickDate.getMinutes() === 0))
+            return ((getHours(tickDate) % 2 === 0) &&
+              (getMinutes(tickDate) === 0))
           } else {
-            return ((tickDate.getHours() % 1 === 0) && (tickDate.getMinutes() === 0))
+            return ((getHours(tickDate) % 1 === 0) && (getMinutes(tickDate) === 0))
           }
         },
         tickLabelFormat: (width) => '%H',
         contextLabelTest: (tickDate) =>
-          ((tickDate.getHours() === 0) && (tickDate.getMinutes() === 0)),
+          ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
         contextLabelFormat: '%Y/%m/%d'
       }
     }
@@ -121,10 +118,10 @@ export default (maxWindowT, periodLabel) => {
         numTicks: 26,
         min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
-        tickLabelTest: (tickDate) => (tickDate.getMinutes() === 0),
+        tickLabelTest: (tickDate) => (getMinutes(tickDate) === 0),
         tickLabelFormat: (width) => width >= 600 ? '%H:%M' : '%H',
         contextLabelTest: (tickDate) =>
-          ((tickDate.getHours() === 0) && (tickDate.getMinutes() === 0)),
+          ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
         contextLabelFormat: '%Y/%m/%d'
       }
     }
@@ -136,11 +133,11 @@ export default (maxWindowT, periodLabel) => {
         min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => (width >= 260)
-          ? (tickDate.getMinutes() % 30 === 0)
-          : (tickDate.getMinutes() === 0),
+          ? (getMinutes(tickDate) % 30 === 0)
+          : (getMinutes(tickDate) === 0),
         tickLabelFormat: (width) => width >= 260 ? '%H:%M' : '%H',
         contextLabelTest: (tickDate) =>
-          ((tickDate.getHours() === 0) && (tickDate.getMinutes() === 0)),
+          ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
         contextLabelFormat: '%Y/%m/%d'
       }
     }
@@ -152,11 +149,11 @@ export default (maxWindowT, periodLabel) => {
         min: Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod,
         max: Math.ceil((maxWindowT + tickPeriod) / tickPeriod) * tickPeriod,
         tickLabelTest: (tickDate, width) => (width >= 600)
-          ? (tickDate.getMinutes() % 5 === 0)
-          : (tickDate.getMinutes() % 15 === 0),
+          ? (getMinutes(tickDate) % 5 === 0)
+          : (getMinutes(tickDate) % 15 === 0),
         tickLabelFormat: (width) => '%H:%M',
         contextLabelTest: (tickDate) =>
-          ((tickDate.getHours() === 0) && (tickDate.getMinutes() === 0)),
+          ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
         contextLabelFormat: '%Y/%m/%d'
       }
     }

@@ -37,8 +37,19 @@ export default (props) => <div>
       data={data1}
       width={width}
       height={height}
-      title={`Basic Example`}
+      title={`Basic Example UTC`}
       periodLabel='24h'
+      localOrUTC='utc'
+    />
+  </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <TimeXScalarYGraph
+      data={data1}
+      width={width}
+      height={height}
+      title={`Basic Example Local`}
+      periodLabel='24h'
+      localOrUTC='local'
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >

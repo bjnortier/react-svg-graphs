@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const fs = require('fs')
+const opn = require('opn')
 
 const port = 8085
 
@@ -21,7 +22,10 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    port
+    port,
+    after: (app, server) => {
+      opn(`http://localhost:${port}`, { app: 'google chrome' })
+    }
   },
   resolve: {
     modules: [path.resolve('..', '..', 'node_modules'), 'node_modules']

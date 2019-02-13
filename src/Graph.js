@@ -11,7 +11,7 @@ import colors10 from './colors10'
 
 class Graph extends Component {
   render () {
-    const { width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors } = this.props
+    const { timezone, width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors } = this.props
     // There's one set of x values
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
     const contentsWidth = width - 128
@@ -42,11 +42,12 @@ class Graph extends Component {
         <text style={{ textAnchor: 'middle' }} x={64 + contentsWidth / 2} y={30} >
           {title}
         </text>
-        <g transform={`translate(${64}, ${height - 48})`}>
+        <g transform={`translate(64, ${height - 48})`}>
           {renderXAxis({
             width: contentsWidth,
             layout: xLayout,
-            label: data.x.label
+            label: data.x.label,
+            timezone
           })}
         </g>
         <g transform='translate(16, 48)'>
@@ -68,6 +69,7 @@ class Graph extends Component {
         <g transform='translate(64, 48)'>
           <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
         </g>
+        {this.props.children}
       </g>
     </svg>
   }

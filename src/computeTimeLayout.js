@@ -2,11 +2,28 @@ import timePeriods from './timePeriods'
 
 export default (maxWindowT, periodLabel, localOrUTC) => {
   const hr = 3600 * 1000
+  const day = hr * 24
+  const year = day * 365
   const minWindowT = maxWindowT - timePeriods[periodLabel]
   const getDate = (date) => localOrUTC === 'local' ? date.getDate() : date.getUTCDate()
   const getHours = (date) => localOrUTC === 'local' ? date.getHours() : date.getUTCHours()
   const getMinutes = (date) => localOrUTC === 'local' ? date.getMinutes() : date.getUTCMinutes()
   switch (periodLabel) {
+    case ('6y'): {
+      const tickPeriod = year
+      let max = new Date(`${new Date(maxWindowT).getFullYear() + 1}`).getTime()
+      let min = max - 6 * year
+      return {
+        timeAxisTickPeriod: tickPeriod,
+        numTicks: 6,
+        min,
+        max,
+        tickLabelTest: (tickDate, width) => true,
+        tickLabelFormat: (width) => '%y',
+        contextLabelTest: (tickDate) => tickDate.getFullYear() === 2000,
+        contextLabelFormat: '%C'
+      }
+    }
     case ('1mo'): {
       const tickPeriod = hr * 24
       let min = Math.floor((minWindowT - tickPeriod) / tickPeriod) * tickPeriod

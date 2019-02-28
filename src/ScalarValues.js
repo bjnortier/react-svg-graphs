@@ -49,7 +49,8 @@ class ScalarValues extends Component {
                 ...hoverPoint,
                 color: palette[i % 10],
                 xLabel: data.x.label,
-                yLabel: data.y[i].label
+                yLabel: data.y[i].label,
+                yIndex: i
               })
             } else {
               this.handleHoverPoint(null)

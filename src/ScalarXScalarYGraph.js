@@ -23,7 +23,8 @@ ScalarXScalarYGraph.propTypes = {
   colorOffset: PropTypes.number,
   colors: PropTypes.array,
   height: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  onHover: PropTypes.func
 }
 
 export default ScalarXScalarYGraph

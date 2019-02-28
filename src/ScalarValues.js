@@ -15,14 +15,16 @@ class ScalarValues extends Component {
     if (hoverPoint) {
       const xInfo = `${xInfoFormatter(hoverPoint.xValue)}:`
       const yInfo = `${hoverPoint.yValue}`
-      this.setState({
-        hoverPoint: {
-          ...hoverPoint,
-          xInfo,
-          yInfo,
-          infoWidth: Math.round((xInfo.length + yInfo.length) * 7.3 + 8)
-        }
-      })
+      const hoverPointState = {
+        ...hoverPoint,
+        xInfo,
+        yInfo,
+        infoWidth: Math.round((xInfo.length + yInfo.length) * 7.3 + 8)
+      }
+      this.setState({ hoverPoint: hoverPointState })
+      if (this.props.onHover) {
+        this.props.onHover(hoverPointState)
+      }
     } else {
       this.setState({ hoverPoint })
     }
@@ -91,7 +93,8 @@ ScalarValues.propTypes = {
   layout: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   palette: PropTypes.array.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired
+  xInfoFormatter: PropTypes.func.isRequired,
+  onHover: PropTypes.func
 }
 
 export default ScalarValues

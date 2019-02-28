@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -32,14 +32,14 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "acorn": "^6.0.5",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.2",
-    "expect": "^23.4.0",
+    "expect": "^24.1.0",
     "json-loader": "^0.5.7",
     "mocha": "^5.2.0",
     "opn": "^5.4.0",
@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "jstz": "^2.1.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "round10": "^1.0.3",
     "timezone": "^1.0.20",
     "uuid": "^3.3.2"

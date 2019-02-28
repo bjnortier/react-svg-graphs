@@ -31,7 +31,8 @@ TimeXScalarYGraph.propTypes = {
   height: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   periodLabel: PropTypes.string.isRequired,
-  localOrUTC: PropTypes.oneOf(['local', 'utc'])
+  localOrUTC: PropTypes.oneOf(['local', 'utc']),
+  onHover: PropTypes.func
 }
 
 TimeXAxis.defaultProps = {

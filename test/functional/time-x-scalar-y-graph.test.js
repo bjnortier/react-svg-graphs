@@ -40,6 +40,7 @@ export default (props) => <div>
       title={`Basic Example UTC`}
       periodLabel='24h'
       localOrUTC='utc'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >

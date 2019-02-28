@@ -85,6 +85,7 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Basic Example`}
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >

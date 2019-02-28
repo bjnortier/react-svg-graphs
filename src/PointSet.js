@@ -8,11 +8,11 @@ class PointSet extends Component {
     this.state = {
       hoverPoint: null
     }
-    this.handleMouseMove = this.handleMouseMove.bind(this)
+    this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
   }
 
-  handleMouseMove (hoverPoint) {
+  handleMouseEnter (hoverPoint) {
     this.setState({ hoverPoint }, () => {
       if (this.props.onHoverPoint) {
         this.props.onHoverPoint(hoverPoint)
@@ -93,7 +93,7 @@ class PointSet extends Component {
       {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
         ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
           <circle stroke='none' fill='transparent' r={r3}
-            onMouseMove={() => this.handleMouseMove(p)}
+            onMouseEnter={() => this.handleMouseEnter(p)}
             onMouseLeave={() => this.handleMouseLeave(p)}
           />
         </g> : null)}

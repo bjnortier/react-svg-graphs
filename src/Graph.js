@@ -11,7 +11,7 @@ import colors10 from './colors10'
 
 class Graph extends Component {
   render () {
-    const { timezone, width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors } = this.props
+    const { timezone, width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors, onHover } = this.props
     // There's one set of x values
     const [yMin, yMax] = minmax(data.y.map(y => y.values))
     const contentsWidth = width - 128
@@ -64,6 +64,7 @@ class Graph extends Component {
             palette={palette}
             data={data}
             xInfoFormatter={xInfoFormatter}
+            onHover={onHover}
           />
         </g>
         <g transform='translate(64, 48)'>
@@ -82,7 +83,8 @@ Graph.propTypes = {
   data: PropTypes.object.isRequired,
   computeXLayout: PropTypes.func.isRequired,
   renderXAxis: PropTypes.func.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired
+  xInfoFormatter: PropTypes.func.isRequired,
+  onHover: PropTypes.func
 }
 
 Graph.defaultProps = {

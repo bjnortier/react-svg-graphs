@@ -51,8 +51,8 @@ class PointSet extends Component {
         yPos: height - (y - yMin) / (yMax - yMin) * height,
         xValue: x,
         yValue: y,
-        color,
-        xIndex: i
+        xIndex: i,
+        color
       })
     }
 

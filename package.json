@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -63,7 +63,6 @@
     "uuid": "^3.3.2"
   },
   "standard": {
-    "parser": "babel-eslint",
     "globals": [
       "describe",
       "it",

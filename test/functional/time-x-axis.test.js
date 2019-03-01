@@ -6,6 +6,7 @@ import computeTimeLayout from '../../src/computeTimeLayout'
 import { TimeXAxis } from '../../src'
 
 const timeBounds = [
+  [new Date('2002-01-01T00:00:00Z').getTime(), '7y', 'utc'],
   [new Date('2002-01-01T00:00:00Z').getTime(), '6y', 'utc'],
   [new Date('2018-06-22T00:00:00Z').getTime(), '6y', 'utc'],
   [new Date('2018-06-22T00:00:00Z').getTime(), '1mo', 'utc'],

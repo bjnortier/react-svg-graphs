@@ -9,6 +9,21 @@ export default (maxWindowT, periodLabel, localOrUTC) => {
   const getHours = (date) => localOrUTC === 'local' ? date.getHours() : date.getUTCHours()
   const getMinutes = (date) => localOrUTC === 'local' ? date.getMinutes() : date.getUTCMinutes()
   switch (periodLabel) {
+    case ('7y'): {
+      const tickPeriod = year
+      let max = new Date(`${new Date(maxWindowT).getFullYear() + 1}`).getTime()
+      let min = max - 7 * year
+      return {
+        timeAxisTickPeriod: tickPeriod,
+        numTicks: 6,
+        min,
+        max,
+        tickLabelTest: (tickDate, width) => true,
+        tickLabelFormat: (width) => '%y',
+        contextLabelTest: (tickDate) => tickDate.getFullYear() === 2000,
+        contextLabelFormat: '%C'
+      }
+    }
     case ('6y'): {
       const tickPeriod = year
       let max = new Date(`${new Date(maxWindowT).getFullYear() + 1}`).getTime()

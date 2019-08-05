@@ -19,6 +19,18 @@ const data1 = {
     }
   ]
 }
+const emptyData = {
+  x: {
+    label: 't',
+    values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
+  },
+  y: [
+    {
+      label: 'Alpha',
+      values: []
+    }
+  ]
+}
 const colors = ['#906', '#609']
 
 const GraphContainer = styled.div`
@@ -56,6 +68,17 @@ export default (props) => <div>
   <GraphContainer width={width} height={height} >
     <TimeXScalarYGraph
       data={data1}
+      width={width}
+      height={height}
+      title={`Overflow Example`}
+      periodLabel='6h'
+      colors={colors}
+      colorOffset={12}
+    />
+  </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <TimeXScalarYGraph
+      data={emptyData}
       width={width}
       height={height}
       title={`Overflow Example`}

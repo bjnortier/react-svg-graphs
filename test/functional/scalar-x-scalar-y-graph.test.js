@@ -44,6 +44,16 @@ const data3 = {
     values: [-5291165.188978182, -2632850.206962444]
   }]
 }
+const emptyData = {
+  x: {
+    values: [1, 2],
+    label: 'iterarions'
+  },
+  y: [{
+    label: 'Reward',
+    values: []
+  }]
+}
 
 // Re-map the data form timestamps to millisecs from start
 // Temporal Data is in the form {t: <timestamp>, v: <value>} an in
@@ -110,6 +120,15 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Large Dataset Example`}
+      colors={colors4}
+    />
+  </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <ScalarXScalarYGraph
+      data={emptyData}
+      width={width}
+      height={height}
+      title={`Empty Example`}
       colors={colors4}
     />
   </GraphContainer>

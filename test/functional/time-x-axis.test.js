@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import jstz from 'jstz'
 
-import computeTimeLayout from '../../src/computeTimeLayout'
+import computeTimeLayout from '../../src/util/computeTimeLayout'
 import { TimeXAxis } from '../../src'
 
 const timeBounds = [

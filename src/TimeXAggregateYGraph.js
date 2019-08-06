@@ -6,10 +6,10 @@ import { max, flatten } from 'lodash'
 import TimeXAxis from './TimeXAxis'
 import ContinuousBarValues from './ContinuousBarValues'
 import Graph from './Graph'
-import computeTimeLayout from './computeTimeLayout'
-import computeAggregate from './computeAggregate'
+import computeTimeLayout from './util/computeTimeLayout'
+import computeAggregate from './util/computeAggregate'
 import ceilingToPeriod from './util/ceilingToPeriod'
-import timePeriods from './timePeriods'
+import timePeriods from './util/timePeriods'
 
 class TimeXAggregateYGraph extends Component {
   render () {

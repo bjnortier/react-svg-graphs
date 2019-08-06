@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { min, max, flatten } from 'lodash'
 
-import computeScalarLayout from './computeScalarLayout'
+import computeScalarLayout from './util/computeScalarLayout'
 import ScalarXAxis from './ScalarXAxis'
 import ScalarValues from './ScalarValues'
 import Graph from './Graph'
-import timePeriods from './timePeriods'
+import timePeriods from './util/timePeriods'
 
 class ScalarXScalarYGraph extends Component {
   render () {

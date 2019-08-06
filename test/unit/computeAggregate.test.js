@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import computeAggregate from '../../src/computeAggregate'
+import computeAggregate from '../../src/util/computeAggregate'
 
 describe('Compute aggregate', () => {
   it('for a set of data 1', () => {

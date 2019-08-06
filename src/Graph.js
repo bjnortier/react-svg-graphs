@@ -4,8 +4,8 @@ import { min, max, flatten } from 'lodash'
 
 import Legend from './Legend'
 import ScalarYAxis from './ScalarYAxis'
-import computeScalarLayout from './computeScalarLayout'
-import colors10 from './colors10'
+import computeScalarLayout from './util/computeScalarLayout'
+import colors10 from './util/colors10'
 
 class Graph extends Component {
   render () {

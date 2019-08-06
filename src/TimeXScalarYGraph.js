@@ -7,8 +7,8 @@ import { max, flatten } from 'lodash'
 import TimeXAxis from './TimeXAxis'
 import ScalarValues from './ScalarValues'
 import Graph from './Graph'
-import computeTimeLayout from './computeTimeLayout'
-import timePeriods from './timePeriods'
+import computeTimeLayout from './util/computeTimeLayout'
+import timePeriods from './util/timePeriods'
 import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXScalarYGraph extends Component {

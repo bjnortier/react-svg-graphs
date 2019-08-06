@@ -4,11 +4,11 @@ import { Box2 } from 'vecks'
 
 import ContinuousBarValues from '../../src/ContinuousBarValues'
 
-const data1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => ({
+const values1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => ({
   x,
   y: Math.exp(x / 10) - 0.8
 }))
-const data2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => ({
+const values2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => ({
   x,
   y: Math.exp(x / 20) - 0.9
 }))
@@ -28,6 +28,10 @@ class GraphWithValue extends Component {
     const bounds = new Box2()
       .expandByPoint({ x: -0.5, y: 0 })
       .expandByPoint({ x: 10.5, y: 2 })
+    const layout = {
+      x: { min: bounds.min.x, max: bounds.max.x },
+      y: { min: bounds.min.y, max: bounds.max.y }
+    }
 
     return <div>
       <GraphContainer
@@ -35,22 +39,22 @@ class GraphWithValue extends Component {
         height={height}
       >
         <ContinuousBarValues
-          data={data1}
+          values={values1}
           width={width}
           height={height}
           stroke='#2ca02c'
           fill='#2ca02c11'
           dx={1}
-          bounds={bounds}
+          layout={layout}
         />
         <ContinuousBarValues
-          data={data2}
+          values={values2}
           width={width}
           height={height}
           stroke='#1f77b4'
           fill='#1f77b411'
           dx={1}
-          bounds={bounds}
+          layout={layout}
         />
       </GraphContainer>
     </div>

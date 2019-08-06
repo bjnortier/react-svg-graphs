@@ -29,7 +29,7 @@ class PointSet extends Component {
   }
 
   render () {
-    const { width, height, values, layout, color } = this.props
+    const { width, height, values, layout, color, highlightIndex } = this.props
     const { hoverPoint } = this.state
     const xMin = layout.x.min
     const xMax = layout.x.max
@@ -90,6 +90,10 @@ class PointSet extends Component {
         ? <g transform={`translate(${hoverPoint.xPos},${hoverPoint.yPos})`}>
           <circle stroke='none' fill={color} r={r2} />
         </g> : null}
+      {highlightIndex !== null
+        ? <g transform={`translate(${points[highlightIndex].xPos},${points[highlightIndex].yPos})`}>
+          <circle stroke='none' fill={color} r={r2} />
+        </g> : null}
       {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
         ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
           <circle stroke='none' fill='transparent' r={r3}
@@ -111,7 +115,8 @@ PointSet.propTypes = {
 }
 
 PointSet.defaultProps = {
-  showPoints: true
+  showPoints: true,
+  highlightIndex: null
 }
 
 export default PointSet

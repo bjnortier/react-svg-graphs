@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { min, max } from 'lodash'
 
 import PointSet from './PointSet'
 import minmax from './minmax'
@@ -24,24 +25,24 @@ class Sparkline extends Component {
   }
 
   updateClosest (event) {
-    const { onHighlightIndex, data } = this.props
+    const { onHighlightIndex, values } = this.props
     const { xMin, xMax, contentsWidth } = this.state
-    if (!data.x.length) {
+    if (!values.length) {
       return
     }
 
     const mouseX = event.nativeEvent.offsetX
     const interpolatedXValue = ((mouseX - 3.5) / contentsWidth) * (xMax - xMin) + xMin
-    const closest = data.x.reduce((closestSoFar, xValue, index) => {
+    const closest = values.reduce((closestSoFar, { x }, index) => {
       if (closestSoFar === null) {
         return {
-          xValue,
+          x,
           index
         }
       } else {
-        if (Math.abs(interpolatedXValue - xValue) < Math.abs(interpolatedXValue - closestSoFar.xValue)) {
+        if (Math.abs(interpolatedXValue - x) < Math.abs(interpolatedXValue - closestSoFar.x)) {
           return {
-            xValue,
+            x,
             index
           }
         } else {
@@ -66,9 +67,17 @@ class Sparkline extends Component {
   }
 
   static getDerivedStateFromProps (props, state) {
-    const { data, width, height } = props
-    let [xMin, xMax] = minmax(data.x)
-    let [yMin, yMax] = minmax(data.y)
+    const { values, width, height } = props
+    let xMin, xMax, yMin, yMax
+    if (values.length) {
+      xMin = min(values.map(v => v.x))
+      xMax = max(values.map(v => v.x))
+      yMin = min(values.map(v => v.y))
+      yMax = max(values.map(v => v.y))
+    } else {
+      xMin = 0; yMin = 0; yMin = 0; yMax = 0
+    }
+
     if (xMin === xMax) {
       xMin = xMin - 1
       xMax = xMax + 1
@@ -84,7 +93,7 @@ class Sparkline extends Component {
   }
 
   render () {
-    const { width, height, data, color } = this.props
+    const { width, height, values, stroke } = this.props
     const { xMin, xMax, yMin, yMax, contentsWidth, contentsHeight, closest } = this.state
     const layout = { x: { min: xMin, max: xMax }, y: { min: yMin, max: yMax } }
 
@@ -103,9 +112,9 @@ class Sparkline extends Component {
           width={contentsWidth}
           height={contentsHeight}
           layout={layout}
-          color={color}
-          highlightIndex={closest !== null ? closest.index : data.x.length ? data.x.length - 1 : null}
-          data={data}
+          color={stroke}
+          values={values}
+          highlightIndex={closest !== null ? closest.index : null}
         />
       </g>
     </svg>
@@ -115,8 +124,8 @@ class Sparkline extends Component {
 Sparkline.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired,
-  color: PropTypes.string.isRequired,
+  values: PropTypes.array.isRequired,
+  stroke: PropTypes.string.isRequired,
   onHighlightIndex: PropTypes.func
 }
 

@@ -1,59 +1,38 @@
 import React from 'react'
 import { round10 } from 'round10'
 import styled from 'styled-components'
+import { zip } from 'lodash'
 
 import { ScalarXScalarYGraph } from '../../src'
 import temporalData from '../resources/flow.json'
 
-const data1 = {
-  x: {
-    label: 'iterations',
-    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const data1 = [
+  {
+    label: 'A',
+    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(a => ({ x: a, y: a * a }))
   },
-  y: [
-    {
-      label: 'A',
-      values: [ 0, 1, null, 9, 16, 25, 36, 49, 64, 81, 100 ]
-    },
-    {
-      label: 'B',
-      values: [ 10, 11, 12, 14, 16, 18, 21, 24, null, null, 37 ]
-    }
-  ]
-}
-
+  {
+    label: 'B',
+    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(b => ({ x: b, y: b * 10 }))
+  }
+]
 const xValues2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]
-const data2 = {
-  x: {
-    label: 'x',
-    values: xValues2
-  },
-  y: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(m => ({
-    label: ['', '', '', '', '', '', '', '', '', ''].fill(m, 9 - m).join(''),
-    values: xValues2.map(x => round10(m * Math.exp(x / 10), -2))
+const data2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(m => ({
+  label: ['', '', '', '', '', '', '', '', '', ''].fill(m, 9 - m).join(''),
+  values: xValues2.map(x => ({
+    x,
+    y: round10(m * Math.exp(x / 10), -2)
   }))
-}
+}))
 
-const data3 = {
-  x: {
-    values: [1, 2],
-    label: 'iterarions'
-  },
-  y: [{
-    label: 'Reward',
-    values: [-5291165.188978182, -2632850.206962444]
-  }]
-}
-const emptyData = {
-  x: {
-    values: [1, 2],
-    label: 'iterarions'
-  },
-  y: [{
-    label: 'Reward',
-    values: []
-  }]
-}
+const data3 = [{
+  label: 'iterations',
+  values: [
+    { x: 1, y: -5291165.188978182 },
+    { x: 2, y: -2632850.206962444 }
+  ]
+}]
+const emptyData = []
 
 // Re-map the data form timestamps to millisecs from start
 // Temporal Data is in the form {t: <timestamp>, v: <value>} an in
@@ -63,19 +42,13 @@ const start = orderedData[0].t
 const xValues4 = orderedData.map(d => round10((d.t - start) / 100000, 0)).slice(100, 200)
 const yValues4a = orderedData.map(d => d.v).slice(100, 200)
 const yValues4b = orderedData.map(d => d.v).slice(200, 300)
-const data4 = {
-  x: {
-    label: 'Iterations',
-    values: xValues4
-  },
-  y: [{
-    label: 'foo',
-    values: yValues4a
-  }, {
-    label: 'bar',
-    values: yValues4b
-  }]
-}
+const data4 = [{
+  label: 'foo',
+  values: zip(xValues4, yValues4a).map(([x, y]) => ({ x, y }))
+}, {
+  label: 'bar',
+  values: zip(xValues4, yValues4b).map(([x, y]) => ({ x, y }))
+}]
 const colors4 = ['#906', '#609']
 
 const GraphContainer = styled.div`
@@ -94,7 +67,8 @@ export default (props) => <div>
       data={data1}
       width={width}
       height={height}
-      title={`Basic Example`}
+      title='Basic Example'
+      xLabel='Iterations'
       onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
@@ -103,7 +77,8 @@ export default (props) => <div>
       data={data2}
       width={width}
       height={350}
-      title={`Colors Example`}
+      title='Colors Example'
+      xLabel='X'
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -111,7 +86,8 @@ export default (props) => <div>
       data={data3}
       width={width}
       height={height}
-      title={`Limits Example`}
+      title='Limits Example'
+      xLabel='iterations'
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -119,8 +95,9 @@ export default (props) => <div>
       data={data4}
       width={width}
       height={height}
-      title={`Large Dataset Example`}
-      colors={colors4}
+      title='Large Dataset Example'
+      xLabel='Foo'
+      palette={colors4}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -128,7 +105,8 @@ export default (props) => <div>
       data={emptyData}
       width={width}
       height={height}
-      title={`Empty Example`}
+      title='Empty Example'
+      xLabel='Empty'
       colors={colors4}
     />
   </GraphContainer>

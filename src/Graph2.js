@@ -2,19 +2,22 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { min, max, flatten } from 'lodash'
 
+import Legend from './Legend'
 import ScalarYAxis from './ScalarYAxis'
 import computeScalarLayout from './computeScalarLayout'
 import colors10 from './colors10'
 
 class Graph2 extends Component {
   render () {
-    const { width, height, data, title, xLabel, computeXLayout, renderXAxis, renderValues, palette } = this.props
+    const { width, height, data, title, xLabel, computeXLayout,
+      renderXAxis, renderValues, palette, xInfoFormatter } = this.props
     const yMin = min(flatten(data.map(d => d.values.map(d => d.y))))
     const yMax = max(flatten(data.map(d => d.values.map(d => d.y))))
     const contentsWidth = width - 128
     const contentsHeight = height - 96
     const xLayout = computeXLayout(contentsWidth)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
+    const maxLegendLength = max(data.map(dataSet => dataSet.label.length))
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
@@ -55,11 +58,15 @@ class Graph2 extends Component {
                 key: i,
                 width: contentsWidth,
                 height: contentsHeight,
-                stroke: palette[i],
-                fill: `${palette[i]}11`,
+                stroke: palette[i % palette.length],
+                fill: `${palette[i % palette.length]}11`,
                 values: dataset.values,
-                layout: { x: xLayout, y: yLayout }
+                layout: { x: xLayout, y: yLayout },
+                xInfoFormatter
               }))}
+            </g>
+            <g transform='translate(64, 48)'>
+              <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
             </g>
             {this.props.children}
           </>
@@ -82,6 +89,7 @@ Graph2.propTypes = {
 }
 
 Graph2.defaultProps = {
+  xInfoFormatter: x => `${x}`,
   palette: colors10
 }
 

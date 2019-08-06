@@ -13,14 +13,14 @@ const subSampleMinutes2 = [-10, 5, 10, 11, 30, 35].map(x => x * 1000 * 60)
 
 const data1 = [
   {
-    label: '2XX',
+    label: 'HTTP 2XX',
     values: minutes.map((x, i) => ({
       x,
       y: Math.exp(i / 50) - 0.5
     }))
   },
   {
-    label: '5XX',
+    label: 'HTTP 5XX',
     values: minutes.map((x, i) => ({
       x,
       y: Math.random() * 2 - 1
@@ -29,13 +29,13 @@ const data1 = [
 ]
 
 const data2 = [{
-  label: '2XX',
+  label: 'HTTP 2XX',
   values: subSampleMinutes1.map((x, i) => ({
     x,
     y: 10
   }))
 }, {
-  label: '5XX',
+  label: 'HTTP 5XX',
   values: subSampleMinutes2.map((x, i) => ({
     x,
     y: 10

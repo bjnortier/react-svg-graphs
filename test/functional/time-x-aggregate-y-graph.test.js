@@ -78,4 +78,16 @@ export default (props) => <div>
       localOrUTC='utc'
     />
   </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <TimeXAggregateYGraph
+      width={width}
+      height={height}
+      data={[]}
+      title='Empty Example'
+      xLabel='Time'
+      period='1h'
+      divisions={6}
+      localOrUTC='utc'
+    />
+  </GraphContainer>
 </div>

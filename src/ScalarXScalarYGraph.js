@@ -5,7 +5,7 @@ import { min, max, flatten } from 'lodash'
 import computeScalarLayout from './computeScalarLayout'
 import ScalarXAxis from './ScalarXAxis'
 import ScalarValues from './ScalarValues'
-import Graph from './Graph2'
+import Graph from './Graph'
 import timePeriods from './timePeriods'
 
 class ScalarXScalarYGraph extends Component {

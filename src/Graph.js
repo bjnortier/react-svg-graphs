@@ -1,30 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { max } from 'lodash'
+import { min, max, flatten } from 'lodash'
 
-import ScalarYAxis from './ScalarYAxis'
-import ScalarValues from './ScalarValues'
 import Legend from './Legend'
+import ScalarYAxis from './ScalarYAxis'
 import computeScalarLayout from './computeScalarLayout'
-import minmax from './minmax'
 import colors10 from './colors10'
 
 class Graph extends Component {
   render () {
-    const { timezone, width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors, onHover } = this.props
-    const [yMin, yMax] = minmax(data.y.map(y => y.values))
+    const { width, height, data, title, xLabel, computeXLayout,
+      renderXAxis, renderValues, palette, xInfoFormatter } = this.props
+    const yMin = min(flatten(data.map(d => d.values.map(d => d.y))))
+    const yMax = max(flatten(data.map(d => d.values.map(d => d.y))))
     const contentsWidth = width - 128
     const contentsHeight = height - 96
     const xLayout = computeXLayout(contentsWidth)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
-    const maxLegendLength = max(data.y.map(y => y.label.length))
-    let palette = colors.slice(0)
-    if (colorOffset) {
-      for (let i = 0; i < colorOffset; ++i) {
-        const c = palette.shift()
-        palette.push(c)
-      }
-    }
+    const maxLegendLength = max(data.map(dataSet => dataSet.label.length))
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
@@ -41,35 +34,43 @@ class Graph extends Component {
         <text style={{ textAnchor: 'middle' }} x={64 + contentsWidth / 2} y={30} >
           {title}
         </text>
-        <g transform={`translate(64, ${height - 48})`}>
-          {renderXAxis({
-            width: contentsWidth,
-            layout: xLayout,
-            label: data.x.label,
-            timezone
-          })}
-        </g>
-        <g transform='translate(16, 48)'>
-          <ScalarYAxis
-            height={height - 96}
-            layout={yLayout}
-          />
-        </g>
-        <g transform='translate(64, 48)'>
-          <ScalarValues
-            width={contentsWidth}
-            height={contentsHeight}
-            layout={{ x: xLayout, y: yLayout }}
-            palette={palette}
-            data={data}
-            xInfoFormatter={xInfoFormatter}
-            onHover={onHover}
-          />
-        </g>
-        <g transform='translate(64, 48)'>
-          <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
-        </g>
-        {this.props.children}
+        <rect
+          stroke='#ddd' fill='none' x='64' y='48'
+          width={contentsWidth} height={contentsHeight}
+        />
+        {data.length
+          ? <>
+            <g transform={`translate(64, ${height - 48})`}>
+              {renderXAxis({
+                width: contentsWidth,
+                layout: xLayout,
+                label: xLabel
+              })}
+            </g>
+            <g transform='translate(16, 48)'>
+              <ScalarYAxis
+                height={height - 96}
+                layout={yLayout}
+              />
+            </g>
+            <g transform='translate(64, 48)'>
+              {data.map((dataset, i) => renderValues({
+                key: i,
+                width: contentsWidth,
+                height: contentsHeight,
+                stroke: palette[i % palette.length],
+                fill: `${palette[i % palette.length]}11`,
+                values: dataset.values,
+                layout: { x: xLayout, y: yLayout },
+                xInfoFormatter
+              }))}
+            </g>
+            <g transform='translate(64, 48)'>
+              <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
+            </g>
+            {this.props.children}
+          </>
+          : null}
       </g>
     </svg>
   }
@@ -77,18 +78,19 @@ class Graph extends Component {
 
 Graph.propTypes = {
   width: PropTypes.number.isRequired,
-  colorOffset: PropTypes.number,
   height: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  xLabel: PropTypes.string.isRequired,
   computeXLayout: PropTypes.func.isRequired,
   renderXAxis: PropTypes.func.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired,
-  onHover: PropTypes.func
+  renderValues: PropTypes.func.isRequired,
+  palette: PropTypes.array.isRequired
 }
 
 Graph.defaultProps = {
   xInfoFormatter: x => `${x}`,
-  colors: colors10
+  palette: colors10
 }
 
 export default Graph

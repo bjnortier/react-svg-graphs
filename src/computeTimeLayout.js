@@ -1,14 +1,14 @@
 import timePeriods from './timePeriods'
 
-export default (max, periodLabel, localOrUTC) => {
+export default (max, period, localOrUTC) => {
   const hr = 3600 * 1000
   const day = hr * 24
   const year = day * 365
-  const min = max - timePeriods[periodLabel]
+  const min = max - timePeriods[period]
   const getDate = (date) => localOrUTC === 'local' ? date.getDate() : date.getUTCDate()
   const getHours = (date) => localOrUTC === 'local' ? date.getHours() : date.getUTCHours()
   const getMinutes = (date) => localOrUTC === 'local' ? date.getMinutes() : date.getUTCMinutes()
-  switch (periodLabel) {
+  switch (period) {
     case ('7y'): {
       const tickPeriod = year
       let max1 = new Date(`${new Date(max).getFullYear() + 1}`).getTime()
@@ -185,6 +185,6 @@ export default (max, periodLabel, localOrUTC) => {
         contextLabelFormat: '%Y/%m/%d'
       }
     }
-    default: throw Error(`period not supported: ${periodLabel}`)
+    default: throw Error(`period not supported: ${period}`)
   }
 }

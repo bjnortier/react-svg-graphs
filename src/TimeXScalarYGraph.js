@@ -6,19 +6,21 @@ import { max, flatten } from 'lodash'
 
 import TimeXAxis from './TimeXAxis'
 import ScalarValues from './ScalarValues'
-import Graph from './Graph2'
+import Graph from './Graph'
 import computeTimeLayout from './computeTimeLayout'
 import timePeriods from './timePeriods'
+import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXScalarYGraph extends Component {
   render () {
-    const { width, height, data, periodLabel, title, xLabel, localOrUTC, palette } = this.props
+    const { width, height, data, period, title, xLabel, localOrUTC, palette } = this.props
     const dataXMax = max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
     const timezone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
-    const xInfoFormatter = (timestamp) => `${tz(new Date(timestamp), '%Y/%m/%d %H:%M:%S', 'en_GB', timezone)}`
+    const format = timeFormatForPeriod(period)
+    const xInfoFormatter = (timestamp) => `${tz(new Date(timestamp), format, 'en_GB', timezone)}`
     return <Graph
       {...{ width, height, data, title, xLabel, palette }}
-      computeXLayout={() => computeTimeLayout(dataXMax, periodLabel, localOrUTC)}
+      computeXLayout={() => computeTimeLayout(dataXMax, period, localOrUTC)}
       renderXAxis={(props) => <TimeXAxis {...props} timezone={timezone} />}
       renderValues={(props) => <ScalarValues {...props} {...{ xInfoFormatter }} />}
     >

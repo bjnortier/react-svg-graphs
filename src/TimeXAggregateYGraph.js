@@ -5,7 +5,7 @@ import { max, flatten } from 'lodash'
 
 import TimeXAxis from './TimeXAxis'
 import ContinuousBarValues from './ContinuousBarValues'
-import Graph from './Graph2'
+import Graph from './Graph'
 import computeTimeLayout from './computeTimeLayout'
 import computeAggregate from './computeAggregate'
 import ceilingToPeriod from './util/ceilingToPeriod'

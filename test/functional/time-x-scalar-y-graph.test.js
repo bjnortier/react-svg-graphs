@@ -40,7 +40,7 @@ export default (props) => <div>
       height={height}
       title={`Basic Example UTC`}
       xLabel='Time'
-      periodLabel='24h'
+      period='24h'
       localOrUTC='utc'
     />
   </GraphContainer>
@@ -51,7 +51,7 @@ export default (props) => <div>
       height={height}
       title={`Basic Example Local`}
       xLabel='Time'
-      periodLabel='24h'
+      period='24h'
       localOrUTC='local'
     />
   </GraphContainer>
@@ -62,7 +62,7 @@ export default (props) => <div>
       height={height}
       title={`Show latest example`}
       xLabel='Time'
-      periodLabel='6h'
+      period='6h'
       palette={palette}
     />
   </GraphContainer>
@@ -72,7 +72,7 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Empty Data Example`}
-      periodLabel='6h'
+      period='6h'
       xLabel='Time'
       palette={palette}
     />

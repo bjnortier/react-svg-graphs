@@ -3,35 +3,35 @@ import styled from 'styled-components'
 
 import { TimeXScalarYGraph } from '../../src'
 
-const data1 = {
-  x: {
-    label: 't',
-    values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
+const data1 = [
+  {
+    label: 'Alpha',
+    values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(a => ({
+      x: a * 1000 * 3600,
+      y: Math.random() * 10
+    }))
   },
-  y: [
-    {
-      label: 'Alpha',
-      values: [ 0, 1, null, 9, 16, 25, 36, 49, 64, 81, 144 ]
-    },
-    {
-      label: 'Beta',
-      values: [ 10, 11, 12, 14, 16, 18, 21, 24, null, null, 37 ]
-    }
-  ]
-}
-const emptyData = {
-  x: {
-    label: 't',
-    values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
-  },
-  y: [
-    {
-      label: 'Alpha',
-      values: []
-    }
-  ]
-}
-const colors = ['#906', '#609']
+  {
+    label: 'Beta',
+    values: [8, 9, 10, 11, 12].map(a => ({
+      x: a * 1000 * 3600,
+      y: Math.random() * 10
+    }))
+  }
+]
+// const emptyData = {
+//   x: {
+//     label: 't',
+//     values: [-5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12].map(x => x * 1000 * 3600)
+//   },
+//   y: [
+//     {
+//       label: 'Alpha',
+//       values: []
+//     }
+//   ]
+// }
+const palette = ['#990066', '#660099']
 
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
@@ -50,9 +50,9 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Basic Example UTC`}
+      xLabel='Time'
       periodLabel='24h'
       localOrUTC='utc'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -61,6 +61,7 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Basic Example Local`}
+      xLabel='Time'
       periodLabel='24h'
       localOrUTC='local'
     />
@@ -71,20 +72,21 @@ export default (props) => <div>
       width={width}
       height={height}
       title={`Show latest example`}
+      xLabel='Time'
       periodLabel='6h'
-      colors={colors}
-      colorOffset={12}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXScalarYGraph
-      data={emptyData}
-      width={width}
-      height={height}
-      title={`Empty Data Example`}
-      periodLabel='6h'
-      colors={colors}
-      colorOffset={12}
+      palette={palette}
     />
   </GraphContainer>
 </div>
+
+// <GraphContainer width={width} height={height} >
+//   <TimeXScalarYGraph
+//     data={emptyData}
+//     width={width}
+//     height={height}
+//     title={`Empty Data Example`}
+//     periodLabel='6h'
+//     colors={colors}
+//     colorOffset={12}
+//   />
+// </GraphContainer>

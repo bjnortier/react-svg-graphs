@@ -29,7 +29,7 @@ class PointSet extends Component {
   }
 
   render () {
-    const { width, height, data, layout, color } = this.props
+    const { width, height, values, layout, color } = this.props
     const { hoverPoint } = this.state
     const xMin = layout.x.min
     const xMax = layout.x.max
@@ -40,9 +40,8 @@ class PointSet extends Component {
     const r2 = 3
     const r3 = 5
     const points = []
-    for (let i = 0; i < data.x.length; ++i) {
-      const x = data.x[i]
-      const y = data.y[i]
+    for (let i = 0; i < values.length; ++i) {
+      const { x, y } = values[i]
       if ((y === null) || (y === undefined)) {
         continue
       }
@@ -106,7 +105,7 @@ PointSet.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  values: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
   onHoverPoint: PropTypes.func
 }

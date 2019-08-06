@@ -4,6 +4,7 @@ import jstz from 'jstz'
 import { max, flatten } from 'lodash'
 
 import TimeXAxis from './TimeXAxis'
+import ContinuousBarValues from './ContinuousBarValues'
 import Graph from './Graph2'
 import computeTimeLayout from './computeTimeLayout'
 import computeAggregate from './computeAggregate'
@@ -27,9 +28,10 @@ class TimeXAggregateYGraph extends Component {
 
     const timezone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     return <Graph
-      {...{ width, height, data: aggregateData, title, xLabel, dx, palette }}
+      {...{ width, height, data: aggregateData, title, xLabel, palette }}
       computeXLayout={() => computeTimeLayout(xMax, period, localOrUTC)}
       renderXAxis={(props) => <TimeXAxis {...props} timezone={timezone} />}
+      renderValues={(props) => <ContinuousBarValues {...props} dx={dx} />}
     >
       <text style={{ textAnchor: 'end' }} x={width - 64} y={30} >[{timezone}]</text>
     </Graph>
@@ -43,7 +45,7 @@ TimeXAggregateYGraph.propTypes = {
   title: PropTypes.string.isRequired,
   xLabel: PropTypes.string.isRequired,
   palette: PropTypes.array,
-  period: PropTypes.oneOf(['7y', '6y', '1mo', '1w', '2d', '1d', '24h', '12h', '6h', '3h', '1h']),
+  period: PropTypes.oneOf(Object.keys(timePeriods)),
   divisions: PropTypes.number.isRequired,
   localOrUTC: PropTypes.oneOf(['local', 'utc'])
 }

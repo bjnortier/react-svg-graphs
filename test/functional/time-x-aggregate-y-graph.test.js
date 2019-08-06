@@ -16,14 +16,14 @@ const data1 = [
     label: '2XX',
     values: minutes.map((x, i) => ({
       x,
-      y: Math.exp(i / 50) - 1
+      y: Math.exp(i / 50) - 0.5
     }))
   },
   {
     label: '5XX',
     values: minutes.map((x, i) => ({
       x,
-      y: Math.random()
+      y: Math.random() * 2 - 1
     }))
   }
 ]
@@ -76,7 +76,6 @@ export default (props) => <div>
       period='1h'
       divisions={6}
       localOrUTC='utc'
-      palette={['#2ca02c', '#d62728']}
     />
   </GraphContainer>
 </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import PointSet from './PointSet'
+import HoverInfo from './HoverInfo'
 
 class ScalarValues extends Component {
   constructor (props) {
@@ -34,7 +35,7 @@ class ScalarValues extends Component {
 
   render () {
     const { width, height, values, layout, stroke } = this.props
-    const { hoverPoint } = this.state
+    const { hoverPoint: hoverInfo } = this.state
     return <g>
       <PointSet
         width={width}
@@ -50,42 +51,7 @@ class ScalarValues extends Component {
           }
         }}
       />
-      {hoverPoint
-        ? <g>
-          <line stroke={hoverPoint.color} x1={hoverPoint.xPos} y1={hoverPoint.yPos + 5} x2={hoverPoint.xPos} y2={height} />
-          <line stroke={hoverPoint.color} x1={hoverPoint.xPos - 5} y1={hoverPoint.yPos} x2={0} y2={hoverPoint.yPos} />
-          <g transform={`translate(${
-            hoverPoint.xPos + ((hoverPoint.xPos > width / 2) ? -hoverPoint.infoWidth - 8 : 8)
-          },${
-            hoverPoint.yPos + ((hoverPoint.yPos > height / 2) ? -33 - 8 : 8)
-          })`}>
-            <rect
-              x={0}
-              y={0}
-              width={hoverPoint.infoWidth}
-              height={33}
-              stroke='#ddd'
-              fill='white'
-              fillOpacity={0.8}
-            />
-            <text
-              textAnchor='start'
-              x={4}
-              y={14}
-              fill='#000'
-            >
-              {hoverPoint.xInfo}
-            </text>
-            <text
-              textAnchor='end'
-              x={hoverPoint.infoWidth - 4}
-              y={14}
-              fill={hoverPoint.color}
-            >
-              {hoverPoint.yInfo}
-            </text>
-          </g>
-        </g> : null}
+      {hoverInfo ? <HoverInfo {...{ width, height, hoverInfo }} /> : null}
     </g>
   }
 }

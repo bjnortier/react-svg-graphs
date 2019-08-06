@@ -1,30 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { max } from 'lodash'
+import { Box2 } from 'vecks'
+import { max, flatten } from 'lodash'
 
 import ScalarYAxis from './ScalarYAxis'
-import ScalarValues from './ScalarValues'
-import Legend from './Legend'
+import ContinuousBarValues from './ContinuousBarValues'
 import computeScalarLayout from './computeScalarLayout'
-import minmax from './minmax'
 import colors10 from './colors10'
 
-class Graph extends Component {
+class Graph2 extends Component {
   render () {
-    const { timezone, width, height, data, title, colorOffset, computeXLayout, renderXAxis, xInfoFormatter, colors, onHover } = this.props
-    const [yMin, yMax] = minmax(data.y.map(y => y.values))
+    const { width, height, data, title, xLabel, computeXLayout, renderXAxis, dx, palette } = this.props
+    const yMin = 0
+    const yMax = max(flatten(data.map(d => d.values.map(d => d.y))))
     const contentsWidth = width - 128
     const contentsHeight = height - 96
     const xLayout = computeXLayout(contentsWidth)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
-    const maxLegendLength = max(data.y.map(y => y.label.length))
-    let palette = colors.slice(0)
-    if (colorOffset) {
-      for (let i = 0; i < colorOffset; ++i) {
-        const c = palette.shift()
-        palette.push(c)
-      }
-    }
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
@@ -45,8 +37,7 @@ class Graph extends Component {
           {renderXAxis({
             width: contentsWidth,
             layout: xLayout,
-            label: data.x.label,
-            timezone
+            label: xLabel
           })}
         </g>
         <g transform='translate(16, 48)'>
@@ -56,18 +47,17 @@ class Graph extends Component {
           />
         </g>
         <g transform='translate(64, 48)'>
-          <ScalarValues
+          {data.map((dataset, i) => <ContinuousBarValues
+            key={i}
             width={contentsWidth}
             height={contentsHeight}
+            stroke={palette[i]}
+            fill={`${palette[i]}11`}
+            data={dataset.values}
             layout={{ x: xLayout, y: yLayout }}
+            dx={dx}
             palette={palette}
-            data={data}
-            xInfoFormatter={xInfoFormatter}
-            onHover={onHover}
-          />
-        </g>
-        <g transform='translate(64, 48)'>
-          <Legend data={data} maxLegendLength={maxLegendLength} palette={palette} />
+          />)}
         </g>
         {this.props.children}
       </g>
@@ -75,20 +65,20 @@ class Graph extends Component {
   }
 }
 
-Graph.propTypes = {
+Graph2.propTypes = {
   width: PropTypes.number.isRequired,
-  colorOffset: PropTypes.number,
   height: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  xLabel: PropTypes.string.isRequired,
+  dx: PropTypes.number.isRequired,
   computeXLayout: PropTypes.func.isRequired,
   renderXAxis: PropTypes.func.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired,
-  onHover: PropTypes.func
+  palette: PropTypes.array.isRequired
 }
 
-Graph.defaultProps = {
-  xInfoFormatter: x => `${x}`,
-  colors: colors10
+Graph2.defaultProps = {
+  palette: colors10
 }
 
-export default Graph
+export default Graph2

@@ -39,7 +39,6 @@ const Value = styled.div`
   height: 50px;
   vertical-align: middle;
   text-align: right;
-
 `
 
 class GraphWithValue extends Component {

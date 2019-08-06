@@ -9,11 +9,11 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "lint": "standard",
+    "test:lint": "standard",
     "test:unit": "mocha --require @babel/register --recursive test/unit/**",
     "test:unit:watch": "npm run test:unit -- --watch",
     "test:functional": "cd test/functional && webpack-dev-server",
-    "test": "npm run lint && npm run test:unit",
+    "test": "npm run test:lint && npm run test:unit",
     "compile": "babel --optional runtime -d lib/ src/",
     "prepublishOnly": "npm audit && rimraf lib/ && npm run compile"
   },
@@ -60,7 +60,8 @@
     "lodash": "^4.17.15",
     "round10": "^1.0.3",
     "timezone": "^1.0.20",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "vecks": "^3.8.3"
   },
   "standard": {
     "globals": [

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { min, max } from 'lodash'
 
 import PointSet from './PointSet'
-import minmax from './minmax'
 
 class Sparkline extends Component {
   constructor (props) {

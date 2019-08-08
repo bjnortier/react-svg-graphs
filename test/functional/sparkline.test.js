@@ -1,29 +1,26 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { round10 } from 'round10'
+import { zip } from 'lodash'
 
 import { Sparkline, colors10 } from '../../src'
 import temporalData from '../resources/flow.json'
 
-const xValues1 = [0, 1, 3, 10]
-const data1 = {
-  x: xValues1,
-  y: xValues1.map(x => Math.exp(x / 10))
-}
+const values1 = [0, 1, 3, 10].map(x => ({
+  x,
+  y: Math.exp(x / 10)
+}))
 
-const data2 = {
-  x: xValues1,
-  y: xValues1.map(x => -Math.exp(x / 10))
-}
+const values2 = [0, 1, 3, 10].map(x => ({
+  x,
+  y: -Math.exp(x / 10)
+}))
 
 const orderedData = temporalData.slice().reverse()
 const start = orderedData[0].t
 const xValues4 = orderedData.map(d => round10((d.t - start) / 100000, 0)).slice(100, 200)
 const yValues4a = orderedData.map(d => d.v).slice(100, 200)
-const data3 = {
-  x: xValues4,
-  y: yValues4a
-}
+const values3 = zip(xValues4, yValues4a).map(([x, y]) => ({ x, y }))
 
 const GraphContainer = styled.div`
   display: inline-block;
@@ -39,7 +36,6 @@ const Value = styled.div`
   height: 50px;
   vertical-align: middle;
   text-align: right;
-
 `
 
 class GraphWithValue extends Component {
@@ -51,21 +47,21 @@ class GraphWithValue extends Component {
   }
 
   render () {
-    const { data, color } = this.props
+    const { values, stroke } = this.props
     const { highlightIndex } = this.state
     const width = 300
     const height = 50
     return <div>
-      <Value>{highlightIndex !== null ? round10(data.y[highlightIndex], -2) : null}</Value>
+      <Value>{highlightIndex !== null ? round10(values[highlightIndex].y, -2) : null}</Value>
       <GraphContainer
         width={width}
         height={height}
       >
         <Sparkline
-          data={data}
+          values={values}
           width={width}
           height={height}
-          color={color}
+          stroke={stroke}
           onHighlightIndex={highlightIndex => this.setState({ highlightIndex })}
         />
       </GraphContainer>
@@ -74,9 +70,9 @@ class GraphWithValue extends Component {
 }
 
 export default (props) => <div>
-  <GraphWithValue data={{ x: [], y: [] }} color={colors10[0]} />
-  <GraphWithValue data={{ x: [1, 1], y: [0, 0] }} color={colors10[0]} />
-  <GraphWithValue data={data1} color={colors10[0]} />
-  <GraphWithValue data={data2} color={colors10[1]} />
-  <GraphWithValue data={data3} color={colors10[2]} />
+  <GraphWithValue values={[{ x: 1, y: 0 }, { x: 2, y: 0 }]} stroke={colors10[0]} />
+  <GraphWithValue values={[]} stroke={colors10[0]} />
+  <GraphWithValue values={values1} stroke={colors10[0]} />
+  <GraphWithValue values={values2} stroke={colors10[1]} />
+  <GraphWithValue values={values3} stroke={colors10[2]} />
 </div>

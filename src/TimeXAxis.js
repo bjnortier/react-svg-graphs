@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { v4 } from 'uuid'
 import tz from 'timezone/loaded'
 
 class TimeXAxis extends Component {
@@ -18,7 +17,7 @@ class TimeXAxis extends Component {
     for (let tickTime = firstTick, tickIndex = 0; tickTime <= lastTick; tickTime += timeAxisTickPeriod, ++tickIndex) {
       const dx = (tickTime - min) / (max - min) * width
       const tickDate = new Date(tickTime)
-      if (Math.abs(dx - (width / 2)) < (width / 2 - 10)) {
+      if (Math.abs(dx - (width / 2)) <= (width / 2)) {
         const label = tickLabelTest(tickDate, width)
           ? formatDateTime(tickDate, tickLabelFormat(width))
           : ''
@@ -40,35 +39,26 @@ class TimeXAxis extends Component {
       })
     }
 
-    const clipId = v4()
-    return <g>
-      <clipPath id={clipId}>
-        <rect x='0px' y='0' width={width} height='48' />
-      </clipPath>
-      <g
-        style={{ textAnchor: 'middle' }}
-        clipPath={`url(#${clipId})`}
-      >
-        {ticks.map((tick, i) =>
-          <g key={i} transform={`translate(${tick.dx}, 0)`}>
-            {tick.label
-              ? <g>
-                <line stroke='#ccc' x1={0} x2={0} y1={0} y2={8} />
-                <text
-                  transform='translate(0, 22)'
-                >
-                  {tick.label}
-                </text>
-              </g>
-              : <line stroke='#ccc' x1={0} x2={0} y1={0} y2={4} />}
-          </g>
-        )}
-        {contexts.map((context, i) =>
-          <g key={i} transform={`translate(${context.dx}, 36)`}>
-            <text>{context.label}</text>
-          </g>
-        )}
-      </g>
+    return <g style={{ textAnchor: 'middle' }} >
+      {ticks.map((tick, i) =>
+        <g key={i} transform={`translate(${tick.dx}, 0)`}>
+          {tick.label
+            ? <g>
+              <line stroke='#ccc' x1={0} x2={0} y1={0} y2={8} />
+              <text
+                transform='translate(0, 22)'
+              >
+                {tick.label}
+              </text>
+            </g>
+            : <line stroke='#ccc' x1={0} x2={0} y1={0} y2={4} />}
+        </g>
+      )}
+      {contexts.map((context, i) =>
+        <g key={i} transform={`translate(${context.dx}, 36)`}>
+          <text>{context.label}</text>
+        </g>
+      )}
     </g>
   }
 }

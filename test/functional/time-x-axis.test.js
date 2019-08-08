@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import jstz from 'jstz'
 
-import computeTimeLayout from '../../src/computeTimeLayout'
+import computeTimeLayout from '../../src/util/computeTimeLayout'
 import { TimeXAxis } from '../../src'
 
 const timeBounds = [
@@ -46,12 +46,12 @@ const SVGContainer = styled.div`
 `
 
 export default (props) => <div>
-  {timeBounds.map(([maxTimestamp, periodLabel, localOrUTC], i) => {
+  {timeBounds.map(([maxTimestamp, period, localOrUTC], i) => {
     const timezone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     return <div key={i}>
-      <Limits>{new Date(maxTimestamp).toGMTString()} - {periodLabel} [{localOrUTC}]</Limits>
+      <Limits>{new Date(maxTimestamp).toGMTString()} - {period} [{localOrUTC}]</Limits>
       {widths.map(width => {
-        const layout = computeTimeLayout(maxTimestamp, periodLabel, localOrUTC)
+        const layout = computeTimeLayout(maxTimestamp, period, localOrUTC)
         return <SVGContainer
           key={width}
           width={width + 48}

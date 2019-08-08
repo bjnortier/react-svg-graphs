@@ -3,9 +3,9 @@ import ScalarXAxis from './ScalarXAxis'
 import ScalarYAxis from './ScalarYAxis'
 import ScalarXScalarYGraph from './ScalarXScalarYGraph'
 import TimeXScalarYGraph from './TimeXScalarYGraph'
+import TimeXAggregateYGraph from './TimeXAggregateYGraph'
 import Sparkline from './Sparkline'
-import minmax from './minmax'
-import colors10 from './colors10'
+import colors10 from './util/colors10'
 
 export {
   TimeXAxis,
@@ -13,7 +13,7 @@ export {
   ScalarYAxis,
   ScalarXScalarYGraph,
   TimeXScalarYGraph,
+  TimeXAggregateYGraph,
   Sparkline,
-  minmax,
   colors10
 }

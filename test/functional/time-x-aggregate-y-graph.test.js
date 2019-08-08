@@ -42,6 +42,16 @@ const data2 = [{
   }))
 }]
 
+const data3 = [
+  {
+    label: 'HTTP 2XX',
+    values: minutes.slice(0, 30).map((x, i) => ({
+      x,
+      y: Math.exp(i / 50) - 0.5
+    }))
+  }
+]
+
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
@@ -72,6 +82,18 @@ export default (props) => <div>
       height={height}
       data={data2}
       title='Subsample Example'
+      xLabel='Time'
+      period='1h'
+      divisions={6}
+      localOrUTC='utc'
+    />
+  </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <TimeXAggregateYGraph
+      width={width}
+      height={height}
+      data={data3}
+      title='Crop to last datapoint'
       xLabel='Time'
       period='1h'
       divisions={6}

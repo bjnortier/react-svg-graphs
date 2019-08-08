@@ -15,7 +15,7 @@ class TimeXAggregateYGraph extends Component {
   render () {
     const { localOrUTC, width, height, title, xLabel, data, period, divisions, palette } = this.props
     const dataXMax = max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
-    const xMax = ceilingToPeriod(dataXMax, period)
+    const xMax = ceilingToPeriod(dataXMax, period, divisions)
     const xMin = xMax - timePeriods[period]
     const dx = (xMax - xMin) / divisions
 

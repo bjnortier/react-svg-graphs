@@ -7,8 +7,10 @@ import styledNormalize from 'styled-normalize'
 import ScalarXAxisTest from './scalar-x-axis.test'
 import TimeXAxisTest from './time-x-axis.test'
 import ScalarYAxisTest from './scalar-y-axis.test'
+import ContinuousBarValuesTest from './continuous-bar-values.test'
 import ScalarXScalarYGraphTest from './scalar-x-scalar-y-graph.test'
 import TimeXScalarYGraphTest from './time-x-scalar-y-graph.test'
+import TimeXAggregateYGraphTest from './time-x-aggregate-y-graph.test'
 import SparklineTest from './sparkline.test'
 
 const GlobalStyle = createGlobalStyle`
@@ -48,23 +50,29 @@ const HSpace = styled.div`
   width: 10px;
 `
 
-const NavBar = styled.div`
+const Margin = styled.div`
   margin: 20px;
 `
 
-const Nav = () => <NavBar>
+const Nav = () => <Margin>
   <Link to={'/scalar-x-axis'}>{'<ScalarXAxis />'}</Link>
   <HSpace />
   <Link to={'/time-x-axis'}>{'<TimeXAxis />'}</Link>
   <HSpace />
   <Link to={'/scalar-y-axis'}>{'<ScalarYAxis />'}</Link>
   <HSpace />
+  <Link to={'/continuous-bar-values'}>{'<ContinuousBarValuesTest />'}</Link>
+  <HSpace />
   <Link to={'/scalar-x-scalar-y-graph'}>{'<ScalarXScalarYGraph />'}</Link>
   <HSpace />
   <Link to={'/time-x-scalar-y-graph'}>{'<TimeXScalarYGraph />'}</Link>
   <HSpace />
+  <Link to={'/time-x-aggregate-y-graph'}>{'<TimeXAggregateYGraph />'}</Link>
+  <HSpace />
   <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
-</NavBar>
+</Margin>
+
+const NotFound = () => <Margin>Choose one of the example above ↑</Margin>
 
 render(<HashRouter>
   <div>
@@ -73,9 +81,12 @@ render(<HashRouter>
       <Route exact path='/scalar-x-axis' component={ScalarXAxisTest} />
       <Route exact path='/time-x-axis' component={TimeXAxisTest} />
       <Route exact path='/scalar-y-axis' component={ScalarYAxisTest} />
+      <Route exact path='/continuous-bar-values' component={ContinuousBarValuesTest} />
       <Route exact path='/scalar-x-scalar-y-graph' component={ScalarXScalarYGraphTest} />
       <Route exact path='/time-x-scalar-y-graph' component={TimeXScalarYGraphTest} />
+      <Route exact path='/time-x-aggregate-y-graph' component={TimeXAggregateYGraphTest} />
       <Route exact path='/sparkline' component={SparklineTest} />
+      <Route component={NotFound} />
     </Switch>
     <GlobalStyle />
   </div>

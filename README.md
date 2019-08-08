@@ -2,13 +2,13 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
-# rsg
+# react-svg-graphs
 
-React SVG graphs.
+React SVG graphs is a library I wrote to render high-quality SVG graphs of scalar data. It is useful for things like metrics, but not statistics. Focus here is on specific use cases (e.g. temporal data), not to support a wide range of graphing requirements.
 
 ## Status
 
-This is a first release - caveat emptor.
+This is being used in production since 1.6.x so you can consider it stable.
 
 ## Installation
 
@@ -18,61 +18,73 @@ $ npm i react-svg-graphs
 
 ## Requirements
 
-You need to import Roboto Mono into your stylesheets 
+You need to import Roboto Mono into your stylesheets somewhere, e.g.
+
+```
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+```
 
 # Features
 
-- Supports scalar X and multiple scalar Y values.
+4 types of graph are supported:
+1. Scalar data on a scalar X-axis.
+1. Scalar data over time.
+1. Aggregated scalar data over time (e.g. a graph showing HTTP 200 responses over time, a la Heroku metrics).
+1. Sparklines.
 
 ## Limitations
 
-- Y value sets limited to 10.
-- No styling of markers & lines.
+- If you want to display more than 10 sets of data you have to supply your own color palette.
+- No custom styling or configurations.
+
+## Testing
+
+Running
+
+```
+$ npm run test:functional
+```
+
+will start a dev server and show the SVG  outputs of different tests.
 
 ## Usage:
 
-There are 5 parameters:
-- data
-- width
-- height
-- padding
-- title
+The code in functional tests (see above) will show how to structure your data to generate graphs. The top-level components are:
 
-All except ```data``` are self-explanatory. ```data``` must be in the form shown in the examples below (single x array, multiple y arrays, each with their own labels).
+```
+<ScalarXScalarYGraph />
+<TimeXScalarYGraph />
+<TimeXAggregateYGraph />
+<Sparkline />
+```
 
-X and Y axes scales are automatic and not configurable (if you have examples where they look terrible, please submit as an issue).
-
+For example:
 
 ```
 import React from 'react'
 import { render } from 'react-dom'
 
-import { ScalarXYGraph } from 'react-svg-graphs'
+import { ScalarXScalarYGraph } from 'react-svg-graphs'
 
-const data1 = {
-  x: {
-    label: 'Foo',
-    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const data1 = [
+  {
+    label: 'A',
+    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(a => ({ x: a, y: a * a }))
   },
-  y: [
-    {
-      label: 'A',
-      values: [ 0, 1, null, 9, 16, 25, 36, 49, 64, 81, 100 ]
-    },
-    {
-      label: 'B',
-      values: [ 10, 11, 12, 14, 16, 18, 21, 24, null, null, 37 ]
-    }
-  ]
-}
+  {
+    label: 'B',
+    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(b => ({ x: b, y: b * 10 }))
+  }
+]
 
 render(
-  <ScalarXYGraph
+  <ScalarXScalarYGraph
     data={data1}
-    width={600}
-    height={400}
-    padding={50}
-    title={`Basic Example`}
+    width={width}
+    height={height}
+    title='Basic Example'
+    xLabel='Iterations'
+    onHover={hoverInfo => console.log('hover info:', hoverInfo)}
   />,
   document.getElementById('contents')
 )
@@ -81,39 +93,3 @@ render(
 Result:
 
 ![Basic Example](https://github.com/bjnortier/react-svg-graphs/blob/master/doc/basic_example.png?raw=true)
-
-
-
-```
-import React from 'react'
-import { render } from 'react-dom'
-
-import { ScalarXYGraph } from 'react-svg-graphs'
-
-const xValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const data2 = {
-  x: {
-    label: 'Bar',
-    values: xValues
-  },
-  y: [0,1,2,3,4,5,6,7,8,9].map(m => ({
-    label: m,
-    values: xValues.map(x => m * Math.exp(x / 10))
-  }))
-}
-
-render(
-  <ScalarXYGraph
-    data={data2}
-    width={600}
-    height={400}
-    padding={50}
-    title={`Colors Example`}
-  />,
-  document.getElementById('contents')
-)
-```
-
-Result:
-
-![Colors Example](https://github.com/bjnortier/react-svg-graphs/blob/master/doc/colors_example.png?raw=true)

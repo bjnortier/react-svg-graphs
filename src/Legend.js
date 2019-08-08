@@ -5,12 +5,12 @@ export default ({ data, maxLegendLength, palette }) => <>
     x={0}
     y={0}
     width={20 + maxLegendLength * 7.5 + 10}
-    height={data.y.length * 20}
+    height={data.length * 20}
     fill='#fff'
     stroke='#ddd'
     fillOpacity={0.5}
   />
-  {data.y.map((y, i) => {
+  {data.map((dataSet, i) => {
     const paletteIndex = i % 10
     const r1 = 1.5
     const r2 = 3
@@ -21,7 +21,7 @@ export default ({ data, maxLegendLength, palette }) => <>
         <circle stroke='none' fill='white' r={r1} />
       </g>
       <text x={20} y={14} >
-        {y.label}
+        {dataSet.label}
       </text>
     </g>
   })}

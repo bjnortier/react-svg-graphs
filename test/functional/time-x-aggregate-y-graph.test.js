@@ -74,6 +74,7 @@ export default (props) => <div>
       divisions={12}
       localOrUTC='utc'
       palette={['#2ca02c', '#d62728']}
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -86,6 +87,7 @@ export default (props) => <div>
       period='1h'
       divisions={6}
       localOrUTC='utc'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -98,6 +100,7 @@ export default (props) => <div>
       period='1h'
       divisions={6}
       localOrUTC='utc'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -110,6 +113,7 @@ export default (props) => <div>
       period='1h'
       divisions={6}
       localOrUTC='utc'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
 </div>

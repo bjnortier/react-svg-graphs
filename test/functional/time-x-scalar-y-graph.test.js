@@ -42,6 +42,7 @@ export default (props) => <div>
       xLabel='Time'
       period='24h'
       localOrUTC='utc'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -53,6 +54,7 @@ export default (props) => <div>
       xLabel='Time'
       period='24h'
       localOrUTC='local'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -64,6 +66,7 @@ export default (props) => <div>
       xLabel='Time'
       period='6h'
       palette={palette}
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -75,6 +78,7 @@ export default (props) => <div>
       period='6h'
       xLabel='Time'
       palette={palette}
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
 </div>

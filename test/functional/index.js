@@ -50,11 +50,11 @@ const HSpace = styled.div`
   width: 10px;
 `
 
-const NavBar = styled.div`
+const Margin = styled.div`
   margin: 20px;
 `
 
-const Nav = () => <NavBar>
+const Nav = () => <Margin>
   <Link to={'/scalar-x-axis'}>{'<ScalarXAxis />'}</Link>
   <HSpace />
   <Link to={'/time-x-axis'}>{'<TimeXAxis />'}</Link>
@@ -70,9 +70,9 @@ const Nav = () => <NavBar>
   <Link to={'/time-x-aggregate-y-graph'}>{'<TimeXAggregateYGraph />'}</Link>
   <HSpace />
   <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
-</NavBar>
+</Margin>
 
-const NotFound = () => 'Not found'
+const NotFound = () => <Margin>Choose one of the example above ↑</Margin>
 
 render(<HashRouter>
   <div>

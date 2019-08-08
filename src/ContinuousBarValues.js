@@ -30,8 +30,8 @@ class ContinuousBarValues extends Component {
       const xInfo = `${xInfoFormatter(values[hoverIndex].x)}:`
       const yInfo = `${values[hoverIndex].y}`
       const hoverInfo = {
-        xPos: hoverPoint.x,
-        yPos: hoverPoint.y,
+        xPos: Math.round(hoverPoint.x),
+        yPos: Math.round(hoverPoint.y),
         xInfo,
         yInfo,
         color: stroke,
@@ -105,7 +105,9 @@ ContinuousBarValues.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
-  dx: PropTypes.number.isRequired
+  dx: PropTypes.number.isRequired,
+  xInfoFormatter: PropTypes.func.isRequired,
+  onHover: PropTypes.func
 }
 
 export default ContinuousBarValues

@@ -12,6 +12,11 @@ module.exports = {
       `webpack-dev-server/client?http://localhost:${port}`,
       'webpack/hot/dev-server',
       path.resolve(__dirname, 'index.js')
+    ],
+    'readme': [
+      `webpack-dev-server/client?http://localhost:${port}`,
+      'webpack/hot/dev-server',
+      path.resolve(__dirname, 'readme.test.js')
     ]
   },
   output: {
@@ -24,7 +29,7 @@ module.exports = {
   devServer: {
     port,
     after: (app, server) => {
-      opn(`http://localhost:${port}`, { app: 'google chrome' })
+      opn(`http://localhost:${port}`)
     }
   },
   resolve: {

@@ -13,7 +13,7 @@ const data1 = [
   },
   {
     label: 'B',
-    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(b => ({ x: b, y: b * 10 }))
+    values: [1, 2, 3, 4, 7, 8, 9].map(b => ({ x: b, y: b * 10 }))
   }
 ]
 const xValues2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]
@@ -79,6 +79,7 @@ export default (props) => <div>
       height={350}
       title='Colors Example'
       xLabel='X'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -88,6 +89,7 @@ export default (props) => <div>
       height={height}
       title='Limits Example'
       xLabel='iterations'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -98,6 +100,7 @@ export default (props) => <div>
       title='Large Dataset Example'
       xLabel='Foo'
       palette={colors4}
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
   <GraphContainer width={width} height={height} >
@@ -108,6 +111,7 @@ export default (props) => <div>
       title='Empty Example'
       xLabel='Empty'
       colors={colors4}
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
     />
   </GraphContainer>
 </div>

@@ -18,6 +18,7 @@ class Graph extends Component {
     const xLayout = computeXLayout(contentsWidth)
     const yLayout = computeScalarLayout('y', [yMin, yMax], contentsHeight)
     const maxLegendLength = max(data.map(dataSet => dataSet.label.length))
+    const validData = !!data.length && data.reduce((acc, d) => acc + d.values.length, 0) > 0
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
@@ -38,7 +39,7 @@ class Graph extends Component {
           stroke='#ddd' fill='none' x='64' y='48'
           width={contentsWidth} height={contentsHeight}
         />
-        {data.length
+        {validData
           ? <>
             <g transform={`translate(64, ${height - 48})`}>
               {renderXAxis({

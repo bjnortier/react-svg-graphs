@@ -52,6 +52,13 @@ const data3 = [
   }
 ]
 
+const emptyValues = [
+  {
+    label: 'Empty',
+    values: []
+  }
+]
+
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
@@ -108,7 +115,20 @@ export default (props) => <div>
       width={width}
       height={height}
       data={[]}
-      title='Empty Example'
+      title='Empty Data Example'
+      xLabel='Time'
+      period='1h'
+      divisions={6}
+      localOrUTC='utc'
+      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+    />
+  </GraphContainer>
+  <GraphContainer width={width} height={height} >
+    <TimeXAggregateYGraph
+      width={width}
+      height={height}
+      data={emptyValues}
+      title='Empty Values Example'
       xLabel='Time'
       period='1h'
       divisions={6}

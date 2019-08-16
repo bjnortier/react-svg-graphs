@@ -19,16 +19,22 @@ class TimeXAggregateYGraph extends Component {
       data, period, divisions, palette, onHover } = this.props
     const timezone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     const format = timeFormatForPeriod(period)
-    const dataXMax = max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
+
+    const noValues = data.reduce((acc, d) => acc + d.values.length, 0) === 0
+    const dataXMax = noValues
+      ? new Date().getTime()
+      : max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
     const xMax = ceilingToPeriod(dataXMax, period, divisions)
     const xMin = xMax - timePeriods[period]
     const dx = (xMax - xMin) / divisions
-    const aggregateData = data.map(d => {
-      return {
-        ...d,
-        values: computeAggregate({ xMin, xMax, divisions, data: d.values })
-      }
-    })
+    const aggregateData = noValues
+      ? []
+      : data.map(d => {
+        return {
+          ...d,
+          values: computeAggregate({ xMin, xMax, divisions, data: d.values })
+        }
+      })
 
     const xInfoFormatter = (timestamp) => {
       const from = tz(new Date(timestamp - dx / 2), format, 'en_GB', timezone)

@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -56,10 +56,11 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "date-fns": "^2.1.0",
+    "date-fns-tz": "^1.0.7",
     "jstz": "^2.1.1",
     "lodash": "^4.17.15",
     "round10": "^1.0.3",
-    "timezone": "^1.0.20",
     "uuid": "^3.3.2",
     "vecks": "^3.8.3"
   },

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import tz from 'timezone/loaded'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 class TimeXAxis extends Component {
   render () {
-    const { width, layout, timezone } = this.props
+    const { width, layout, timeZone } = this.props
     const { min, max, timeAxisTickPeriod } = layout
     const { tickLabelTest, tickLabelFormat, contextLabelTest, contextLabelFormat } = layout
-    const formatDateTime = (date, format) => tz(date, format, 'en_GB', timezone)
+    const formatDateTime = (date, pattern) => {
+      return format(utcToZonedTime(date, timeZone), pattern, { timeZone: timeZone })
+    }
 
     const firstTick = min
     const lastTick = max
@@ -67,7 +69,7 @@ TimeXAxis.propTypes = {
   width: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
   period: PropTypes.oneOf(['1hr', '3hr', '6hr', '12hr', '24hr', '1d', '2d', '1wk', '1mo']),
-  timezone: PropTypes.string.isRequired
+  timeZone: PropTypes.string.isRequired
 }
 
 export default TimeXAxis

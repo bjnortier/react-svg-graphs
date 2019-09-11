@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { ScalarXScalarYGraph } from '../..'
+import { ScalarXScalarYGraph } from '../../src'
 
 const data1 = [
   {

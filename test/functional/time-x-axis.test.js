@@ -26,7 +26,7 @@ const timeBounds = [
   [new Date('2018-06-19T00:15:00Z').getTime(), '1h', 'utc'],
   [new Date('2018-06-19T00:15:00Z').getTime(), '1h', 'local'],
   [new Date('2018-06-19T12:00:00Z').getTime(), '1h', 'utc'],
-  [new Date('2018-06-19T10:00:00Z').getTime(), '1h', 'local']
+  [new Date('2018-06-19T12:00:00Z').getTime(), '1h', 'local']
 ]
 const widths = [800, 640, 480, 320, 240]
 
@@ -47,9 +47,9 @@ const SVGContainer = styled.div`
 
 export default (props) => <div>
   {timeBounds.map(([maxTimestamp, period, localOrUTC], i) => {
-    const timezone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
+    const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     return <div key={i}>
-      <Limits>{new Date(maxTimestamp).toGMTString()} - {period} [{localOrUTC}]</Limits>
+      <Limits>{new Date(maxTimestamp).toGMTString()} [{period}][{localOrUTC}]</Limits>
       {widths.map(width => {
         const layout = computeTimeLayout(maxTimestamp, period, localOrUTC)
         return <SVGContainer
@@ -61,9 +61,7 @@ export default (props) => <div>
             <g transform={`translate(24, 0)`}>
               <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
               <TimeXAxis
-                width={width}
-                layout={layout}
-                timezone={timezone}
+                {...{ width, layout, timeZone }}
               />
             </g>
           </svg>

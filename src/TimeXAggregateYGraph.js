@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import jstz from 'jstz'
-import tz from 'timezone/loaded'
 import { max, flatten } from 'lodash'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 import TimeXAxis from './TimeXAxis'
 import ContinuousBarValues from './ContinuousBarValues'
@@ -17,8 +17,8 @@ class TimeXAggregateYGraph extends Component {
   render () {
     const { localOrUTC, width, height, title, xLabel,
       data, period, divisions, palette, onHover } = this.props
-    const timezone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
-    const format = timeFormatForPeriod(period)
+    const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
+    const pattern = timeFormatForPeriod(period)
 
     const noValues = data.reduce((acc, d) => acc + d.values.length, 0) === 0
     const dataXMax = noValues
@@ -37,17 +37,17 @@ class TimeXAggregateYGraph extends Component {
       })
 
     const xInfoFormatter = (timestamp) => {
-      const from = tz(new Date(timestamp - dx / 2), format, 'en_GB', timezone)
-      const to = tz(new Date(timestamp + dx / 2), format, 'en_GB', timezone)
+      const from = format(utcToZonedTime(new Date(timestamp - dx / 2), timeZone), pattern, { timeZone: timeZone })
+      const to = format(utcToZonedTime(new Date(timestamp + dx / 2), timeZone), pattern, { timeZone: timeZone })
       return `${from}-${to}`
     }
     return <Graph
       {...{ width, height, data: aggregateData, title, xLabel, palette, onHover }}
       computeXLayout={() => computeTimeLayout(xMax, period, localOrUTC)}
-      renderXAxis={(props) => <TimeXAxis {...props} timezone={timezone} />}
+      renderXAxis={(props) => <TimeXAxis {...props} timeZone={timeZone} />}
       renderValues={(props) => <ContinuousBarValues {...props} {... { dx, xInfoFormatter }} />}
     >
-      <text style={{ textAnchor: 'end' }} x={width - 64} y={30} >[{timezone}]</text>
+      <text style={{ textAnchor: 'end' }} x={width - 64} y={30} >[{timeZone}]</text>
     </Graph>
   }
 }

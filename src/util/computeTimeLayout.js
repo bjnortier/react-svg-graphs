@@ -19,9 +19,9 @@ export default (max, period, localOrUTC) => {
         min,
         max: max1,
         tickLabelTest: (tickDate, width) => true,
-        tickLabelFormat: (width) => '%y',
+        tickLabelFormat: (width) => 'yy',
         contextLabelTest: (tickDate) => tickDate.getFullYear() === 2000,
-        contextLabelFormat: '%C'
+        contextLabelFormat: '2000'
       }
     }
     case ('6y'): {
@@ -34,9 +34,9 @@ export default (max, period, localOrUTC) => {
         min,
         max: max1,
         tickLabelTest: (tickDate, width) => true,
-        tickLabelFormat: (width) => '%y',
+        tickLabelFormat: (width) => 'yy',
         contextLabelTest: (tickDate) => tickDate.getFullYear() === 2000,
-        contextLabelFormat: '%C'
+        contextLabelFormat: '2000'
       }
     }
     case ('1mo'): {
@@ -55,9 +55,9 @@ export default (max, period, localOrUTC) => {
               (getDate(tickDate) < 30)
           }
         },
-        tickLabelFormat: (width) => '%d',
+        tickLabelFormat: (width) => 'd',
         contextLabelTest: (tickDate) => (getDate(tickDate) === 1),
-        contextLabelFormat: '%Y/%m'
+        contextLabelFormat: 'y/M'
       }
     }
     case ('1w'): {
@@ -76,13 +76,13 @@ export default (max, period, localOrUTC) => {
             return (getHours(tickDate) % 24 === 0)
           }
         },
-        tickLabelFormat: (width) => '%d/%m',
+        tickLabelFormat: (width) => 'd/M',
         contextLabelTest: (tickDate) => {
           return ((getHours(tickDate) === 0) &&
                   (getDate(tickDate) === 1) &&
                   (tickDate.getUTCMonth() === 0))
         },
-        contextLabelFormat: '%Y'
+        contextLabelFormat: 'y'
       }
     }
     case ('2d'): {
@@ -99,9 +99,9 @@ export default (max, period, localOrUTC) => {
             return (getHours(tickDate) % 3 === 0)
           }
         },
-        tickLabelFormat: (width) => '%H',
+        tickLabelFormat: (width) => 'HH',
         contextLabelTest: (tickDate) => (getHours(tickDate) === 0),
-        contextLabelFormat: '%Y/%m/%d'
+        contextLabelFormat: 'y/M/d'
       }
     }
     case ('1d'):
@@ -113,9 +113,9 @@ export default (max, period, localOrUTC) => {
         min,
         max,
         tickLabelTest: (tickDate) => (getHours(tickDate) % 3 === 0),
-        tickLabelFormat: (width) => '%H',
+        tickLabelFormat: (width) => 'HH',
         contextLabelTest: (tickDate) => (getHours(tickDate) === 0),
-        contextLabelFormat: '%Y/%m/%d'
+        contextLabelFormat: 'y/M/d'
       }
     }
     case ('12h'): {
@@ -133,10 +133,10 @@ export default (max, period, localOrUTC) => {
             return ((getHours(tickDate) % 1 === 0) && (getMinutes(tickDate) === 0))
           }
         },
-        tickLabelFormat: (width) => '%H',
+        tickLabelFormat: (width) => 'HH',
         contextLabelTest: (tickDate) =>
           ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
-        contextLabelFormat: '%Y/%m/%d'
+        contextLabelFormat: 'y/M/d'
       }
     }
     case ('6h'): {
@@ -147,10 +147,10 @@ export default (max, period, localOrUTC) => {
         min,
         max,
         tickLabelTest: (tickDate) => (getMinutes(tickDate) === 0),
-        tickLabelFormat: (width) => width >= 600 ? '%H:%M' : '%H',
+        tickLabelFormat: (width) => width >= 600 ? 'HH:mm' : 'HH',
         contextLabelTest: (tickDate) =>
           ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
-        contextLabelFormat: '%Y/%m/%d'
+        contextLabelFormat: 'y/M/d'
       }
     }
     case ('3h'): {
@@ -163,10 +163,10 @@ export default (max, period, localOrUTC) => {
         tickLabelTest: (tickDate, width) => (width >= 260)
           ? (getMinutes(tickDate) % 30 === 0)
           : (getMinutes(tickDate) === 0),
-        tickLabelFormat: (width) => width >= 260 ? '%H:%M' : '%H',
+        tickLabelFormat: (width) => width >= 260 ? 'H:mm' : 'H',
         contextLabelTest: (tickDate) =>
           ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
-        contextLabelFormat: '%Y/%m/%d'
+        contextLabelFormat: 'y/M/d'
       }
     }
     case ('1h'): {
@@ -179,10 +179,10 @@ export default (max, period, localOrUTC) => {
         tickLabelTest: (tickDate, width) => (width >= 600)
           ? (getMinutes(tickDate) % 5 === 0)
           : (getMinutes(tickDate) % 15 === 0),
-        tickLabelFormat: (width) => '%H:%M',
+        tickLabelFormat: (width) => 'HH:mm',
         contextLabelTest: (tickDate) =>
           ((getHours(tickDate) === 0) && (getMinutes(tickDate) === 0)),
-        contextLabelFormat: '%Y/%m/%d'
+        contextLabelFormat: 'y/M/d'
       }
     }
     default: throw Error(`period not supported: ${period}`)

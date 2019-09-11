@@ -1,23 +1,23 @@
 export default (period) => {
   switch (period) {
     case '1h':
-      return '%H:%M:%S'
+      return 'HH:mm'
     case '3h':
     case '6h':
     case '12h':
     case '24h':
     case '1d':
     case '2d':
-      return '%H:%M'
+      return 'HH:mm'
     case '1w':
     case '1mo':
-      return '%d %H:%M'
+      return 'd HH:mm'
     case '1y':
     case '3y':
     case '6y':
     case '7y':
-      return '%Y/%m/%d'
+      return 'y/M/d'
     default:
-      return '%Y/%m/%d %H:%M:%S'
+      return 'y/M/d HH:mm:SS'
   }
 }

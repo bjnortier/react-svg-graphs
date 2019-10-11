@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import TimeXAggregateYGraph from '../../src/TimeXAggregateYGraph'
+import data4 from './aggregate-example.js'
 
 const minutes = []
 for (let i = 0; i < 60; ++i) {
@@ -28,19 +29,22 @@ const data1 = [
   }
 ]
 
-const data2 = [{
-  label: 'HTTP 2XX',
-  values: subSampleMinutes1.map((x, i) => ({
-    x,
-    y: 10
-  }))
-}, {
-  label: 'HTTP 5XX',
-  values: subSampleMinutes2.map((x, i) => ({
-    x,
-    y: 10
-  }))
-}]
+const data2 = [
+  {
+    label: 'HTTP 2XX',
+    values: subSampleMinutes1.map((x, i) => ({
+      x,
+      y: 10
+    }))
+  },
+  {
+    label: 'HTTP 5XX',
+    values: subSampleMinutes2.map((x, i) => ({
+      x,
+      y: 10
+    }))
+  }
+]
 
 const data3 = [
   {
@@ -69,71 +73,85 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-export default (props) => <div>
-  <GraphContainer width={width} height={height} >
-    <TimeXAggregateYGraph
-      width={width}
-      height={height}
-      data={data1}
-      title='Basic Example'
-      xLabel='Time'
-      period='1h'
-      divisions={12}
-      localOrUTC='utc'
-      palette={['#2ca02c', '#d62728']}
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXAggregateYGraph
-      width={width}
-      height={height}
-      data={data2}
-      title='Subsample Example'
-      xLabel='Time'
-      period='1h'
-      divisions={6}
-      localOrUTC='utc'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXAggregateYGraph
-      width={width}
-      height={height}
-      data={data3}
-      title='Crop to last datapoint'
-      xLabel='Time'
-      period='1h'
-      divisions={6}
-      localOrUTC='utc'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXAggregateYGraph
-      width={width}
-      height={height}
-      data={[]}
-      title='Empty Data Example'
-      xLabel='Time'
-      period='1h'
-      divisions={6}
-      localOrUTC='utc'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXAggregateYGraph
-      width={width}
-      height={height}
-      data={emptyValues}
-      title='Empty Values Example'
-      xLabel='Time'
-      period='1h'
-      divisions={6}
-      localOrUTC='utc'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-</div>
+export default props => (
+  <div>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={data1}
+        title='Basic Example'
+        xLabel='Time'
+        period='1h'
+        divisions={12}
+        localOrUTC='utc'
+        palette={['#2ca02c', '#d62728']}
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={data2}
+        title='Subsample Example'
+        xLabel='Time'
+        period='1h'
+        divisions={6}
+        localOrUTC='utc'
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={data3}
+        title='Crop to last datapoint'
+        xLabel='Time'
+        period='1h'
+        divisions={6}
+        localOrUTC='utc'
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={[]}
+        title='Empty Data Example'
+        xLabel='Time'
+        period='1h'
+        divisions={6}
+        localOrUTC='utc'
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={emptyValues}
+        title='Empty Values Example'
+        xLabel='Time'
+        period='1h'
+        divisions={6}
+        localOrUTC='utc'
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={data4}
+        title='Issue'
+        xLabel='Time'
+        period='3h'
+        divisions={12}
+        localOrUTC='utc'
+      />
+    </GraphContainer>
+  </div>
+)

@@ -15,8 +15,18 @@ import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXAggregateYGraph extends Component {
   render () {
-    const { localOrUTC, width, height, title, xLabel,
-      data, period, divisions, palette, onHover } = this.props
+    const {
+      localOrUTC,
+      width,
+      height,
+      title,
+      xLabel,
+      data,
+      period,
+      divisions,
+      palette,
+      onHover
+    } = this.props
     const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     const pattern = timeFormatForPeriod(period)
 
@@ -36,19 +46,41 @@ class TimeXAggregateYGraph extends Component {
         }
       })
 
-    const xInfoFormatter = (timestamp) => {
-      const from = format(utcToZonedTime(new Date(timestamp - dx / 2), timeZone), pattern, { timeZone: timeZone })
-      const to = format(utcToZonedTime(new Date(timestamp + dx / 2), timeZone), pattern, { timeZone: timeZone })
+    const xInfoFormatter = timestamp => {
+      const from = format(
+        utcToZonedTime(new Date(timestamp - dx / 2), timeZone),
+        pattern,
+        { timeZone: timeZone }
+      )
+      const to = format(
+        utcToZonedTime(new Date(timestamp + dx / 2), timeZone),
+        pattern,
+        { timeZone: timeZone }
+      )
       return `${from}-${to}`
     }
-    return <Graph
-      {...{ width, height, data: aggregateData, title, xLabel, palette, onHover }}
-      computeXLayout={() => computeTimeLayout(xMax, period, localOrUTC)}
-      renderXAxis={(props) => <TimeXAxis {...props} timeZone={timeZone} />}
-      renderValues={(props) => <ContinuousBarValues {...props} {... { dx, xInfoFormatter }} />}
-    >
-      <text style={{ textAnchor: 'end' }} x={width - 64} y={30} >[{timeZone}]</text>
-    </Graph>
+    return (
+      <Graph
+        {...{
+          width,
+          height,
+          data: aggregateData,
+          title,
+          xLabel,
+          palette,
+          onHover
+        }}
+        computeXLayout={() => computeTimeLayout(xMax, period, localOrUTC)}
+        renderXAxis={props => <TimeXAxis {...props} timeZone={timeZone} />}
+        renderValues={props => (
+          <ContinuousBarValues {...props} {...{ dx, xInfoFormatter }} />
+        )}
+      >
+        <text style={{ textAnchor: 'end' }} x={width - 64} y={30}>
+          [{timeZone}]
+        </text>
+      </Graph>
+    )
   }
 }
 

@@ -148,8 +148,8 @@ export default props => (
         data={data4}
         title='Issue'
         xLabel='Time'
-        period='3h'
-        divisions={12}
+        period='12h'
+        divisions={12 * 4}
         localOrUTC='utc'
       />
     </GraphContainer>

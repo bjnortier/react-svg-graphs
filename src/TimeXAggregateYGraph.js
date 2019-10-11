@@ -35,6 +35,7 @@ class TimeXAggregateYGraph extends Component {
       ? new Date().getTime()
       : max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
     const xMax = ceilingToPeriod(dataXMax, period, divisions)
+    console.log('@@@', new Date(xMax))
     const xMin = xMax - timePeriods[period]
     const dx = (xMax - xMin) / divisions
     const aggregateData = noValues

@@ -115,7 +115,6 @@ export default (max, period, localOrUTC) => {
       const max1 = Math.ceil(max / hr) * hr
       return {
         timeAxisTickPeriod: tickPeriod,
-        numTicks: 24,
         min: max1 - 24 * hr,
         max: max1,
         tickLabelTest: tickDate => getHours(tickDate) % 3 === 0,
@@ -129,7 +128,6 @@ export default (max, period, localOrUTC) => {
       const max1 = Math.ceil(max / (hr / 2)) * (hr / 2)
       return {
         timeAxisTickPeriod: tickPeriod,
-        numTicks: 24,
         min: max1 - 12 * hr,
         max: max1,
         tickLabelTest: (tickDate, width) => {
@@ -149,7 +147,6 @@ export default (max, period, localOrUTC) => {
       const tickPeriod = hr / 4
       return {
         timeAxisTickPeriod: tickPeriod,
-        numTicks: 26,
         min,
         max,
         tickLabelTest: tickDate => getMinutes(tickDate) === 0,
@@ -163,7 +160,6 @@ export default (max, period, localOrUTC) => {
       const tickPeriod = hr / 8
       return {
         timeAxisTickPeriod: tickPeriod,
-        numTicks: 26,
         min,
         max,
         tickLabelTest: (tickDate, width) =>
@@ -180,7 +176,6 @@ export default (max, period, localOrUTC) => {
       const tickPeriod = hr / 12
       return {
         timeAxisTickPeriod: tickPeriod,
-        numTicks: 12,
         min,
         max,
         tickLabelTest: (tickDate, width) =>

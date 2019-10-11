@@ -19,14 +19,14 @@ const timeBounds = [
   [new Date('2018-06-19T00:00:00Z').getTime(), '1d', 'utc'],
   [new Date('2018-06-19T08:00:00Z').getTime(), '12h', 'utc'],
   [new Date('2018-06-19T00:00:00Z').getTime(), '12h', 'utc'],
-  [new Date('2018-06-19T02:00:00Z').getTime(), '6h', 'utc'],
+  [new Date('2018-06-19T01:45:00Z').getTime(), '6h', 'utc'],
   [new Date('2018-06-19T00:00:00Z').getTime(), '6h', 'utc'],
   [new Date('2018-06-19T00:30:00Z').getTime(), '3h', 'utc'],
   [new Date('2018-06-19T00:00:00Z').getTime(), '3h', 'utc'],
   [new Date('2018-06-19T00:15:00Z').getTime(), '1h', 'utc'],
   [new Date('2018-06-19T00:15:00Z').getTime(), '1h', 'local'],
   [new Date('2018-06-19T12:00:00Z').getTime(), '1h', 'utc'],
-  [new Date('2018-06-19T12:00:00Z').getTime(), '1h', 'local']
+  [new Date('2018-06-19T11:55:00Z').getTime(), '1h', 'local']
 ]
 const widths = [800, 640, 480, 320, 240]
 
@@ -45,28 +45,31 @@ const SVGContainer = styled.div`
   background-color: #fff;
 `
 
-export default (props) => <div>
-  {timeBounds.map(([maxTimestamp, period, localOrUTC], i) => {
-    const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
-    return <div key={i}>
-      <Limits>{new Date(maxTimestamp).toGMTString()} [{period}][{localOrUTC}]</Limits>
-      {widths.map(width => {
-        const layout = computeTimeLayout(maxTimestamp, period, localOrUTC)
-        return <SVGContainer
-          key={width}
-          width={width + 48}
-        >
-          <Width>{width}px</Width>
-          <svg width={width + 48} height={48}>
-            <g transform={`translate(24, 0)`}>
-              <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
-              <TimeXAxis
-                {...{ width, layout, timeZone }}
-              />
-            </g>
-          </svg>
-        </SVGContainer>
-      })}
-    </div>
-  })}
-</div>
+export default props => (
+  <div>
+    {timeBounds.map(([maxTimestamp, period, localOrUTC], i) => {
+      const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
+      return (
+        <div key={i}>
+          <Limits>
+            {new Date(maxTimestamp).toGMTString()} [{period}][{localOrUTC}]
+          </Limits>
+          {widths.map(width => {
+            const layout = computeTimeLayout(maxTimestamp, period, localOrUTC)
+            return (
+              <SVGContainer key={width} width={width + 48}>
+                <Width>{width}px</Width>
+                <svg width={width + 48} height={48}>
+                  <g transform={`translate(24, 0)`}>
+                    <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
+                    <TimeXAxis {...{ width, layout, timeZone }} />
+                  </g>
+                </svg>
+              </SVGContainer>
+            )
+          })}
+        </div>
+      )
+    })}
+  </div>
+)

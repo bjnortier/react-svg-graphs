@@ -54,10 +54,15 @@ class ContinuousBarValues extends Component {
       .expandByPoint({ x: layout.x.min, y: layout.y.min })
       .expandByPoint({ x: layout.x.max, y: layout.y.max })
 
-    const mapXToCanvas = x => (x - layout.x.min) / bounds.width * width
-    const mapYToCanvas = y => height - (y - bounds.min.y) / bounds.height * height
+    const mapXToCanvas = x => ((x - layout.x.min) / bounds.width) * width
+    const mapYToCanvas = y =>
+      height - ((y - bounds.min.y) / bounds.height) * height
     const strokePolyline = []
     const hoverPoints = []
+    strokePolyline.push({
+      x: mapXToCanvas(values[0].x - dx / 2),
+      y: mapYToCanvas(Math.max(layout.y.min, 0))
+    })
     for (let i = 0; i < values.length; ++i) {
       const datum = values[i]
       strokePolyline.push({
@@ -73,28 +78,46 @@ class ContinuousBarValues extends Component {
         y: mapYToCanvas(datum.y)
       })
     }
+    strokePolyline.push({
+      x: mapXToCanvas(values[values.length - 1].x + dx / 2),
+      y: mapYToCanvas(Math.max(layout.y.min, 0))
+    })
 
     const bars = values.map(({ x, y }) => ({
       x: mapXToCanvas(x - dx / 2),
-      y: Math.min(mapYToCanvas(0), mapYToCanvas(y)),
+      y: Math.min(mapYToCanvas(Math.max(layout.y.min, 0)), mapYToCanvas(y)),
       width: mapXToCanvas(x + dx / 2) - mapXToCanvas(x - dx / 2),
-      height: Math.abs(mapYToCanvas(y) - mapYToCanvas(0))
+      height: Math.abs(
+        mapYToCanvas(y) - mapYToCanvas(Math.max(layout.y.min, 0))
+      )
     }))
 
     const strokePoints = strokePolyline.map(({ x, y }) => `${x},${y}`).join(' ')
-    return <g>
-      <polyline stroke={stroke} fill='none' points={strokePoints} />
-      {bars.map(({ x, y, width, height }, i) => <rect
-        key={i} fill={fill} x={x} y={y} width={width} height={height}
-        onMouseEnter={() => this.handleMouseEnter(i, hoverPoints[i])}
-        onMouseLeave={() => this.handleMouseLeave(i, hoverPoints[i])}
-      />)}
-      {hoverIndex !== null
-        ? <g transform={`translate(${hoverPoints[hoverIndex].x},${hoverPoints[hoverIndex].y})`}>
-          <circle stroke='none' fill={stroke} r={3} />
-        </g> : null}
-      {hoverInfo ? <HoverInfo {...{ width, height, hoverInfo }} /> : null}
-    </g>
+    return (
+      <g>
+        <polyline stroke={stroke} fill='none' points={strokePoints} />
+        {bars.map(({ x, y, width, height }, i) => (
+          <rect
+            key={i}
+            fill={fill}
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            onMouseEnter={() => this.handleMouseEnter(i, hoverPoints[i])}
+            onMouseLeave={() => this.handleMouseLeave(i, hoverPoints[i])}
+          />
+        ))}
+        {hoverIndex !== null ? (
+          <g
+            transform={`translate(${hoverPoints[hoverIndex].x},${hoverPoints[hoverIndex].y})`}
+          >
+            <circle stroke='none' fill={stroke} r={3} />
+          </g>
+        ) : null}
+        {hoverInfo ? <HoverInfo {...{ width, height, hoverInfo }} /> : null}
+      </g>
+    )
   }
 }
 

@@ -1,11 +1,15 @@
+/**
+ * Aggregate includes values up to an INCLUDING the values on the division.
+ * Values on the division boundary are included in the previous division.
+ */
 export default ({ xMin, xMax, divisions, data }) => {
   const buckets = new Map()
   const width = xMax - xMin
   data.forEach(({ x, y }) => {
-    if (x < xMin || x >= xMax) {
+    if (x <= xMin || x > xMax) {
       return
     }
-    const key = Math.floor(Math.abs(x - xMin) / width * divisions)
+    const key = Math.ceil(Math.abs(x - xMin) / width * divisions) - 1
     if (!buckets.has(key)) {
       buckets.set(key, 0)
     }

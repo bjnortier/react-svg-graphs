@@ -72,7 +72,7 @@ const Nav = () => <Margin>
   <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
 </Margin>
 
-const NotFound = () => <Margin>Choose one of the example above ↑</Margin>
+const NotFound = () => <Margin>Choose one of the examples above ↑</Margin>
 
 render(<HashRouter>
   <div>

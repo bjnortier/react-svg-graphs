@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 import TimeXAggregateYGraph from '../../src/TimeXAggregateYGraph'
-import data4 from './aggregate-example.js'
+import issue2 from './issue-2.js'
+import issue3 from './issue-3.js'
 
 const minutes = []
 for (let i = 1; i <= 60; ++i) {
@@ -142,7 +143,19 @@ export default props => (
       <TimeXAggregateYGraph
         width={width}
         height={height}
-        data={data4}
+        data={issue2}
+        title='Issue'
+        xLabel='Time'
+        period='24h'
+        divisions={24 * 4}
+        localOrUTC='utc'
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXAggregateYGraph
+        width={width}
+        height={height}
+        data={issue3}
         title='Issue'
         xLabel='Time'
         period='24h'

@@ -9,6 +9,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
+    "prettier": "prettier-standard '{src,test}/**/*.js'",
     "test:lint": "standard",
     "test:unit": "mocha --require @babel/register --recursive test/unit/**",
     "test:unit:watch": "npm run test:unit -- --watch",
@@ -33,12 +34,13 @@
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
     "@babel/register": "^7.5.5",
     "acorn": "^6.0.5",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.2",
+    "eslint": "^6.5.1",
     "expect": "^24.1.0",
     "json-loader": "^0.5.7",
     "mocha": "^5.2.0",
@@ -67,6 +69,7 @@
     "vecks": "^3.8.3"
   },
   "standard": {
+    "parser": "babel-eslint",
     "globals": [
       "describe",
       "it",

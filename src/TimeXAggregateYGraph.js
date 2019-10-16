@@ -41,12 +41,10 @@ class TimeXAggregateYGraph extends Component {
     const dx = (xMax - xMin) / divisions
     const aggregateData = noValues
       ? []
-      : data.map(d => {
-          return {
-            ...d,
-            values: computeAggregate({ xMin, xMax, divisions, data: d.values })
-          }
-        })
+      : data.map(d => ({
+        ...d,
+        values: computeAggregate({ xMin, xMax, divisions, data: d.values })
+      }))
 
     const xInfoFormatter = timestamp => {
       const from = format(

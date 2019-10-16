@@ -33,38 +33,39 @@ class GraphWithValue extends Component {
       y: { min: bounds.min.y, max: bounds.max.y }
     }
 
-    const xInfoFormatter = (timestamp) => timestamp
+    const xInfoFormatter = timestamp => timestamp
 
-    return <div>
-      <GraphContainer
-        width={width}
-        height={height}
-      >
-        <ContinuousBarValues
-          values={values1}
-          width={width}
-          height={height}
-          stroke='#2ca02c'
-          fill='#2ca02c11'
-          dx={1}
-          layout={layout}
-          xInfoFormatter={xInfoFormatter}
-        />
-        <ContinuousBarValues
-          values={values2}
-          width={width}
-          height={height}
-          stroke='#1f77b4'
-          fill='#1f77b411'
-          dx={1}
-          layout={layout}
-          xInfoFormatter={xInfoFormatter}
-        />
-      </GraphContainer>
-    </div>
+    return (
+      <div>
+        <GraphContainer width={width} height={height}>
+          <ContinuousBarValues
+            values={values1}
+            width={width}
+            height={height}
+            stroke='#2ca02c'
+            fill='#2ca02c11'
+            dx={1}
+            layout={layout}
+            xInfoFormatter={xInfoFormatter}
+          />
+          <ContinuousBarValues
+            values={values2}
+            width={width}
+            height={height}
+            stroke='#1f77b4'
+            fill='#1f77b411'
+            dx={1}
+            layout={layout}
+            xInfoFormatter={xInfoFormatter}
+          />
+        </GraphContainer>
+      </div>
+    )
   }
 }
 
-export default (props) => <div>
-  <GraphWithValue />
-</div>
+export default props => (
+  <div>
+    <GraphWithValue />
+  </div>
+)

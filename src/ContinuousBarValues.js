@@ -110,7 +110,9 @@ class ContinuousBarValues extends Component {
         ))}
         {hoverIndex !== null ? (
           <g
-            transform={`translate(${hoverPoints[hoverIndex].x},${hoverPoints[hoverIndex].y})`}
+            transform={`translate(${hoverPoints[hoverIndex].x},${
+              hoverPoints[hoverIndex].y
+            })`}
           >
             <circle stroke='none' fill={stroke} r={3} />
           </g>

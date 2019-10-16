@@ -8,12 +8,12 @@ const port = 8085
 module.exports = {
   mode: 'development',
   entry: {
-    'index': [
+    index: [
       `webpack-dev-server/client?http://localhost:${port}`,
       'webpack/hot/dev-server',
       path.resolve(__dirname, 'index.js')
     ],
-    'readme': [
+    readme: [
       `webpack-dev-server/client?http://localhost:${port}`,
       'webpack/hot/dev-server',
       path.resolve(__dirname, 'readme.test.js')
@@ -23,9 +23,7 @@ module.exports = {
     path: path.resolve(__dirname),
     filename: '[name].bundle.js'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     port,
     after: (app, server) => {

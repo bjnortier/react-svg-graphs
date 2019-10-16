@@ -36,23 +36,25 @@ class ScalarValues extends Component {
   render () {
     const { width, height, values, layout, stroke } = this.props
     const { hoverPoint: hoverInfo } = this.state
-    return <g>
-      <PointSet
-        width={width}
-        height={height}
-        layout={layout}
-        color={stroke}
-        values={values}
-        onHoverPoint={hoverPoint => {
-          if (hoverPoint) {
-            this.handleHoverPoint(hoverPoint)
-          } else {
-            this.handleHoverPoint(null)
-          }
-        }}
-      />
-      {hoverInfo ? <HoverInfo {...{ width, height, hoverInfo }} /> : null}
-    </g>
+    return (
+      <g>
+        <PointSet
+          width={width}
+          height={height}
+          layout={layout}
+          color={stroke}
+          values={values}
+          onHoverPoint={hoverPoint => {
+            if (hoverPoint) {
+              this.handleHoverPoint(hoverPoint)
+            } else {
+              this.handleHoverPoint(null)
+            }
+          }}
+        />
+        {hoverInfo ? <HoverInfo {...{ width, height, hoverInfo }} /> : null}
+      </g>
+    )
   }
 }
 

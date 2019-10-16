@@ -42,12 +42,12 @@ class PointSet extends Component {
     const points = []
     for (let i = 0; i < values.length; ++i) {
       const { x, y } = values[i]
-      if ((y === null) || (y === undefined)) {
+      if (y === null || y === undefined) {
         continue
       }
       points.push({
-        xPos: (x - xMin) / (xMax - xMin) * width,
-        yPos: height - (y - yMin) / (yMax - yMin) * height,
+        xPos: ((x - xMin) / (xMax - xMin)) * width,
+        yPos: height - ((y - yMin) / (yMax - yMin)) * height,
         xValue: x,
         yValue: y,
         xIndex: i,
@@ -58,50 +58,67 @@ class PointSet extends Component {
     // Clipping: We clip the lines to the graph contents rectangle,
     // but allow circles on the peripheries
     const clipId = v4()
-    return <>
-      <clipPath id={clipId}>
-        <rect x='0px' y='0' width={width} height={height} />
-      </clipPath>
-      <g
-        clipPath={`url(#${clipId})`}
-      >
-        { points.map((to, i) => {
-          if (i > 0) {
-            const from = points[i - 1]
-            return <line
-              key={`${i - 1}_${i}`}
-              stroke={color}
-              x1={from.xPos}
-              x2={to.xPos}
-              y1={from.yPos}
-              y2={to.yPos}
-            />
-          } else {
-            return null
-          }
-        })}
-      </g>
-      {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
-        ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
-          <circle stroke='none' fill={color} r={r2} />
-          <circle stroke='none' fill='white' r={r1} />
-        </g> : null)}
-      {hoverPoint
-        ? <g transform={`translate(${hoverPoint.xPos},${hoverPoint.yPos})`}>
-          <circle stroke='none' fill={color} r={r2} />
-        </g> : null}
-      {highlightIndex !== null
-        ? <g transform={`translate(${points[highlightIndex].xPos},${points[highlightIndex].yPos})`}>
-          <circle stroke='none' fill={color} r={r2} />
-        </g> : null}
-      {points.map((p, i) => (p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height)
-        ? <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
-          <circle stroke='none' fill='transparent' r={r3}
-            onMouseEnter={() => this.handleMouseEnter(p)}
-            onMouseLeave={() => this.handleMouseLeave(p)}
-          />
-        </g> : null)}
-    </>
+    return (
+      <>
+        <clipPath id={clipId}>
+          <rect x='0px' y='0' width={width} height={height} />
+        </clipPath>
+        <g clipPath={`url(#${clipId})`}>
+          {points.map((to, i) => {
+            if (i > 0) {
+              const from = points[i - 1]
+              return (
+                <line
+                  key={`${i - 1}_${i}`}
+                  stroke={color}
+                  x1={from.xPos}
+                  x2={to.xPos}
+                  y1={from.yPos}
+                  y2={to.yPos}
+                />
+              )
+            } else {
+              return null
+            }
+          })}
+        </g>
+        {points.map((p, i) =>
+          p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height ? (
+            <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
+              <circle stroke='none' fill={color} r={r2} />
+              <circle stroke='none' fill='white' r={r1} />
+            </g>
+          ) : null
+        )}
+        {hoverPoint ? (
+          <g transform={`translate(${hoverPoint.xPos},${hoverPoint.yPos})`}>
+            <circle stroke='none' fill={color} r={r2} />
+          </g>
+        ) : null}
+        {highlightIndex !== null ? (
+          <g
+            transform={`translate(${points[highlightIndex].xPos},${
+              points[highlightIndex].yPos
+            })`}
+          >
+            <circle stroke='none' fill={color} r={r2} />
+          </g>
+        ) : null}
+        {points.map((p, i) =>
+          p.xPos >= 0 && p.xPos <= width && p.yPos >= 0 && p.yPos <= height ? (
+            <g key={i} transform={`translate(${p.xPos},${p.yPos})`}>
+              <circle
+                stroke='none'
+                fill='transparent'
+                r={r3}
+                onMouseEnter={() => this.handleMouseEnter(p)}
+                onMouseLeave={() => this.handleMouseLeave(p)}
+              />
+            </g>
+          ) : null
+        )}
+      </>
+    )
   }
 }
 

@@ -57,31 +57,30 @@ const SVGContainer = styled.div`
   background-color: #fff;
 `
 
-export default (props) => <div>
-  {examples.map((limits, i) => {
-    return <div key={i}>
-      <Limits>limits={JSON.stringify(limits)}</Limits>
-      {heights.map(height => {
-        const layout = computeScalarLayout('y', limits, height)
-        return <Group key={height}>
-          <Height width={80}>{height}</Height>
-          <SVGContainer
-            width={80}
-            height={height + 96}
-          >
-            <svg width={64} height={height + 96}>
-              <g transform={`translate(16, 48)`}>
-                <line stroke='#ddd' x1={48} y1={0} x2={48} y2={height} />
-                <ScalarYAxis
-                  width={48}
-                  height={height}
-                  layout={layout}
-                />
-              </g>
-            </svg>
-          </SVGContainer>
-        </Group>
-      })}
-    </div>
-  })}
-</div>
+export default props => (
+  <div>
+    {examples.map((limits, i) => {
+      return (
+        <div key={i}>
+          <Limits>limits={JSON.stringify(limits)}</Limits>
+          {heights.map(height => {
+            const layout = computeScalarLayout('y', limits, height)
+            return (
+              <Group key={height}>
+                <Height width={80}>{height}</Height>
+                <SVGContainer width={80} height={height + 96}>
+                  <svg width={64} height={height + 96}>
+                    <g transform={`translate(16, 48)`}>
+                      <line stroke='#ddd' x1={48} y1={0} x2={48} y2={height} />
+                      <ScalarYAxis width={48} height={height} layout={layout} />
+                    </g>
+                  </svg>
+                </SVGContainer>
+              </Group>
+            )
+          })}
+        </div>
+      )
+    })}
+  </div>
+)

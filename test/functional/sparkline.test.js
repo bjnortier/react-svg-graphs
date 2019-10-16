@@ -18,7 +18,9 @@ const values2 = [0, 1, 3, 10].map(x => ({
 
 const orderedData = temporalData.slice().reverse()
 const start = orderedData[0].t
-const xValues4 = orderedData.map(d => round10((d.t - start) / 100000, 0)).slice(100, 200)
+const xValues4 = orderedData
+  .map(d => round10((d.t - start) / 100000, 0))
+  .slice(100, 200)
 const yValues4a = orderedData.map(d => d.v).slice(100, 200)
 const values3 = zip(xValues4, yValues4a).map(([x, y]) => ({ x, y }))
 
@@ -51,28 +53,38 @@ class GraphWithValue extends Component {
     const { highlightIndex } = this.state
     const width = 300
     const height = 50
-    return <div>
-      <Value>{highlightIndex !== null ? round10(values[highlightIndex].y, -2) : null}</Value>
-      <GraphContainer
-        width={width}
-        height={height}
-      >
-        <Sparkline
-          values={values}
-          width={width}
-          height={height}
-          stroke={stroke}
-          onHighlightIndex={highlightIndex => this.setState({ highlightIndex })}
-        />
-      </GraphContainer>
-    </div>
+    return (
+      <div>
+        <Value>
+          {highlightIndex !== null
+            ? round10(values[highlightIndex].y, -2)
+            : null}
+        </Value>
+        <GraphContainer width={width} height={height}>
+          <Sparkline
+            values={values}
+            width={width}
+            height={height}
+            stroke={stroke}
+            onHighlightIndex={highlightIndex =>
+              this.setState({ highlightIndex })
+            }
+          />
+        </GraphContainer>
+      </div>
+    )
   }
 }
 
-export default (props) => <div>
-  <GraphWithValue values={[{ x: 1, y: 0 }, { x: 2, y: 0 }]} stroke={colors10[0]} />
-  <GraphWithValue values={[]} stroke={colors10[0]} />
-  <GraphWithValue values={values1} stroke={colors10[0]} />
-  <GraphWithValue values={values2} stroke={colors10[1]} />
-  <GraphWithValue values={values3} stroke={colors10[2]} />
-</div>
+export default props => (
+  <div>
+    <GraphWithValue
+      values={[{ x: 1, y: 0 }, { x: 2, y: 0 }]}
+      stroke={colors10[0]}
+    />
+    <GraphWithValue values={[]} stroke={colors10[0]} />
+    <GraphWithValue values={values1} stroke={colors10[0]} />
+    <GraphWithValue values={values2} stroke={colors10[1]} />
+    <GraphWithValue values={values3} stroke={colors10[2]} />
+  </div>
+)

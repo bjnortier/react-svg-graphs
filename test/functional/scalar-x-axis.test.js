@@ -45,29 +45,28 @@ const SVGContainer = styled.div`
   background-color: #fff;
 `
 
-export default (props) => <div>
-  {examples.map((limits, i) => {
-    return <div key={i}>
-      <Limits>limits={JSON.stringify(limits)}</Limits>
-      {widths.map(width => {
-        const layout = computeScalarLayout('x', limits, width)
-        return <SVGContainer
-          key={width}
-          width={width + 48}
-        >
-          <Width>{width}px</Width>
-          <svg width={width + 48} height={48}>
-            <g transform={`translate(24, 0)`}>
-              <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
-              <ScalarXAxis
-                width={width}
-                layout={layout}
-                label='X'
-              />
-            </g>
-          </svg>
-        </SVGContainer>
-      })}
-    </div>
-  })}
-</div>
+export default props => (
+  <div>
+    {examples.map((limits, i) => {
+      return (
+        <div key={i}>
+          <Limits>limits={JSON.stringify(limits)}</Limits>
+          {widths.map(width => {
+            const layout = computeScalarLayout('x', limits, width)
+            return (
+              <SVGContainer key={width} width={width + 48}>
+                <Width>{width}px</Width>
+                <svg width={width + 48} height={48}>
+                  <g transform={`translate(24, 0)`}>
+                    <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
+                    <ScalarXAxis width={width} layout={layout} label='X' />
+                  </g>
+                </svg>
+              </SVGContainer>
+            )
+          })}
+        </div>
+      )
+    })}
+  </div>
+)

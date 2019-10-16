@@ -31,7 +31,8 @@ class Sparkline extends Component {
     }
 
     const mouseX = event.nativeEvent.offsetX
-    const interpolatedXValue = ((mouseX - 3.5) / contentsWidth) * (xMax - xMin) + xMin
+    const interpolatedXValue =
+      ((mouseX - 3.5) / contentsWidth) * (xMax - xMin) + xMin
     const closest = values.reduce((closestSoFar, { x }, index) => {
       if (closestSoFar === null) {
         return {
@@ -39,7 +40,10 @@ class Sparkline extends Component {
           index
         }
       } else {
-        if (Math.abs(interpolatedXValue - x) < Math.abs(interpolatedXValue - closestSoFar.x)) {
+        if (
+          Math.abs(interpolatedXValue - x) <
+          Math.abs(interpolatedXValue - closestSoFar.x)
+        ) {
           return {
             x,
             index
@@ -74,7 +78,10 @@ class Sparkline extends Component {
       yMin = min(values.map(v => v.y))
       yMax = max(values.map(v => v.y))
     } else {
-      xMin = 0; yMin = 0; yMin = 0; yMax = 0
+      xMin = 0
+      yMin = 0
+      yMin = 0
+      yMax = 0
     }
 
     if (xMin === xMax) {
@@ -93,30 +100,40 @@ class Sparkline extends Component {
 
   render () {
     const { width, height, values, stroke } = this.props
-    const { xMin, xMax, yMin, yMax, contentsWidth, contentsHeight, closest } = this.state
+    const {
+      xMin,
+      xMax,
+      yMin,
+      yMax,
+      contentsWidth,
+      contentsHeight,
+      closest
+    } = this.state
     const layout = { x: { min: xMin, max: xMax }, y: { min: yMin, max: yMax } }
 
     // The entire graph is offset by 0.5,0.5 pixesl to get crisp single
     // pixel lines
     // https://kilianvalkhof.com/2010/design/the-problem-with-svg-and-canvas/
-    return <svg
-      width={width}
-      height={height}
-      onMouseEnter={this.handleMouseEnter}
-      onMouseMove={this.handleMouseMove}
-      onMouseLeave={this.handleMouseLeave}
-    >
-      <g transform='translate(3.5, 3.5)'>
-        <PointSet
-          width={contentsWidth}
-          height={contentsHeight}
-          layout={layout}
-          color={stroke}
-          values={values}
-          highlightIndex={closest !== null ? closest.index : null}
-        />
-      </g>
-    </svg>
+    return (
+      <svg
+        width={width}
+        height={height}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseMove={this.handleMouseMove}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        <g transform='translate(3.5, 3.5)'>
+          <PointSet
+            width={contentsWidth}
+            height={contentsHeight}
+            layout={layout}
+            color={stroke}
+            values={values}
+            highlightIndex={closest !== null ? closest.index : null}
+          />
+        </g>
+      </svg>
+    )
   }
 }
 

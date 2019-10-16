@@ -45,7 +45,7 @@ const getTicksRequired = (dimension, size) => {
  * of the ScalarXAxis
  */
 export default (dimension, limits, size) => {
-  if (!((dimension === 'x') || (dimension === 'y'))) {
+  if (!(dimension === 'x' || dimension === 'y')) {
     throw new Error('"dimension" should be "x" or "y"')
   }
   if (limits.length > 2) {
@@ -68,8 +68,14 @@ export default (dimension, limits, size) => {
   })
 
   const mid = min + diff / 2
-  const firstValueTick = round10(Math.floor((mid - (diff / 2)) / tickSize) * tickSize, order - 1)
-  const lastValueTick = round10(Math.ceil((mid + (diff / 2)) / tickSize) * tickSize, order - 1)
+  const firstValueTick = round10(
+    Math.floor((mid - diff / 2) / tickSize) * tickSize,
+    order - 1
+  )
+  const lastValueTick = round10(
+    Math.ceil((mid + diff / 2) / tickSize) * tickSize,
+    order - 1
+  )
 
   return {
     min: firstValueTick,

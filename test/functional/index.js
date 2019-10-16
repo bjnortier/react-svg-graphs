@@ -54,40 +54,61 @@ const Margin = styled.div`
   margin: 20px;
 `
 
-const Nav = () => <Margin>
-  <Link to={'/scalar-x-axis'}>{'<ScalarXAxis />'}</Link>
-  <HSpace />
-  <Link to={'/time-x-axis'}>{'<TimeXAxis />'}</Link>
-  <HSpace />
-  <Link to={'/scalar-y-axis'}>{'<ScalarYAxis />'}</Link>
-  <HSpace />
-  <Link to={'/continuous-bar-values'}>{'<ContinuousBarValuesTest />'}</Link>
-  <HSpace />
-  <Link to={'/scalar-x-scalar-y-graph'}>{'<ScalarXScalarYGraph />'}</Link>
-  <HSpace />
-  <Link to={'/time-x-scalar-y-graph'}>{'<TimeXScalarYGraph />'}</Link>
-  <HSpace />
-  <Link to={'/time-x-aggregate-y-graph'}>{'<TimeXAggregateYGraph />'}</Link>
-  <HSpace />
-  <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
-</Margin>
+const Nav = () => (
+  <Margin>
+    <Link to={'/scalar-x-axis'}>{'<ScalarXAxis />'}</Link>
+    <HSpace />
+    <Link to={'/time-x-axis'}>{'<TimeXAxis />'}</Link>
+    <HSpace />
+    <Link to={'/scalar-y-axis'}>{'<ScalarYAxis />'}</Link>
+    <HSpace />
+    <Link to={'/continuous-bar-values'}>{'<ContinuousBarValuesTest />'}</Link>
+    <HSpace />
+    <Link to={'/scalar-x-scalar-y-graph'}>{'<ScalarXScalarYGraph />'}</Link>
+    <HSpace />
+    <Link to={'/time-x-scalar-y-graph'}>{'<TimeXScalarYGraph />'}</Link>
+    <HSpace />
+    <Link to={'/time-x-aggregate-y-graph'}>{'<TimeXAggregateYGraph />'}</Link>
+    <HSpace />
+    <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
+  </Margin>
+)
 
 const NotFound = () => <Margin>Choose one of the examples above ↑</Margin>
 
-render(<HashRouter>
-  <div>
-    <Nav />
-    <Switch>
-      <Route exact path='/scalar-x-axis' component={ScalarXAxisTest} />
-      <Route exact path='/time-x-axis' component={TimeXAxisTest} />
-      <Route exact path='/scalar-y-axis' component={ScalarYAxisTest} />
-      <Route exact path='/continuous-bar-values' component={ContinuousBarValuesTest} />
-      <Route exact path='/scalar-x-scalar-y-graph' component={ScalarXScalarYGraphTest} />
-      <Route exact path='/time-x-scalar-y-graph' component={TimeXScalarYGraphTest} />
-      <Route exact path='/time-x-aggregate-y-graph' component={TimeXAggregateYGraphTest} />
-      <Route exact path='/sparkline' component={SparklineTest} />
-      <Route component={NotFound} />
-    </Switch>
-    <GlobalStyle />
-  </div>
-</HashRouter>, document.getElementById('contents'))
+render(
+  <HashRouter>
+    <div>
+      <Nav />
+      <Switch>
+        <Route exact path='/scalar-x-axis' component={ScalarXAxisTest} />
+        <Route exact path='/time-x-axis' component={TimeXAxisTest} />
+        <Route exact path='/scalar-y-axis' component={ScalarYAxisTest} />
+        <Route
+          exact
+          path='/continuous-bar-values'
+          component={ContinuousBarValuesTest}
+        />
+        <Route
+          exact
+          path='/scalar-x-scalar-y-graph'
+          component={ScalarXScalarYGraphTest}
+        />
+        <Route
+          exact
+          path='/time-x-scalar-y-graph'
+          component={TimeXScalarYGraphTest}
+        />
+        <Route
+          exact
+          path='/time-x-aggregate-y-graph'
+          component={TimeXAggregateYGraphTest}
+        />
+        <Route exact path='/sparkline' component={SparklineTest} />
+        <Route component={NotFound} />
+      </Switch>
+      <GlobalStyle />
+    </div>
+  </HashRouter>,
+  document.getElementById('contents')
+)

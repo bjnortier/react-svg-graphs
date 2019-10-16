@@ -9,7 +9,7 @@ export default ({ xMin, xMax, divisions, data }) => {
     if (x <= xMin || x > xMax) {
       return
     }
-    const key = Math.ceil(Math.abs(x - xMin) / width * divisions) - 1
+    const key = Math.ceil((Math.abs(x - xMin) / width) * divisions) - 1
     if (!buckets.has(key)) {
       buckets.set(key, 0)
     }
@@ -18,7 +18,7 @@ export default ({ xMin, xMax, divisions, data }) => {
   const result = []
   for (let i = 0; i < divisions; ++i) {
     result.push({
-      x: xMin + width / divisions / 2 + i * width / divisions,
+      x: xMin + width / divisions / 2 + (i * width) / divisions,
       y: buckets.has(i) ? buckets.get(i) : 0
     })
   }

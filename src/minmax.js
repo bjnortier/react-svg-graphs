@@ -1,6 +1,6 @@
 import { flatten, min, max } from 'lodash'
 
-export default (dataSets) => {
+export default dataSets => {
   if (!Array.isArray(dataSets)) {
     dataSets = [dataSets]
   }

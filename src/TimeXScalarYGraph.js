@@ -13,21 +13,41 @@ import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXScalarYGraph extends Component {
   render () {
-    const { width, height, data, period, title, xLabel, localOrUTC, palette, onHover } = this.props
-    const dataXMax = max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
+    const {
+      width,
+      height,
+      data,
+      period,
+      title,
+      xLabel,
+      localOrUTC,
+      palette,
+      onHover
+    } = this.props
+    const dataXMax = max(
+      flatten(data.map(dataset => dataset.values.map(v => v.x)))
+    )
     const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     const pattern = timeFormatForPeriod(period)
-    const xInfoFormatter = (timestamp) => {
-      return format(utcToZonedTime(new Date(timestamp), timeZone), pattern, { timeZone })
+    const xInfoFormatter = timestamp => {
+      return format(utcToZonedTime(new Date(timestamp), timeZone), pattern, {
+        timeZone
+      })
     }
-    return <Graph
-      {...{ width, height, data, title, xLabel, palette, onHover }}
-      computeXLayout={() => computeTimeLayout(dataXMax, period, localOrUTC)}
-      renderXAxis={(props) => <TimeXAxis {...props} timeZone={timeZone} />}
-      renderValues={(props) => <ScalarValues {...props} {...{ xInfoFormatter }} />}
-    >
-      <text style={{ textAnchor: 'end' }} x={width - 64} y={30} >[{timeZone}]</text>
-    </Graph>
+    return (
+      <Graph
+        {...{ width, height, data, title, xLabel, palette, onHover }}
+        computeXLayout={() => computeTimeLayout(dataXMax, period, localOrUTC)}
+        renderXAxis={props => <TimeXAxis {...props} timeZone={timeZone} />}
+        renderValues={props => (
+          <ScalarValues {...props} {...{ xInfoFormatter }} />
+        )}
+      >
+        <text style={{ textAnchor: 'end' }} x={width - 64} y={30}>
+          [{timeZone}]
+        </text>
+      </Graph>
+    )
   }
 }
 

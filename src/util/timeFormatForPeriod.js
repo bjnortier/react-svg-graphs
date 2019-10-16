@@ -1,4 +1,4 @@
-export default (period) => {
+export default period => {
   switch (period) {
     case '1h':
       return 'HH:mm'

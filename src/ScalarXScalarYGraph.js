@@ -11,14 +11,22 @@ import timePeriods from './util/timePeriods'
 class ScalarXScalarYGraph extends Component {
   render () {
     const { width, height, data, title, xLabel, palette, onHover } = this.props
-    const dataXMax = max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
-    const dataXMin = min(flatten(data.map(dataset => dataset.values.map(v => v.x))))
-    return <Graph
-      {...{ width, height, data, title, xLabel, palette, onHover }}
-      computeXLayout={contentsWidth => computeScalarLayout('x', [dataXMin, dataXMax], contentsWidth)}
-      renderXAxis={(props) => <ScalarXAxis {...props} />}
-      renderValues={(props) => <ScalarValues {...props} />}
-    />
+    const dataXMax = max(
+      flatten(data.map(dataset => dataset.values.map(v => v.x)))
+    )
+    const dataXMin = min(
+      flatten(data.map(dataset => dataset.values.map(v => v.x)))
+    )
+    return (
+      <Graph
+        {...{ width, height, data, title, xLabel, palette, onHover }}
+        computeXLayout={contentsWidth =>
+          computeScalarLayout('x', [dataXMin, dataXMax], contentsWidth)
+        }
+        renderXAxis={props => <ScalarXAxis {...props} />}
+        renderValues={props => <ScalarValues {...props} />}
+      />
+    )
   }
 }
 

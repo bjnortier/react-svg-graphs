@@ -34,17 +34,17 @@ class TimeXAggregateYGraph extends Component {
     const dataXMax = noValues
       ? new Date().getTime()
       : max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
-    const xMax = ceilingToPeriod(dataXMax, period, divisions)
-    const xMin = xMax - timePeriods[period]
+    const xMax0 = ceilingToPeriod(dataXMax, period, divisions)
+    const layout = computeTimeLayout(xMax0, period, localOrUTC)
+    const xMax = layout.max
+    const xMin = layout.min
     const dx = (xMax - xMin) / divisions
     const aggregateData = noValues
       ? []
-      : data.map(d => {
-        return {
-          ...d,
-          values: computeAggregate({ xMin, xMax, divisions, data: d.values })
-        }
-      })
+      : data.map(d => ({
+        ...d,
+        values: computeAggregate({ xMin, xMax, divisions, data: d.values })
+      }))
 
     const xInfoFormatter = timestamp => {
       const from = format(

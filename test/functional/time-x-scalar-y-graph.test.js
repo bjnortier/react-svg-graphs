@@ -32,53 +32,55 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-export default (props) => <div>
-  <GraphContainer width={width} height={height} >
-    <TimeXScalarYGraph
-      data={data1}
-      width={width}
-      height={height}
-      title={`Basic Example UTC`}
-      xLabel='Time'
-      period='24h'
-      localOrUTC='utc'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXScalarYGraph
-      data={data1}
-      width={width}
-      height={height}
-      title={`Basic Example Local`}
-      xLabel='Time'
-      period='24h'
-      localOrUTC='local'
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXScalarYGraph
-      data={data1}
-      width={width}
-      height={height}
-      title={`Show latest example`}
-      xLabel='Time'
-      period='6h'
-      palette={palette}
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-  <GraphContainer width={width} height={height} >
-    <TimeXScalarYGraph
-      data={emptyData}
-      width={width}
-      height={height}
-      title={`Empty Data Example`}
-      period='6h'
-      xLabel='Time'
-      palette={palette}
-      onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-    />
-  </GraphContainer>
-</div>
+export default props => (
+  <div>
+    <GraphContainer width={width} height={height}>
+      <TimeXScalarYGraph
+        data={data1}
+        width={width}
+        height={height}
+        title={`Basic Example UTC`}
+        xLabel='Time'
+        period='24h'
+        localOrUTC='utc'
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXScalarYGraph
+        data={data1}
+        width={width}
+        height={height}
+        title={`Basic Example Local`}
+        xLabel='Time'
+        period='24h'
+        localOrUTC='local'
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXScalarYGraph
+        data={data1}
+        width={width}
+        height={height}
+        title={`Show latest example`}
+        xLabel='Time'
+        period='6h'
+        palette={palette}
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXScalarYGraph
+        data={emptyData}
+        width={width}
+        height={height}
+        title={`Empty Data Example`}
+        period='6h'
+        xLabel='Time'
+        palette={palette}
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+  </div>
+)

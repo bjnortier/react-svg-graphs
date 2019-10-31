@@ -128,7 +128,8 @@ PointSet.propTypes = {
   layout: PropTypes.object.isRequired,
   values: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
-  onHoverPoint: PropTypes.func
+  onHoverPoint: PropTypes.func,
+  highlightIndex: PropTypes.number
 }
 
 PointSet.defaultProps = {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { round10 } from 'round10'
 import { zip } from 'lodash'
@@ -67,8 +68,7 @@ class GraphWithValue extends Component {
             height={height}
             stroke={stroke}
             onHighlightIndex={highlightIndex =>
-              this.setState({ highlightIndex })
-            }
+              this.setState({ highlightIndex })}
           />
         </GraphContainer>
       </div>
@@ -76,7 +76,12 @@ class GraphWithValue extends Component {
   }
 }
 
-export default props => (
+GraphWithValue.propTypes = {
+  values: PropTypes.array.isRequired,
+  stroke: PropTypes.string.isRequired
+}
+
+const SparklineTest = props => (
   <div>
     <GraphWithValue
       values={[{ x: 1, y: 0 }, { x: 2, y: 0 }]}
@@ -88,3 +93,5 @@ export default props => (
     <GraphWithValue values={values3} stroke={colors10[2]} />
   </div>
 )
+
+export default SparklineTest

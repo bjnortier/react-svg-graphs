@@ -56,21 +56,21 @@ const Margin = styled.div`
 
 const Nav = () => (
   <Margin>
-    <Link to={'/scalar-x-axis'}>{'<ScalarXAxis />'}</Link>
+    <Link to='/scalar-x-axis'>{'<ScalarXAxis />'}</Link>
     <HSpace />
-    <Link to={'/time-x-axis'}>{'<TimeXAxis />'}</Link>
+    <Link to='/time-x-axis'>{'<TimeXAxis />'}</Link>
     <HSpace />
-    <Link to={'/scalar-y-axis'}>{'<ScalarYAxis />'}</Link>
+    <Link to='/scalar-y-axis'>{'<ScalarYAxis />'}</Link>
     <HSpace />
-    <Link to={'/continuous-bar-values'}>{'<ContinuousBarValuesTest />'}</Link>
+    <Link to='/continuous-bar-values'>{'<ContinuousBarValuesTest />'}</Link>
     <HSpace />
-    <Link to={'/scalar-x-scalar-y-graph'}>{'<ScalarXScalarYGraph />'}</Link>
+    <Link to='/scalar-x-scalar-y-graph'>{'<ScalarXScalarYGraph />'}</Link>
     <HSpace />
-    <Link to={'/time-x-scalar-y-graph'}>{'<TimeXScalarYGraph />'}</Link>
+    <Link to='/time-x-scalar-y-graph'>{'<TimeXScalarYGraph />'}</Link>
     <HSpace />
-    <Link to={'/time-x-aggregate-y-graph'}>{'<TimeXAggregateYGraph />'}</Link>
+    <Link to='/time-x-aggregate-y-graph'>{'<TimeXAggregateYGraph />'}</Link>
     <HSpace />
-    <Link to={'/sparkline'}>{'<Sparkline />'}</Link>
+    <Link to='/sparkline'>{'<Sparkline />'}</Link>
   </Margin>
 )
 

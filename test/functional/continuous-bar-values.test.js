@@ -64,8 +64,10 @@ class GraphWithValue extends Component {
   }
 }
 
-export default props => (
+const ContinuousBarValuesTest = props => (
   <div>
     <GraphWithValue />
   </div>
 )
+
+export default ContinuousBarValuesTest

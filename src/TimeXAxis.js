@@ -82,17 +82,6 @@ class TimeXAxis extends Component {
 TimeXAxis.propTypes = {
   width: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
-  period: PropTypes.oneOf([
-    '1hr',
-    '3hr',
-    '6hr',
-    '12hr',
-    '24hr',
-    '1d',
-    '2d',
-    '1wk',
-    '1mo'
-  ]),
   timeZone: PropTypes.string.isRequired
 }
 

@@ -32,14 +32,14 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-export default props => (
+const TimeXScalarYGraphTest = props => (
   <div>
     <GraphContainer width={width} height={height}>
       <TimeXScalarYGraph
         data={data1}
         width={width}
         height={height}
-        title={`Basic Example UTC`}
+        title='Basic Example UTC'
         xLabel='Time'
         period='24h'
         localOrUTC='utc'
@@ -51,7 +51,7 @@ export default props => (
         data={data1}
         width={width}
         height={height}
-        title={`Basic Example Local`}
+        title='Basic Example Local'
         xLabel='Time'
         period='24h'
         localOrUTC='local'
@@ -63,7 +63,7 @@ export default props => (
         data={data1}
         width={width}
         height={height}
-        title={`Show latest example`}
+        title='Show latest example'
         xLabel='Time'
         period='6h'
         palette={palette}
@@ -75,7 +75,7 @@ export default props => (
         data={emptyData}
         width={width}
         height={height}
-        title={`Empty Data Example`}
+        title='Empty Data Example'
         period='6h'
         xLabel='Time'
         palette={palette}
@@ -84,3 +84,5 @@ export default props => (
     </GraphContainer>
   </div>
 )
+
+export default TimeXScalarYGraphTest

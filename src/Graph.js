@@ -117,7 +117,8 @@ Graph.propTypes = {
   renderValues: PropTypes.func.isRequired,
   palette: PropTypes.array.isRequired,
   xInfoFormatter: PropTypes.func.isRequired,
-  onHover: PropTypes.func
+  onHover: PropTypes.func,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 }
 
 Graph.defaultProps = {

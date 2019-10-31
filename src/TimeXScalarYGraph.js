@@ -57,6 +57,7 @@ TimeXScalarYGraph.propTypes = {
   xLabel: PropTypes.string.isRequired,
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
+  palette: PropTypes.array,
   period: PropTypes.oneOf(Object.keys(timePeriods)),
   localOrUTC: PropTypes.oneOf(['local', 'utc']),
   onHover: PropTypes.func

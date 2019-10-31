@@ -45,7 +45,7 @@ const SVGContainer = styled.div`
   background-color: #fff;
 `
 
-export default props => (
+const TimeXAxisTest = props => (
   <div>
     {timeBounds.map(([maxTimestamp, period, localOrUTC], i) => {
       const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
@@ -60,7 +60,7 @@ export default props => (
               <SVGContainer key={width} width={width + 48}>
                 <Width>{width}px</Width>
                 <svg width={width + 48} height={48}>
-                  <g transform={`translate(24, 0)`}>
+                  <g transform='translate(24, 0)'>
                     <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
                     <TimeXAxis {...{ width, layout, timeZone }} />
                   </g>
@@ -73,3 +73,5 @@ export default props => (
     })}
   </div>
 )
+
+export default TimeXAxisTest

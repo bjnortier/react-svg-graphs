@@ -65,7 +65,7 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-export default props => (
+const ScalarXScalarGraphTest = (props) => (
   <div>
     <GraphContainer width={width} height={height}>
       <ScalarXScalarYGraph
@@ -121,3 +121,5 @@ export default props => (
     </GraphContainer>
   </div>
 )
+
+export default ScalarXScalarGraphTest

@@ -6,6 +6,7 @@ import styledNormalize from 'styled-normalize'
 
 import ScalarXAxisTest from './scalar-x-axis.test'
 import TimeXAxisTest from './time-x-axis.test'
+import TimeXAxis2Test from './time-x-axis-2.test'
 import ScalarYAxisTest from './scalar-y-axis.test'
 import ContinuousBarValuesTest from './continuous-bar-values.test'
 import ScalarXScalarYGraphTest from './scalar-x-scalar-y-graph.test'
@@ -60,6 +61,8 @@ const Nav = () => (
     <HSpace />
     <Link to='/time-x-axis'>{'<TimeXAxis />'}</Link>
     <HSpace />
+    <Link to='/time-x-axis-2'>{'<TimeXAxis2 />'}</Link>
+    <HSpace />
     <Link to='/scalar-y-axis'>{'<ScalarYAxis />'}</Link>
     <HSpace />
     <Link to='/continuous-bar-values'>{'<ContinuousBarValuesTest />'}</Link>
@@ -83,6 +86,7 @@ render(
       <Switch>
         <Route exact path='/scalar-x-axis' component={ScalarXAxisTest} />
         <Route exact path='/time-x-axis' component={TimeXAxisTest} />
+        <Route exact path='/time-x-axis-2' component={TimeXAxis2Test} />
         <Route exact path='/scalar-y-axis' component={ScalarYAxisTest} />
         <Route
           exact

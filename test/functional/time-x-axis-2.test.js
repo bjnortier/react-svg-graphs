@@ -5,10 +5,16 @@ import computeTimeLayout2 from '../../src/util/computeTimeLayout2'
 import TimeXAxis2 from '../../src/TimeXAxis2'
 
 const timeBounds = [
+  [new Date('2018-01-01T00:00:00Z'), '6y'],
+  [new Date('2018-03-14T11:35:00Z'), '6y'],
+  [new Date('2018-03-14T11:35:00Z'), '5y'],
+  [new Date('2018-03-14T11:35:00Z'), '4y'],
+  [new Date('2018-03-14T11:35:00Z'), '3y'],
+  [new Date('2018-03-14T11:35:00Z'), '2y'],
   [new Date('2018-03-14T11:35:00Z'), '1y'],
   [new Date('2018-12-14T11:35:00Z'), '1y']
 ]
-const widths = [800, 240]
+const widths = [240]
 // const widths = [800, 640, 480, 320, 240]
 
 const Limits = styled.div`

@@ -13,7 +13,6 @@ class TimeXAxis extends Component {
       contextLabelFormat
     } = layout
     const formatDateTime = (date, pattern) => {
-      console.log('>>>', date)
       return format(date, pattern, {
         timeZone: 'UTC'
       })
@@ -30,7 +29,8 @@ class TimeXAxis extends Component {
           : ''
         ticks.push({ dx, label })
       }
-      if (Math.abs(dx - width / 2) < width / 2 - 60) {
+      // Context label max width allowed = 30 pixels
+      if (Math.abs(dx - width / 2) < width / 2 - 12) {
         if (contextLabelTest(tickDate)) {
           contexts.push({
             dx,

@@ -2,35 +2,46 @@ import subMonths from 'date-fns/subMonths'
 import subYears from 'date-fns/subYears'
 import { range } from 'lodash'
 
-export default (maxValue, period) => {
-  switch (period) {
-    case '1y': {
-      const maxAxisDate = new Date(maxValue)
-      maxAxisDate.setUTCDate(1)
-      maxAxisDate.setUTCHours(0)
-      maxAxisDate.setUTCMinutes(0)
-      maxAxisDate.setUTCSeconds(0)
-      if (maxAxisDate.getUTCMonth() === 11) {
-        maxAxisDate.setUTCMonth(0)
-        maxAxisDate.setUTCFullYear(maxAxisDate.getUTCFullYear() + 1)
-      } else {
-        maxAxisDate.setUTCMonth(maxAxisDate.getUTCMonth() + 1)
-      }
-      console.log('End of month:', maxAxisDate.toISOString())
+const endOfMonth = (date) => {
+  const eom = new Date(date)
+  eom.setUTCDate(1)
+  eom.setUTCHours(0)
+  eom.setUTCMinutes(0)
+  eom.setUTCSeconds(0)
+  if (eom.getUTCMonth() === 11) {
+    eom.setUTCMonth(0)
+    eom.setUTCFullYear(eom.getUTCFullYear() + 1)
+  } else {
+    eom.setUTCMonth(eom.getUTCMonth() + 1)
+  }
+  return eom
+}
 
-      const minAxisDate = subYears(maxAxisDate, 1)
-      const tickDates = range(13).map(x => subMonths(maxAxisDate, x)).reverse()
-      return {
-        tickDates,
-        max: maxAxisDate,
-        min: minAxisDate,
-        tickLabelTest: (tickDate, width) => true,
-        tickLabelFormat: width => 'M',
-        contextLabelTest: tickDate => tickDate.getMonth() === 0,
-        contextLabelFormat: 'y'
-      }
+export default (maxValue, period) => {
+  const yearMatch = /([0-9]+)y/.exec(period)
+  if (yearMatch) {
+    const maxAxisDate = endOfMonth(maxValue)
+    const n = parseInt(yearMatch[1])
+    const minAxisDate = subYears(maxAxisDate, n)
+    const tickDates = range(n * 12 + 1).map(x => subMonths(maxAxisDate, x)).reverse()
+    let tickLabelRem
+    if (n === 1) {
+      tickLabelRem = 1
+    } else if (n === 2) {
+      tickLabelRem = 3
+    } else {
+      tickLabelRem = 12
     }
-    default:
-      throw Error(`period not supported: ${period}`)
+    return {
+      tickDates,
+      max: maxAxisDate,
+      min: minAxisDate,
+      tickLabelTest: (tickDate, width) => tickDate.getUTCMonth() % tickLabelRem === 0,
+      tickLabelFormat: width => 'M',
+      contextLabelTest: tickDate => tickDate.getUTCMonth() === 0,
+      contextLabelFormat: 'y'
+    }
+  } else {
+    throw Error(`period not supported: ${period}`)
   }
 }

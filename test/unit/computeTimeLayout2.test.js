@@ -38,5 +38,13 @@ describe.only('Compute Time Layout 2', () => {
         new Date('2019-01-01T00:00:00.000Z')
       ]
     })
+
+    const layout3 = computeTimeLayout2(new Date('2018-03-11T11:35:00Z'), '3y')
+    expect(layout3.tickDates[0]).toEqual(new Date('2015-04-01T00:00:00.000Z'))
+    expect(layout3.tickDates[layout3.tickDates.length - 1]).toEqual(new Date('2018-04-01T00:00:00.000Z'))
+
+    const layout4 = computeTimeLayout2(new Date('2018-03-11T11:35:00Z'), '4y')
+    expect(layout4.tickDates[0]).toEqual(new Date('2014-04-01T00:00:00.000Z'))
+    expect(layout4.tickDates[layout4.tickDates.length - 1]).toEqual(new Date('2018-04-01T00:00:00.000Z'))
   })
 })

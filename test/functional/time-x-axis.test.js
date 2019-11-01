@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import jstz from 'jstz'
 
 import computeTimeLayout from '../../src/util/computeTimeLayout'
-import { TimeXAxis } from '../../src'
+import TimeXAxis from '../../src/TimeXAxis'
 
 const timeBounds = [
   [new Date('2002-01-01T00:00:00Z').getTime(), '7y', 'utc'],

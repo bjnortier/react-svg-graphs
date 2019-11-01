@@ -11,6 +11,7 @@ import ScalarYAxisTest from './scalar-y-axis.test'
 import ContinuousBarValuesTest from './continuous-bar-values.test'
 import ScalarXScalarYGraphTest from './scalar-x-scalar-y-graph.test'
 import TimeXScalarYGraphTest from './time-x-scalar-y-graph.test'
+import TimeXScalarYGraph2Test from './time-x-scalar-y-graph-2.test'
 import TimeXAggregateYGraphTest from './time-x-aggregate-y-graph.test'
 import SparklineTest from './sparkline.test'
 
@@ -71,6 +72,8 @@ const Nav = () => (
     <HSpace />
     <Link to='/time-x-scalar-y-graph'>{'<TimeXScalarYGraph />'}</Link>
     <HSpace />
+    <Link to='/time-x-scalar-y-graph-2'>{'<TimeXScalarYGraph2 />'}</Link>
+    <HSpace />
     <Link to='/time-x-aggregate-y-graph'>{'<TimeXAggregateYGraph />'}</Link>
     <HSpace />
     <Link to='/sparkline'>{'<Sparkline />'}</Link>
@@ -102,6 +105,11 @@ render(
           exact
           path='/time-x-scalar-y-graph'
           component={TimeXScalarYGraphTest}
+        />
+        <Route
+          exact
+          path='/time-x-scalar-y-graph-2'
+          component={TimeXScalarYGraph2Test}
         />
         <Route
           exact

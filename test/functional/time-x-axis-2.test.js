@@ -14,7 +14,7 @@ const timeBounds = [
   [new Date('2018-03-14T11:35:00Z'), '1y'],
   [new Date('2018-12-14T11:35:00Z'), '1y']
 ]
-const widths = [240]
+const widths = [240, 800]
 // const widths = [800, 640, 480, 320, 240]
 
 const Limits = styled.div`

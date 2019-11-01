@@ -4,11 +4,11 @@ import { max, flatten } from 'lodash'
 import { format } from 'date-fns-tz'
 
 import TimeXAxis2 from './TimeXAxis2'
-import ScalarValues from './ScalarValues'
-import Graph from './Graph'
+import ScalarValues2 from './ScalarValues2'
+import Graph2 from './Graph2'
 import computeTimeLayout2 from './util/computeTimeLayout2'
 import timePeriods from './util/timePeriods'
-import timeFormatForPeriod from './util/timeFormatForPeriod'
+import timeFormatForPeriod2 from './util/timeFormatForPeriod2'
 
 class TimeXScalarYGraph2 extends Component {
   render () {
@@ -25,25 +25,25 @@ class TimeXScalarYGraph2 extends Component {
     const dataXMax = max(
       flatten(data.map(dataset => dataset.values.map(v => v.x)))
     )
-    const pattern = timeFormatForPeriod(period)
+    const pattern = timeFormatForPeriod2(period)
     const xInfoFormatter = timestamp => {
       return format(new Date(timestamp), pattern, {
         timeZone: 'UTC'
       })
     }
     return (
-      <Graph
+      <Graph2
         {...{ width, height, data, title, xLabel, palette, onHover }}
         computeXLayout={() => computeTimeLayout2(new Date(dataXMax), period)}
         renderXAxis={props => <TimeXAxis2 {...props} />}
         renderValues={props => (
-          <ScalarValues {...props} {...{ xInfoFormatter }} />
+          <ScalarValues2 {...props} {...{ xInfoFormatter }} />
         )}
       >
         <text style={{ textAnchor: 'end' }} x={width - 64} y={30}>
           [UTC]
         </text>
-      </Graph>
+      </Graph2>
     )
   }
 }

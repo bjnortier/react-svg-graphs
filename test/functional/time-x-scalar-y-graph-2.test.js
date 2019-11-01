@@ -54,7 +54,6 @@ const TimeXScalarYGraphTest = props => (
         title='Empty Data Example'
         period='1y'
         xLabel='Time'
-        palette={palette}
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>

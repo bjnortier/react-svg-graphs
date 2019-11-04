@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import ms from 'ms'
 
-import TimeXScalarYGraph2 from '../../src/TimeXScalarYGraph2'
+import { TimeXScalarYGraph2 } from '../../src'
 
 const data1 = [
   {
@@ -23,7 +23,7 @@ const data1 = [
 const emptyData = []
 const palette = ['#990066', '#660099']
 
-const GraphContainer = styled.div`
+const Graph = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: #fff;
@@ -33,20 +33,54 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
+class ExternalSelection extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedPath: null,
+      hoverPath: null
+    }
+  }
+
+  render () {
+    return (
+      <TimeXScalarYGraph2
+        {...this.props}
+        onSelect={selectedPath => this.setState({ selectedPath })}
+        onHover={hoverPath => this.setState({ hoverPath })}
+        selectedPath={this.state.selectedPath}
+        hoverPath={this.state.hoverPath}
+      />
+    )
+  }
+}
+
 const TimeXScalarYGraphTest = props => (
   <div>
-    <GraphContainer width={width} height={height}>
+    <Graph width={width} height={height}>
+      <ExternalSelection
+        data={data1}
+        width={width}
+        height={height}
+        title='External Selection Example'
+        period='1y'
+        xLabel='Time'
+        palette={palette}
+      />
+    </Graph>
+    <Graph width={width} height={height}>
       <TimeXScalarYGraph2
         data={data1}
         width={width}
         height={height}
-        title='Basic Example'
+        title='Internal Selection Example'
         xLabel='Time'
         period='1y'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+        onHover={hoverPath => console.log('hover path:', hoverPath)}
       />
-    </GraphContainer>
-    <GraphContainer width={width} height={height}>
+    </Graph>
+
+    <Graph width={width} height={height}>
       <TimeXScalarYGraph2
         data={emptyData}
         width={width}
@@ -54,9 +88,10 @@ const TimeXScalarYGraphTest = props => (
         title='Empty Data Example'
         period='1y'
         xLabel='Time'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+        onHover={hoverPath => console.log('hover path:', hoverPath)}
       />
-    </GraphContainer>
+    </Graph>
+
   </div>
 )
 

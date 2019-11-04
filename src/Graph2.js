@@ -2,38 +2,26 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { min, max, flatten } from 'lodash'
 
-import HoverInfo2 from './HoverInfo2'
-import SelectedInfo2 from './SelectedInfo2'
+import SelectedPath2 from './SelectedPath2'
+import HoverPath2 from './HoverPath2'
 import Legend from './Legend'
 import ScalarYAxis from './ScalarYAxis'
 import computeScalarLayout from './util/computeScalarLayout'
 import colors10 from './util/colors10'
 
-class Graph extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      hoverInfo: null,
-      selectedInfo: null
+class Graph2 extends Component {
+  handleHover (hoverPath) {
+    const { onHover } = this.props
+    if (onHover) {
+      onHover(hoverPath)
     }
   }
 
-  handleHover (hoverInfo) {
-    const { onHover } = this.props
-    this.setState({ hoverInfo }, () => {
-      if (onHover) {
-        onHover(hoverInfo)
-      }
-    })
-  }
-
-  handleSelect (selectedInfo) {
+  handleSelect (selectPath) {
     const { onSelect } = this.props
-    this.setState({ selectedInfo }, () => {
-      if (onSelect) {
-        onSelect(selectedInfo)
-      }
-    })
+    if (onSelect) {
+      onSelect(selectPath)
+    }
   }
 
   render () {
@@ -47,9 +35,10 @@ class Graph extends Component {
       renderXAxis,
       renderValues,
       palette,
-      xInfoFormatter
+      hoverPath,
+      selectedPath,
+      xValueFormatter
     } = this.props
-    const { hoverInfo, selectedInfo } = this.state
 
     const yMin = min(flatten(data.map(d => d.values.map(d => d.y))))
     const yMax = max(flatten(data.map(d => d.values.map(d => d.y))))
@@ -111,19 +100,55 @@ class Graph extends Component {
                     color: palette[i % palette.length],
                     values: dataset.values,
                     layout: { x: xLayout, y: yLayout },
-                    xInfoFormatter,
-                    onHover: (hoverInfo) => {
-                      const augmented = hoverInfo ? { ...hoverInfo, yIndex: i } : null
-                      this.handleHover(augmented)
+                    onHover: (valueIndex) => {
+                      const hoverPath = valueIndex !== null
+                        ? {
+                          valueIndex,
+                          datasetIndex: i
+                        }
+                        : null
+                      this.handleHover(hoverPath)
                     },
-                    onSelect: (selectedInfo) => {
-                      const augmented = selectedInfo ? { ...selectedInfo, yIndex: i } : null
-                      this.handleSelect(augmented)
+                    onSelect: (valueIndex) => {
+                      const selectPath = valueIndex !== null
+                        ? {
+                          valueIndex,
+                          datasetIndex: i
+                        }
+                        : null
+                      this.handleSelect(selectPath)
                     }
                   })
                 )}
-                {hoverInfo ? <HoverInfo2 {...{ width: contentsWidth, height: contentsHeight, info: hoverInfo }} /> : null}
-                {selectedInfo ? <SelectedInfo2 {...{ width: contentsWidth, height: contentsHeight, info: selectedInfo }} /> : null}
+                {hoverPath
+                  ? (
+                    <HoverPath2 {...{
+                      width: contentsWidth,
+                      height: contentsHeight,
+                      path: hoverPath,
+                      xValue: data[hoverPath.datasetIndex].values[hoverPath.valueIndex].x,
+                      yValue: data[hoverPath.datasetIndex].values[hoverPath.valueIndex].y,
+                      layout: { x: xLayout, y: yLayout },
+                      color: palette[hoverPath.datasetIndex % palette.length]
+                    }}
+                    />
+                  )
+                  : null}
+                {selectedPath
+                  ? (
+                    <SelectedPath2 {...{
+                      width: contentsWidth,
+                      height: contentsHeight,
+                      path: selectedPath,
+                      xValue: data[selectedPath.datasetIndex].values[selectedPath.valueIndex].x,
+                      yValue: data[selectedPath.datasetIndex].values[selectedPath.valueIndex].y,
+                      layout: { x: xLayout, y: yLayout },
+                      color: palette[selectedPath.datasetIndex % palette.length],
+                      xValueFormatter
+                    }}
+                    />
+                  )
+                  : null}
               </g>
               <g transform='translate(64, 48)'>
                 <Legend
@@ -141,7 +166,7 @@ class Graph extends Component {
   }
 }
 
-Graph.propTypes = {
+Graph2.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
@@ -151,15 +176,17 @@ Graph.propTypes = {
   renderXAxis: PropTypes.func.isRequired,
   renderValues: PropTypes.func.isRequired,
   palette: PropTypes.array.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired,
+  xValueFormatter: PropTypes.func.isRequired,
   onHover: PropTypes.func,
   onSelect: PropTypes.func,
+  hoverPath: PropTypes.object,
+  selectedPath: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 }
 
-Graph.defaultProps = {
+Graph2.defaultProps = {
   xInfoFormatter: x => `${x}`,
   palette: colors10
 }
 
-export default Graph
+export default Graph2

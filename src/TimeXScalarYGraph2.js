@@ -20,24 +20,39 @@ class TimeXScalarYGraph2 extends Component {
       title,
       xLabel,
       palette,
-      onHover
+      onHover,
+      onSelect,
+      hoverPath,
+      selectedPath
     } = this.props
     const dataXMax = max(
       flatten(data.map(dataset => dataset.values.map(v => v.x)))
     )
     const pattern = timeFormatForPeriod2(period)
-    const xInfoFormatter = timestamp => {
+    const xValueFormatter = timestamp => {
       return format(new Date(timestamp), pattern, {
         timeZone: 'UTC'
       })
     }
     return (
       <Graph2
-        {...{ width, height, data, title, xLabel, palette, onHover }}
+        {...{
+          width,
+          height,
+          data,
+          title,
+          xLabel,
+          palette,
+          onHover,
+          onSelect,
+          hoverPath,
+          selectedPath,
+          xValueFormatter
+        }}
         computeXLayout={() => computeTimeLayout2(new Date(dataXMax), period)}
         renderXAxis={props => <TimeXAxis2 {...props} />}
         renderValues={props => (
-          <ScalarValues2 {...props} {...{ xInfoFormatter }} />
+          <ScalarValues2 {...props} />
         )}
       >
         <text style={{ textAnchor: 'end' }} x={width - 64} y={30}>
@@ -56,7 +71,10 @@ TimeXScalarYGraph2.propTypes = {
   data: PropTypes.array.isRequired,
   palette: PropTypes.array,
   period: PropTypes.oneOf(Object.keys(timePeriods)),
-  onHover: PropTypes.func
+  onHover: PropTypes.func,
+  onSelect: PropTypes.func,
+  hoverPath: PropTypes.object,
+  selectedPath: PropTypes.object
 }
 
 export default TimeXScalarYGraph2

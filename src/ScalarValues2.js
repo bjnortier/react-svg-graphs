@@ -6,26 +6,26 @@ class ScalarValues2 extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      hoverInfo: null
+      hoverIndex: null
     }
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
   }
 
-  handleMouseEnter (hoverPoint) {
+  handleMouseEnter (index) {
     const { onHover } = this.props
-    const hoverInfo = hoverPoint ? { ...hoverPoint } : null
-    this.setState({ hoverInfo }, () => {
+    const hoverIndex = index
+    this.setState({ hoverIndex }, () => {
       if (onHover) {
-        onHover(hoverInfo)
+        onHover(hoverIndex)
       }
     })
   }
 
   handleMouseLeave () {
     const { onHover } = this.props
-    this.setState({ hoverInfo: null }, () => {
+    this.setState({ hoverIndex: null }, () => {
       if (onHover) {
         onHover(null)
       }
@@ -33,18 +33,10 @@ class ScalarValues2 extends Component {
   }
 
   handleMouseUp () {
-    const { xInfoFormatter, onSelect } = this.props
-    const { hoverInfo } = this.state
-    const xInfo = `${xInfoFormatter(hoverInfo.xValue)}:`
-    const yInfo = `${hoverInfo.yValue}`
-    const selectedInfo = {
-      ...hoverInfo,
-      xInfo,
-      yInfo,
-      infoWidth: Math.round((xInfo.length + yInfo.length) * 7.3 + 8)
-    }
+    const { onSelect } = this.props
+    const { hoverIndex } = this.state
     if (onSelect) {
-      onSelect(selectedInfo)
+      onSelect(hoverIndex)
     }
   }
 
@@ -118,9 +110,9 @@ class ScalarValues2 extends Component {
                 stroke='none'
                 fill='transparent'
                 r={hoverRadius}
-                onMouseEnter={() => this.handleMouseEnter(p)}
-                onMouseLeave={() => this.handleMouseLeave(p)}
-                onMouseUp={() => this.handleMouseUp(p)}
+                onMouseEnter={() => this.handleMouseEnter(i)}
+                onMouseLeave={() => this.handleMouseLeave(i)}
+                onMouseUp={() => this.handleMouseUp(i)}
               />
             </g>
           ) : null
@@ -137,7 +129,6 @@ ScalarValues2.propTypes = {
   layout: PropTypes.object.isRequired,
   values: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired,
   onHover: PropTypes.func,
   onSelect: PropTypes.func
 }

@@ -1,8 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const SelectedInfo2 = ({ width, height, info }) => {
-  const { color, xPos, yPos, infoWidth, xInfo, yInfo } = info
+const SelectedPath2 = ({ width, height, xValue, yValue, xValueFormatter, layout, color }) => {
+  const xMin = layout.x.min
+  const xMax = layout.x.max
+  const yMin = layout.y.min
+  const yMax = layout.y.max
+
+  const xPos = ((xValue - xMin) / (xMax - xMin)) * width
+  const yPos = height - ((yValue - yMin) / (yMax - yMin)) * height
+
+  const xValueString = xValueFormatter(xValue)
+  const yValueString = String(yValue)
+  const infoWidth = Math.round((xValueString.length + yValueString.length) * 7.3 + 16)
   return (
     <g pointerEvents='none'>
       <line
@@ -19,8 +29,8 @@ const SelectedInfo2 = ({ width, height, info }) => {
         x2={0}
         y2={yPos}
       />
-      <g transform={`translate(${info.xPos},${info.yPos})`}>
-        <circle stroke={info.color} fill='none' r={5} />
+      <g transform={`translate(${xPos},${yPos})`}>
+        <circle stroke={color} fill='none' r={5} />
       </g>
       <g
         transform={`translate(${xPos +
@@ -33,13 +43,13 @@ const SelectedInfo2 = ({ width, height, info }) => {
           x={0}
           y={0}
           width={infoWidth}
-          height={33}
+          height={20}
           stroke='#ddd'
           fill='white'
           fillOpacity={0.8}
         />
         <text textAnchor='start' x={4} y={14} fill='#000'>
-          {xInfo}
+          {`${xValueString}:`}
         </text>
         <text
           textAnchor='end'
@@ -47,17 +57,21 @@ const SelectedInfo2 = ({ width, height, info }) => {
           y={14}
           fill={color}
         >
-          {yInfo}
+          {yValueString}
         </text>
       </g>
     </g>
   )
 }
 
-SelectedInfo2.propTypes = {
+SelectedPath2.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  info: PropTypes.object.isRequired
+  xValue: PropTypes.number.isRequired,
+  yValue: PropTypes.number.isRequired,
+  xValueFormatter: PropTypes.func.isRequired,
+  layout: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired
 }
 
-export default SelectedInfo2
+export default SelectedPath2

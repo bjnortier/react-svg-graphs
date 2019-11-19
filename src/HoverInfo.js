@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default ({ width, height, hoverInfo }) => (
+const HoverInfo = ({ width, height, hoverInfo }) => (
   <g pointerEvents='none'>
     <line
       stroke={hoverInfo.color}
@@ -46,3 +47,11 @@ export default ({ width, height, hoverInfo }) => (
     </g>
   </g>
 )
+
+HoverInfo.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  hoverInfo: PropTypes.object.isRequired
+}
+
+export default HoverInfo

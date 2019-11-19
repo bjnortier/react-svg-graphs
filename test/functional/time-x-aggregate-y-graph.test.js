@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TimeXAggregateYGraph from '../../src/TimeXAggregateYGraph'
+import { TimeXAggregateYGraph } from '../../src'
 import issue2 from './issue-2.js'
 import issue3 from './issue-3.js'
 
@@ -84,7 +84,7 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-export default props => (
+const TimeXAggregateYGraphTest = props => (
   <div>
     <GraphContainer width={width} height={height}>
       <TimeXAggregateYGraph
@@ -191,3 +191,5 @@ export default props => (
     </GraphContainer>
   </div>
 )
+
+export default TimeXAggregateYGraphTest

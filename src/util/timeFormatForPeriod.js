@@ -13,7 +13,10 @@ export default period => {
     case '1mo':
       return 'd HH:mm'
     case '1y':
+    case '2y':
     case '3y':
+    case '4y':
+    case '5y':
     case '6y':
     case '7y':
       return 'y/M/d'

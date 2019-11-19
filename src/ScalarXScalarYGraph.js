@@ -21,8 +21,7 @@ class ScalarXScalarYGraph extends Component {
       <Graph
         {...{ width, height, data, title, xLabel, palette, onHover }}
         computeXLayout={contentsWidth =>
-          computeScalarLayout('x', [dataXMin, dataXMax], contentsWidth)
-        }
+          computeScalarLayout('x', [dataXMin, dataXMax], contentsWidth)}
         renderXAxis={props => <ScalarXAxis {...props} />}
         renderValues={props => <ScalarValues {...props} />}
       />
@@ -36,6 +35,7 @@ ScalarXScalarYGraph.propTypes = {
   xLabel: PropTypes.string.isRequired,
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
+  palette: PropTypes.array,
   period: PropTypes.oneOf(Object.keys(timePeriods)),
   localOrUTC: PropTypes.oneOf(['local', 'utc']),
   onHover: PropTypes.func

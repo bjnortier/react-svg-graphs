@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { format, utcToZonedTime } from 'date-fns-tz'
+import { format } from 'date-fns-tz'
 
 class TimeXAxis extends Component {
   render () {
-    const { width, layout, timeZone } = this.props
-    const { min, max, timeAxisTickPeriod } = layout
+    const { width, layout } = this.props
+    const { min, max, tickDates } = layout
     const {
       tickLabelTest,
       tickLabelFormat,
@@ -13,30 +13,24 @@ class TimeXAxis extends Component {
       contextLabelFormat
     } = layout
     const formatDateTime = (date, pattern) => {
-      return format(utcToZonedTime(date, timeZone), pattern, {
-        timeZone: timeZone
+      return format(date, pattern, {
+        timeZone: 'UTC'
       })
     }
 
-    const firstTick = min
-    const lastTick = max
-
     const ticks = []
     const contexts = []
-    for (
-      let tickTime = firstTick, tickIndex = 0;
-      tickTime <= lastTick;
-      tickTime += timeAxisTickPeriod, ++tickIndex
-    ) {
-      const dx = ((tickTime - min) / (max - min)) * width
-      const tickDate = new Date(tickTime)
+    for (let i = 0; i < tickDates.length; ++i) {
+      const tickDate = tickDates[i]
+      const dx = ((tickDate.getTime() - min.getTime()) / (max.getTime() - min.getTime())) * width
       if (Math.abs(dx - width / 2) <= width / 2) {
         const label = tickLabelTest(tickDate, width)
           ? formatDateTime(tickDate, tickLabelFormat(width))
           : ''
         ticks.push({ dx, label })
       }
-      if (Math.abs(dx - width / 2) < width / 2 - 60) {
+      // Context label max width allowed = 30 pixels
+      if (Math.abs(dx - width / 2) < width / 2 - 12) {
         if (contextLabelTest(tickDate)) {
           contexts.push({
             dx,
@@ -49,7 +43,7 @@ class TimeXAxis extends Component {
       contexts.push({
         dx: width / 2,
         label: formatDateTime(
-          new Date((firstTick + lastTick) / 2),
+          new Date((min.getTime() + max.getTime()) / 2),
           contextLabelFormat
         )
       })
@@ -81,8 +75,8 @@ class TimeXAxis extends Component {
 
 TimeXAxis.propTypes = {
   width: PropTypes.number.isRequired,
-  layout: PropTypes.object.isRequired,
-  timeZone: PropTypes.string.isRequired
+  layout: PropTypes.object.isRequired
+
 }
 
 export default TimeXAxis

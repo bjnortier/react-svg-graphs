@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default ({ data, maxLegendLength, palette }) => (
+const Legend = ({ data, maxLegendLength, palette }) => (
   <>
     <rect
       x={0}
@@ -18,7 +19,7 @@ export default ({ data, maxLegendLength, palette }) => (
       return (
         <g key={i} transform={`translate(0, ${i * 20})`}>
           <line stroke={palette[paletteIndex]} x1={3} x2={17} y1={10} y2={10} />
-          <g transform={`translate(10, 10)`}>
+          <g transform='translate(10, 10)'>
             <circle
               stroke='none'
               x={5}
@@ -36,3 +37,11 @@ export default ({ data, maxLegendLength, palette }) => (
     })}
   </>
 )
+
+Legend.propTypes = {
+  data: PropTypes.array.isRequired,
+  maxLegendLength: PropTypes.number.isRequired,
+  palette: PropTypes.array.isRequired
+}
+
+export default Legend

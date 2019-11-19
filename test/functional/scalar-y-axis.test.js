@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import computeScalarLayout from '../../src/util/computeScalarLayout'
-import { ScalarYAxis } from '../../src'
+import ScalarYAxis from '../../src/ScalarYAxis'
 
 const examples = [
   [0, 10],
@@ -57,7 +57,7 @@ const SVGContainer = styled.div`
   background-color: #fff;
 `
 
-export default props => (
+const ScalarYTest = props => (
   <div>
     {examples.map((limits, i) => {
       return (
@@ -70,7 +70,7 @@ export default props => (
                 <Height width={80}>{height}</Height>
                 <SVGContainer width={80} height={height + 96}>
                   <svg width={64} height={height + 96}>
-                    <g transform={`translate(16, 48)`}>
+                    <g transform='translate(16, 48)'>
                       <line stroke='#ddd' x1={48} y1={0} x2={48} y2={height} />
                       <ScalarYAxis width={48} height={height} layout={layout} />
                     </g>
@@ -84,3 +84,5 @@ export default props => (
     })}
   </div>
 )
+
+export default ScalarYTest

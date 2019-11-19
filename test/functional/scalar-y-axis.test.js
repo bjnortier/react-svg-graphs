@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import computeScalarLayout from '../../src/util/computeScalarLayout'
-import { ScalarYAxis } from '../../src'
+import ScalarYAxis from '../../src/ScalarYAxis'
 
 const examples = [
   [0, 10],

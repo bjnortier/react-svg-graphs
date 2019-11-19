@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TimeXAggregateYGraph from '../../src/TimeXAggregateYGraph'
+import { TimeXAggregateYGraph } from '../../src'
 import issue2 from './issue-2.js'
 import issue3 from './issue-3.js'
 

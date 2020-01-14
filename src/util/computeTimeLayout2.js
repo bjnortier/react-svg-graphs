@@ -31,6 +31,16 @@ const endOfDay = (date) => {
   return eod
 }
 
+/**
+ * Number of days since 1970 epoch.
+ */
+const daySinceEpoch = (date) => {
+  var start = new Date(0)
+  var diff = (date - start)
+  var oneDay = 1000 * 60 * 60 * 24
+  return Math.floor(diff / oneDay)
+}
+
 export default (maxValue, period) => {
   const yearMatch = /([0-9]+)y/.exec(period)
   const dayMatch = /([0-9]+)d/.exec(period)
@@ -81,7 +91,7 @@ export default (maxValue, period) => {
         if (width <= 480 && n > 3) {
           return tickDate.getUTCHours() === 0
         } else {
-          return tickDate.getUTCHours() === 0 && tickDate.getUTCDate() % 2 === 0
+          return tickDate.getUTCHours() === 0 && daySinceEpoch(tickDate) % 2 === 0
         }
       },
       contextLabelFormat: 'yyyy/M/d'

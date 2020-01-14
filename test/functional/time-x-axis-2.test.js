@@ -11,11 +11,12 @@ const timeBounds = [
   [new Date('2018-01-02T00:00:00Z'), '3d'],
   [new Date('2018-01-02T00:00:00Z'), '4d'],
   [new Date('2018-01-02T00:00:00Z'), '5d'],
-  [new Date('2018-01-02T00:00:00Z'), '6d']
+  [new Date('2018-01-02T00:00:00Z'), '6d'],
+  [new Date('2018-01-02T00:00:00Z'), '7d']
 ]
 // const widths = [800]
 // const widths = [240, 800]
-const widths = [800, 640, 480, 320, 240]
+const widths = [800, 640, 480, 320]
 
 const Limits = styled.div`
   margin: 20px;

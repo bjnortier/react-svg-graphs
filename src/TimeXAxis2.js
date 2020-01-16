@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { format } from 'date-fns-tz'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 class TimeXAxis extends Component {
   render () {
@@ -13,7 +13,7 @@ class TimeXAxis extends Component {
       contextLabelFormat
     } = layout
     const formatDateTime = (date, pattern) => {
-      return format(date, pattern, {
+      return format(utcToZonedTime(date, 'UTC'), pattern, {
         timeZone: 'UTC'
       })
     }

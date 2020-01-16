@@ -25,7 +25,7 @@ const endOfDay = (date) => {
   eod.setUTCHours(0)
   eod.setUTCMinutes(0)
   eod.setUTCSeconds(0)
-  if (date.getUTCHours() !== 0) {
+  if (!(date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds === 0)) {
     eod = addDays(eod, 1)
   }
   return eod
@@ -43,6 +43,7 @@ const daySinceEpoch = (date) => {
 
 export default (maxValue, period) => {
   const yearMatch = /([0-9]+)y/.exec(period)
+  const weekMatch = /([0-9]+)w/.exec(period)
   const dayMatch = /([0-9]+)d/.exec(period)
   if (yearMatch) {
     const maxAxisDate = endOfMonth(maxValue)
@@ -68,13 +69,37 @@ export default (maxValue, period) => {
       contextLabelTest: tickDate => tickDate.getUTCMonth() === 0,
       contextLabelFormat: 'y'
     }
+  } else if (weekMatch) {
+    const maxAxisDate = endOfDay(maxValue)
+    const n = parseInt(weekMatch[1])
+    const minAxisDate = subDays(maxAxisDate, n * 7)
+    const tickDates = range(n * 28 + 1).map(x => subHours(maxAxisDate, x * 24)).reverse()
+    return {
+      tickDates,
+      max: maxAxisDate,
+      min: minAxisDate,
+      tickLabelTest: (tickDate, width) => {
+        if (width >= 480 && n <= 2) {
+          return true
+        } else {
+          return daySinceEpoch(tickDate) % 2 === 0
+        }
+      },
+      tickLabelFormat: width => 'd',
+      contextLabelTest: (tickDate, width) => {
+        if (n > 2) {
+          return daySinceEpoch(tickDate) % 14 === 0
+        } else {
+          return daySinceEpoch(tickDate) % 7 === 0
+        }
+      },
+      contextLabelFormat: 'yyyy/M/d'
+    }
   } else if (dayMatch) {
     const maxAxisDate = endOfDay(maxValue)
     const n = parseInt(dayMatch[1])
     const minAxisDate = subDays(maxAxisDate, n)
     const tickDates = range(n * 24 + 1).map(x => subHours(maxAxisDate, x)).reverse()
-    console.log('min', minAxisDate.toISOString())
-    console.log('max', maxAxisDate.toISOString())
     return {
       tickDates,
       max: maxAxisDate,

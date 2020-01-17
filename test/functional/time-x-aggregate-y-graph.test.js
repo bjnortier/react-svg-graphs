@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import { TimeXAggregateYGraph } from '../../src'
+import { TimeXAggregateYGraph, HoverAndSelectHandler } from '../../src'
 import issue2 from './issue-2.js'
 import issue3 from './issue-3.js'
 
@@ -85,32 +85,11 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-class HoverAndSelectionGraph extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedPath: null,
-      hoverPath: null
-    }
-  }
-
-  render () {
-    return (
-      <TimeXAggregateYGraph
-        {...this.props}
-        onSelect={selectedPath => this.setState({ selectedPath })}
-        onHover={hoverPath => this.setState({ hoverPath })}
-        selectedPath={this.state.selectedPath}
-        hoverPath={this.state.hoverPath}
-      />
-    )
-  }
-}
-
 const TimeXAggregateYGraphTest = props => (
   <div>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={data1}
@@ -123,7 +102,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={data2}
@@ -135,7 +115,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={data3}
@@ -147,7 +128,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={data5}
@@ -159,7 +141,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={issue2}
@@ -170,7 +153,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={issue3}
@@ -181,7 +165,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={[]}
@@ -192,7 +177,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={emptyValues}
@@ -203,7 +189,8 @@ const TimeXAggregateYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
         width={width}
         height={height}
         data={data1}

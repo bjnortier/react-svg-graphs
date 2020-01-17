@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import { TimeXScalarYGraph } from '../../src'
+import { TimeXScalarYGraph, HoverAndSelectHandler } from '../../src'
 
 const data1 = [
   {
@@ -33,32 +33,11 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-class HoverAndSelectionGraph extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedPath: null,
-      hoverPath: null
-    }
-  }
-
-  render () {
-    return (
-      <TimeXScalarYGraph
-        {...this.props}
-        onSelect={selectedPath => this.setState({ selectedPath })}
-        onHover={hoverPath => this.setState({ hoverPath })}
-        selectedPath={this.state.selectedPath}
-        hoverPath={this.state.hoverPath}
-      />
-    )
-  }
-}
-
 const TimeXScalarYGraphTest = props => (
   <div>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXScalarYGraph}
         data={data1}
         width={width}
         height={height}
@@ -68,7 +47,8 @@ const TimeXScalarYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXScalarYGraph}
         data={data1}
         width={width}
         height={height}
@@ -79,7 +59,8 @@ const TimeXScalarYGraphTest = props => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={TimeXScalarYGraph}
         data={emptyData}
         width={width}
         height={height}

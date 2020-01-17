@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { round10 } from 'round10'
 import styled from 'styled-components'
 import { zip } from 'lodash'
 
-import { ScalarXScalarYGraph } from '../../src'
+import { ScalarXScalarYGraph, HoverAndSelectHandler } from '../../src'
 import temporalData from '../resources/flow.json'
 
 const data1 = [
@@ -66,32 +66,11 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
-class HoverAndSelectionGraph extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedPath: null,
-      hoverPath: null
-    }
-  }
-
-  render () {
-    return (
-      <ScalarXScalarYGraph
-        {...this.props}
-        onHover={hoverPath => this.setState({ hoverPath })}
-        onSelect={selectedPath => this.setState({ selectedPath })}
-        hoverPath={this.state.hoverPath}
-        selectedPath={this.state.selectedPath}
-      />
-    )
-  }
-}
-
 const ScalarXScalarGraphTest = (props) => (
   <div>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={ScalarXScalarYGraph}
         data={data1}
         width={width}
         height={height}
@@ -100,7 +79,8 @@ const ScalarXScalarGraphTest = (props) => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={350}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={ScalarXScalarYGraph}
         data={data2}
         width={width}
         height={350}
@@ -109,7 +89,8 @@ const ScalarXScalarGraphTest = (props) => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={ScalarXScalarYGraph}
         data={data3}
         width={width}
         height={height}
@@ -118,7 +99,8 @@ const ScalarXScalarGraphTest = (props) => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={ScalarXScalarYGraph}
         data={data4}
         width={width}
         height={height}
@@ -128,7 +110,8 @@ const ScalarXScalarGraphTest = (props) => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={ScalarXScalarYGraph}
         data={emptyData}
         width={width}
         height={height}
@@ -138,7 +121,8 @@ const ScalarXScalarGraphTest = (props) => (
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <HoverAndSelectionGraph
+      <HoverAndSelectHandler
+        GraphComponent={ScalarXScalarYGraph}
         data={data1}
         width={width}
         height={height}

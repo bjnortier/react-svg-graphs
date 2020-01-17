@@ -1,10 +1,10 @@
 import expect from 'expect'
 
-import computeTimeLayout2 from '../../src/util/computeTimeLayout2'
+import computeTimeLayout from '../../src/util/computeTimeLayout'
 
-describe.only('Compute Time Layout 2', () => {
+describe('Compute Time Layout 2', () => {
   it('can compute for 1y period', () => {
-    expect(computeTimeLayout2(new Date('2018-03-14T11:35:00Z'), '1y')).toMatchObject({
+    expect(computeTimeLayout(new Date('2018-03-14T11:35:00Z'), '1y')).toMatchObject({
       tickDates: [
         new Date('2017-04-01T00:00:00.000Z'),
         new Date('2017-05-01T00:00:00.000Z'),
@@ -21,7 +21,7 @@ describe.only('Compute Time Layout 2', () => {
         new Date('2018-04-01T00:00:00.000Z')
       ]
     })
-    expect(computeTimeLayout2(new Date('2018-12-31T11:35:00Z'), '1y')).toMatchObject({
+    expect(computeTimeLayout(new Date('2018-12-31T11:35:00Z'), '1y')).toMatchObject({
       tickDates: [
         new Date('2018-01-01T00:00:00.000Z'),
         new Date('2018-02-01T00:00:00.000Z'),
@@ -39,11 +39,11 @@ describe.only('Compute Time Layout 2', () => {
       ]
     })
 
-    const layout3 = computeTimeLayout2(new Date('2018-03-11T11:35:00Z'), '3y')
+    const layout3 = computeTimeLayout(new Date('2018-03-11T11:35:00Z'), '3y')
     expect(layout3.tickDates[0]).toEqual(new Date('2015-04-01T00:00:00.000Z'))
     expect(layout3.tickDates[layout3.tickDates.length - 1]).toEqual(new Date('2018-04-01T00:00:00.000Z'))
 
-    const layout4 = computeTimeLayout2(new Date('2018-03-11T11:35:00Z'), '4y')
+    const layout4 = computeTimeLayout(new Date('2018-03-11T11:35:00Z'), '4y')
     expect(layout4.tickDates[0]).toEqual(new Date('2014-04-01T00:00:00.000Z'))
     expect(layout4.tickDates[layout4.tickDates.length - 1]).toEqual(new Date('2018-04-01T00:00:00.000Z'))
   })

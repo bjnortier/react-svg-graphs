@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import jstz from 'jstz'
 import { max, flatten } from 'lodash'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
@@ -9,14 +8,11 @@ import ContinuousBarValues from './ContinuousBarValues'
 import Graph from './Graph'
 import computeTimeLayout from './util/computeTimeLayout'
 import computeAggregate from './util/computeAggregate'
-import ceilingToPeriod from './util/ceilingToPeriod'
-import timePeriods from './util/timePeriods'
 import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXAggregateYGraph extends Component {
   render () {
     const {
-      localOrUTC,
       width,
       height,
       title,
@@ -25,19 +21,21 @@ class TimeXAggregateYGraph extends Component {
       period,
       divisions,
       palette,
-      onHover
+      fill,
+      onHover,
+      onSelect,
+      hoverPath,
+      selectedPath
     } = this.props
-    const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     const pattern = timeFormatForPeriod(period)
 
     const noValues = data.reduce((acc, d) => acc + d.values.length, 0) === 0
     const dataXMax = noValues
       ? new Date().getTime()
       : max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
-    const xMax0 = ceilingToPeriod(dataXMax, period, divisions)
-    const layout = computeTimeLayout(xMax0, period, localOrUTC)
-    const xMax = layout.max
-    const xMin = layout.min
+    const layout = computeTimeLayout(new Date(dataXMax), period)
+    const xMax = layout.max.getTime()
+    const xMin = layout.min.getTime()
     const dx = (xMax - xMin) / divisions
     const aggregateData = noValues
       ? []
@@ -46,17 +44,9 @@ class TimeXAggregateYGraph extends Component {
         values: computeAggregate({ xMin, xMax, divisions, data: d.values })
       }))
 
-    const xInfoFormatter = timestamp => {
-      const from = format(
-        utcToZonedTime(new Date(timestamp - dx / 2), timeZone),
-        pattern,
-        { timeZone: timeZone }
-      )
-      const to = format(
-        utcToZonedTime(new Date(timestamp + dx / 2), timeZone),
-        pattern,
-        { timeZone: timeZone }
-      )
+    const xValueFormatter = timestamp => {
+      const from = format(utcToZonedTime(new Date(timestamp - dx / 2), 'UTC'), pattern, { timeZone: 'UTC' })
+      const to = format(utcToZonedTime(new Date(timestamp + dx / 2), 'UTC'), pattern, { timeZone: 'UTC' })
       return `${from}-${to}`
     }
     return (
@@ -68,16 +58,22 @@ class TimeXAggregateYGraph extends Component {
           title,
           xLabel,
           palette,
-          onHover
+          fill,
+          onHover,
+          onSelect,
+          hoverPath,
+          selectedPath,
+          xValueFormatter,
+          hoverSelectStyle: 'fine'
         }}
-        computeXLayout={() => computeTimeLayout(xMax, period, localOrUTC)}
-        renderXAxis={props => <TimeXAxis {...props} timeZone={timeZone} />}
+        computeXLayout={() => computeTimeLayout(new Date(dataXMax), period)}
+        renderXAxis={props => <TimeXAxis {...props} />}
         renderValues={props => (
-          <ContinuousBarValues {...props} {...{ dx, xInfoFormatter }} />
+          <ContinuousBarValues {...props} dx={dx} />
         )}
       >
         <text style={{ textAnchor: 'end' }} x={width - 64} y={30}>
-          [{timeZone}]
+          [UTC]
         </text>
       </Graph>
     )
@@ -91,10 +87,13 @@ TimeXAggregateYGraph.propTypes = {
   title: PropTypes.string.isRequired,
   xLabel: PropTypes.string.isRequired,
   palette: PropTypes.array,
-  period: PropTypes.oneOf(Object.keys(timePeriods)),
+  fill: PropTypes.string,
+  period: PropTypes.string.isRequired,
   divisions: PropTypes.number.isRequired,
-  localOrUTC: PropTypes.oneOf(['local', 'utc']),
-  onHover: PropTypes.func
+  onHover: PropTypes.func,
+  onSelect: PropTypes.func,
+  hoverPath: PropTypes.object,
+  selectedPath: PropTypes.object
 }
 
 TimeXAxis.defaultProps = {

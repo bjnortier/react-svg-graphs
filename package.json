@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -14,7 +14,7 @@
     "test:unit:watch": "npm run test:unit -- --watch",
     "test:functional": "cd test/functional && webpack-dev-server",
     "test": "npm run test:lint && npm run test:unit",
-    "compile": "babel --optional runtime -d lib/ src/",
+    "compile": "babel -d lib/ src/",
     "prepublishOnly": "npm audit && rimraf lib/ && npm run compile"
   },
   "repository": {
@@ -67,7 +67,6 @@
   "dependencies": {
     "date-fns": "^2.9.0",
     "date-fns-tz": "^1.0.9",
-    "jstz": "^2.1.1",
     "lodash": "^4.17.15",
     "ms": "^2.1.2",
     "round10": "^1.0.3",

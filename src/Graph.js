@@ -2,12 +2,34 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { min, max, flatten } from 'lodash'
 
+import SelectedPath from './SelectedPath'
+import HoverPath from './HoverPath'
 import Legend from './Legend'
 import ScalarYAxis from './ScalarYAxis'
 import computeScalarLayout from './util/computeScalarLayout'
 import colors10 from './util/colors10'
 
 class Graph extends Component {
+  constructor (props) {
+    super(props)
+    this.handleHover = this.handleHover.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
+  }
+
+  handleHover (hoverPath) {
+    const { onHover } = this.props
+    if (onHover) {
+      onHover(hoverPath)
+    }
+  }
+
+  handleSelect (selectPath) {
+    const { onSelect } = this.props
+    if (onSelect) {
+      onSelect(selectPath)
+    }
+  }
+
   render () {
     const {
       width,
@@ -19,9 +41,13 @@ class Graph extends Component {
       renderXAxis,
       renderValues,
       palette,
-      xInfoFormatter,
-      onHover
+      hoverPath,
+      selectedPath,
+      xValueFormatter,
+      hoverSelectStyle,
+      fill
     } = this.props
+
     const yMin = min(flatten(data.map(d => d.values.map(d => d.y))))
     const yMax = max(flatten(data.map(d => d.values.map(d => d.y))))
     const contentsWidth = width - 128
@@ -46,6 +72,13 @@ class Graph extends Component {
         height={height}
       >
         <g transform='translate(0.5, 0.5)'>
+          <rect
+            fill={fill}
+            x='0'
+            y='0'
+            width={width}
+            height={height}
+          />
           <text
             style={{ textAnchor: 'middle' }}
             x={64 + contentsWidth / 2}
@@ -54,12 +87,13 @@ class Graph extends Component {
             {title}
           </text>
           <rect
+            fill={fill}
             stroke='#ddd'
-            fill='none'
             x='64'
             y='48'
             width={contentsWidth}
             height={contentsHeight}
+            onClick={() => this.handleSelect(null)}
           />
           {validData ? (
             <>
@@ -79,16 +113,60 @@ class Graph extends Component {
                     key: i,
                     width: contentsWidth,
                     height: contentsHeight,
-                    stroke: palette[i % palette.length],
-                    fill: `${palette[i % palette.length]}11`,
+                    color: palette[i % palette.length],
                     values: dataset.values,
                     layout: { x: xLayout, y: yLayout },
-                    xInfoFormatter,
-                    onHover: onHover
-                      ? hoverInfo => onHover({ ...hoverInfo, yIndex: i })
-                      : null
+                    onHover: (valueIndex) => {
+                      const hoverPath = valueIndex !== null
+                        ? {
+                          valueIndex,
+                          datasetIndex: i
+                        }
+                        : null
+                      this.handleHover(hoverPath)
+                    },
+                    onSelect: (valueIndex) => {
+                      const selectPath = valueIndex !== null
+                        ? {
+                          valueIndex,
+                          datasetIndex: i
+                        }
+                        : null
+                      this.handleSelect(selectPath)
+                    }
                   })
                 )}
+                {hoverPath
+                  ? (
+                    <HoverPath {...{
+                      width: contentsWidth,
+                      height: contentsHeight,
+                      path: hoverPath,
+                      xValue: data[hoverPath.datasetIndex].values[hoverPath.valueIndex].x,
+                      yValue: data[hoverPath.datasetIndex].values[hoverPath.valueIndex].y,
+                      layout: { x: xLayout, y: yLayout },
+                      color: palette[hoverPath.datasetIndex % palette.length],
+                      hoverSelectStyle
+                    }}
+                    />
+                  )
+                  : null}
+                {selectedPath
+                  ? (
+                    <SelectedPath {...{
+                      width: contentsWidth,
+                      height: contentsHeight,
+                      path: selectedPath,
+                      xValue: data[selectedPath.datasetIndex].values[selectedPath.valueIndex].x,
+                      yValue: data[selectedPath.datasetIndex].values[selectedPath.valueIndex].y,
+                      layout: { x: xLayout, y: yLayout },
+                      color: palette[selectedPath.datasetIndex % palette.length],
+                      xValueFormatter,
+                      hoverSelectStyle
+                    }}
+                    />
+                  )
+                  : null}
               </g>
               <g transform='translate(64, 48)'>
                 <Legend
@@ -116,14 +194,20 @@ Graph.propTypes = {
   renderXAxis: PropTypes.func.isRequired,
   renderValues: PropTypes.func.isRequired,
   palette: PropTypes.array.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired,
+  xValueFormatter: PropTypes.func.isRequired,
   onHover: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  onSelect: PropTypes.func,
+  hoverPath: PropTypes.object,
+  selectedPath: PropTypes.object,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  fill: PropTypes.string.isRequired,
+  hoverSelectStyle: PropTypes.oneOf(['circle', 'fine']).isRequired
 }
 
 Graph.defaultProps = {
-  xInfoFormatter: x => `${x}`,
-  palette: colors10
+  xValueFormatter: x => `${x}`,
+  palette: colors10,
+  fill: '#fff'
 }
 
 export default Graph

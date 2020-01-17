@@ -77,7 +77,8 @@ const emptyValues = [
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: #fff;
+  background-color: #bdf;
+  padding: 20px;
   margin: 20px;
 `
 
@@ -188,7 +189,6 @@ const TimeXAggregateYGraphTest = props => (
         xLabel='Time'
         period='1d'
         divisions={6}
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
@@ -200,7 +200,18 @@ const TimeXAggregateYGraphTest = props => (
         xLabel='Time'
         period='1d'
         divisions={6}
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <HoverAndSelectionGraph
+        width={width}
+        height={height}
+        data={data1}
+        title='Fill Example'
+        xLabel='Time'
+        period='1d'
+        divisions={24}
+        fill='#ea9'
       />
     </GraphContainer>
   </div>

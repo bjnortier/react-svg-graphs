@@ -137,6 +137,16 @@ const ScalarXScalarGraphTest = (props) => (
         colors={colors4}
       />
     </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <HoverAndSelectionGraph
+        data={data1}
+        width={width}
+        height={height}
+        title='Fill Example'
+        xLabel='Iterations'
+        fill='yellow'
+      />
+    </GraphContainer>
   </div>
 )
 

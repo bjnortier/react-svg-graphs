@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { round10 } from 'round10'
 import styled from 'styled-components'
 import { zip } from 'lodash'
@@ -58,65 +58,83 @@ const colors4 = ['#906', '#609']
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: #fff;
+  background-color: #bdf;
+  padding: 20px;
   margin: 20px;
 `
 
 const width = 640
 const height = 480
 
+class HoverAndSelectionGraph extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedPath: null,
+      hoverPath: null
+    }
+  }
+
+  render () {
+    return (
+      <ScalarXScalarYGraph
+        {...this.props}
+        onHover={hoverPath => this.setState({ hoverPath })}
+        onSelect={selectedPath => this.setState({ selectedPath })}
+        hoverPath={this.state.hoverPath}
+        selectedPath={this.state.selectedPath}
+      />
+    )
+  }
+}
+
 const ScalarXScalarGraphTest = (props) => (
   <div>
     <GraphContainer width={width} height={height}>
-      <ScalarXScalarYGraph
+      <HoverAndSelectionGraph
         data={data1}
         width={width}
         height={height}
         title='Basic Example'
         xLabel='Iterations'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
-    <GraphContainer width={width} height={height}>
-      <ScalarXScalarYGraph
+    <GraphContainer width={width} height={350}>
+      <HoverAndSelectionGraph
         data={data2}
         width={width}
         height={350}
         title='Colors Example'
         xLabel='X'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <ScalarXScalarYGraph
+      <HoverAndSelectionGraph
         data={data3}
         width={width}
         height={height}
         title='Limits Example'
         xLabel='iterations'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <ScalarXScalarYGraph
+      <HoverAndSelectionGraph
         data={data4}
         width={width}
         height={height}
         title='Large Dataset Example'
         xLabel='Foo'
         palette={colors4}
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <ScalarXScalarYGraph
+      <HoverAndSelectionGraph
         data={emptyData}
         width={width}
         height={height}
         title='Empty Example'
         xLabel='Empty'
         colors={colors4}
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
   </div>

@@ -6,11 +6,22 @@ import computeScalarLayout from './util/computeScalarLayout'
 import ScalarXAxis from './ScalarXAxis'
 import ScalarValues from './ScalarValues'
 import Graph from './Graph'
-import timePeriods from './util/timePeriods'
 
 class ScalarXScalarYGraph extends Component {
   render () {
-    const { width, height, data, title, xLabel, palette, onHover } = this.props
+    const {
+      width,
+      height,
+      data,
+      title,
+      xLabel,
+      palette,
+      fill,
+      onHover,
+      onSelect,
+      hoverPath,
+      selectedPath
+    } = this.props
     const dataXMax = max(
       flatten(data.map(dataset => dataset.values.map(v => v.x)))
     )
@@ -19,7 +30,20 @@ class ScalarXScalarYGraph extends Component {
     )
     return (
       <Graph
-        {...{ width, height, data, title, xLabel, palette, onHover }}
+        {...{
+          width,
+          height,
+          data,
+          title,
+          xLabel,
+          palette,
+          fill,
+          onHover,
+          onSelect,
+          hoverPath,
+          selectedPath,
+          hoverSelectStyle: 'circle'
+        }}
         computeXLayout={contentsWidth =>
           computeScalarLayout('x', [dataXMin, dataXMax], contentsWidth)}
         renderXAxis={props => <ScalarXAxis {...props} />}
@@ -36,9 +60,11 @@ ScalarXScalarYGraph.propTypes = {
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   palette: PropTypes.array,
-  period: PropTypes.oneOf(Object.keys(timePeriods)),
-  localOrUTC: PropTypes.oneOf(['local', 'utc']),
-  onHover: PropTypes.func
+  fill: PropTypes.string,
+  onHover: PropTypes.func,
+  onSelect: PropTypes.func,
+  hoverPath: PropTypes.object,
+  selectedPath: PropTypes.object
 }
 
 export default ScalarXScalarYGraph

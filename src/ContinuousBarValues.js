@@ -2,53 +2,48 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Box2 } from 'vecks'
 
-import HoverInfo from './HoverInfo'
-
 class ContinuousBarValues extends Component {
   constructor (props) {
     super(props)
     this.state = {
       hoverIndex: null
     }
-    this.handleHoverBar = this.handleHoverBar.bind(this)
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
   }
 
-  handleMouseEnter (index, point) {
-    this.setState({ hoverIndex: index, hoverPoint: point }, this.handleHoverBar)
+  handleMouseEnter (index) {
+    const { onHover } = this.props
+    const hoverIndex = index
+    this.setState({ hoverIndex }, () => {
+      if (onHover) {
+        onHover(hoverIndex)
+      }
+    })
   }
 
   handleMouseLeave () {
-    this.setState({ hoverIndex: null, hoverPoint: null }, this.handleHoverBar)
+    const { onHover } = this.props
+    this.setState({ hoverIndex: null }, () => {
+      if (onHover) {
+        onHover(null)
+      }
+    })
   }
 
-  handleHoverBar () {
-    const { xInfoFormatter, values, stroke } = this.props
-    const { hoverIndex, hoverPoint } = this.state
-    if (hoverIndex !== null) {
-      const xInfo = `${xInfoFormatter(values[hoverIndex].x)}:`
-      const yInfo = `${values[hoverIndex].y}`
-      const hoverInfo = {
-        xPos: Math.round(hoverPoint.x),
-        yPos: Math.round(hoverPoint.y),
-        xInfo,
-        yInfo,
-        color: stroke,
-        infoWidth: Math.round((xInfo.length + yInfo.length) * 7.3 + 8)
-      }
-      this.setState({ hoverInfo })
-      if (this.props.onHover) {
-        this.props.onHover(hoverInfo)
-      }
-    } else {
-      this.setState({ hoverInfo: null })
+  handleMouseUp () {
+    const { onSelect } = this.props
+    const { hoverIndex } = this.state
+    if (onSelect) {
+      onSelect(hoverIndex)
     }
   }
 
   render () {
-    const { width, height, stroke, fill, values, dx, layout } = this.props
-    const { hoverIndex, hoverInfo } = this.state
+    const { width, height, color, values, dx, layout } = this.props
+    const stroke = color
+    const fill = color
 
     const bounds = new Box2()
       .expandByPoint({ x: layout.x.min, y: layout.y.min })
@@ -84,9 +79,9 @@ class ContinuousBarValues extends Component {
     })
 
     const bars = values.map(({ x, y }) => ({
-      x: mapXToCanvas(x - dx / 2),
+      x: mapXToCanvas(x - dx / 2) - 0.5,
       y: Math.min(mapYToCanvas(Math.max(layout.y.min, 0)), mapYToCanvas(y)),
-      width: mapXToCanvas(x + dx / 2) - mapXToCanvas(x - dx / 2),
+      width: mapXToCanvas(x + dx / 2) - mapXToCanvas(x - dx / 2) + 1,
       height: Math.abs(
         mapYToCanvas(y) - mapYToCanvas(Math.max(layout.y.min, 0))
       )
@@ -95,44 +90,36 @@ class ContinuousBarValues extends Component {
     const strokePoints = strokePolyline.map(({ x, y }) => `${x},${y}`).join(' ')
     return (
       <g>
+        <g opacity='0.15'>
+          {bars.map(({ x, y, width, height }, i) => (
+            <rect
+              key={i}
+              fill={fill}
+              x={x}
+              y={y}
+              width={width}
+              height={height}
+              onMouseEnter={() => this.handleMouseEnter(i)}
+              onMouseLeave={() => this.handleMouseLeave(i)}
+              onMouseUp={() => this.handleMouseUp(i)}
+            />
+          ))}
+        </g>
         <polyline stroke={stroke} fill='none' points={strokePoints} />
-        {bars.map(({ x, y, width, height }, i) => (
-          <rect
-            key={i}
-            fill={fill}
-            x={x}
-            y={y}
-            width={width}
-            height={height}
-            onMouseEnter={() => this.handleMouseEnter(i, hoverPoints[i])}
-            onMouseLeave={() => this.handleMouseLeave(i, hoverPoints[i])}
-          />
-        ))}
-        {hoverIndex !== null ? (
-          <g
-            transform={`translate(${hoverPoints[hoverIndex].x},${
-              hoverPoints[hoverIndex].y
-            })`}
-          >
-            <circle stroke='none' fill={stroke} r={3} />
-          </g>
-        ) : null}
-        {hoverInfo ? <HoverInfo {...{ width, height, hoverInfo }} /> : null}
       </g>
     )
   }
 }
 
 ContinuousBarValues.propTypes = {
-  values: PropTypes.array.isRequired,
-  stroke: PropTypes.string.isRequired,
-  fill: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   layout: PropTypes.object.isRequired,
+  values: PropTypes.array.isRequired,
   dx: PropTypes.number.isRequired,
-  xInfoFormatter: PropTypes.func.isRequired,
-  onHover: PropTypes.func
+  color: PropTypes.string.isRequired,
+  onHover: PropTypes.func,
+  onSelect: PropTypes.func
 }
 
 export default ContinuousBarValues

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import { TimeXScalarYGraph } from '../../src'
@@ -25,60 +25,80 @@ const palette = ['#990066', '#660099']
 const GraphContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: #fff;
+  background-color: #bdf;
+  padding: 20px;
   margin: 20px;
 `
 
 const width = 640
 const height = 480
 
+class HoverAndSelectionGraph extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedPath: null,
+      hoverPath: null
+    }
+  }
+
+  render () {
+    return (
+      <TimeXScalarYGraph
+        {...this.props}
+        onSelect={selectedPath => this.setState({ selectedPath })}
+        onHover={hoverPath => this.setState({ hoverPath })}
+        selectedPath={this.state.selectedPath}
+        hoverPath={this.state.hoverPath}
+      />
+    )
+  }
+}
+
 const TimeXScalarYGraphTest = props => (
   <div>
     <GraphContainer width={width} height={height}>
-      <TimeXScalarYGraph
+      <HoverAndSelectionGraph
         data={data1}
         width={width}
         height={height}
-        title='Basic Example UTC'
+        title='Basic Example'
         xLabel='Time'
-        period='24h'
-        localOrUTC='utc'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+        period='1d'
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXScalarYGraph
+      <HoverAndSelectionGraph
         data={data1}
         width={width}
         height={height}
-        title='Basic Example Local'
+        title='Palette example'
         xLabel='Time'
-        period='24h'
-        localOrUTC='local'
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
-      />
-    </GraphContainer>
-    <GraphContainer width={width} height={height}>
-      <TimeXScalarYGraph
-        data={data1}
-        width={width}
-        height={height}
-        title='Show latest example'
-        xLabel='Time'
-        period='6h'
+        period='2d'
         palette={palette}
-        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXScalarYGraph
+      <HoverAndSelectionGraph
         data={emptyData}
         width={width}
         height={height}
         title='Empty Data Example'
-        period='6h'
+        period='3d'
         xLabel='Time'
         palette={palette}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <TimeXScalarYGraph
+        data={data1}
+        width={width}
+        height={height}
+        title='Fill Example'
+        xLabel='Time'
+        period='1d'
+        palette={palette}
+        fill='#fce'
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>

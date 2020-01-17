@@ -1,34 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
-import jstz from 'jstz'
 
 import computeTimeLayout from '../../src/util/computeTimeLayout'
 import TimeXAxis from '../../src/TimeXAxis'
 
 const timeBounds = [
-  [new Date('2002-01-01T00:00:00Z').getTime(), '7y', 'utc'],
-  [new Date('2002-01-01T00:00:00Z').getTime(), '6y', 'utc'],
-  [new Date('2018-06-22T00:00:00Z').getTime(), '6y', 'utc'],
-  [new Date('2018-06-22T00:00:00Z').getTime(), '1mo', 'utc'],
-  [new Date('2018-06-01T00:00:00Z').getTime(), '1mo', 'utc'],
-  [new Date('2018-01-03T00:00:00Z').getTime(), '1w', 'utc'],
-  [new Date('2018-06-19T00:00:00Z').getTime(), '1w', 'utc'],
-  [new Date('2018-06-19T12:00:00Z').getTime(), '2d', 'utc'],
-  [new Date('2018-06-19T00:00:00Z').getTime(), '2d', 'utc'],
-  [new Date('2018-06-19T03:00:00Z').getTime(), '1d', 'utc'],
-  [new Date('2018-06-19T00:00:00Z').getTime(), '1d', 'utc'],
-  [new Date('2018-06-19T08:00:00Z').getTime(), '12h', 'utc'],
-  [new Date('2018-06-19T00:00:00Z').getTime(), '12h', 'utc'],
-  [new Date('2018-06-19T01:45:00Z').getTime(), '6h', 'utc'],
-  [new Date('2018-06-19T00:00:00Z').getTime(), '6h', 'utc'],
-  [new Date('2018-06-19T00:30:00Z').getTime(), '3h', 'utc'],
-  [new Date('2018-06-19T00:00:00Z').getTime(), '3h', 'utc'],
-  [new Date('2018-06-19T00:15:00Z').getTime(), '1h', 'utc'],
-  [new Date('2018-06-19T00:15:00Z').getTime(), '1h', 'local'],
-  [new Date('2018-06-19T12:00:00Z').getTime(), '1h', 'utc'],
-  [new Date('2018-06-19T11:55:00Z').getTime(), '1h', 'local']
+  [new Date('2018-01-02T00:00:00Z'), '1d'],
+  [new Date('2018-01-02T05:00:00Z'), '1d'],
+  [new Date('2018-01-02T00:00:00Z'), '2d'],
+  [new Date('2018-01-02T00:00:00Z'), '3d'],
+  [new Date('2018-01-02T00:00:00Z'), '4d'],
+  [new Date('2018-01-02T00:00:00Z'), '5d'],
+  [new Date('2018-01-02T00:00:00Z'), '6d'],
+  [new Date('2018-01-02T00:00:00Z'), '7d'],
+  [new Date('2018-01-02T00:00:00Z'), '1w'],
+  [new Date('2018-01-02T00:00:00Z'), '2w'],
+  [new Date('2018-01-04T00:01:00Z'), '3w'],
+  [new Date('2018-01-02T00:00:00Z'), '4w']
 ]
-const widths = [800, 640, 480, 320, 240]
+// const widths = [800]
+// const widths = [240, 800]
+const widths = [800, 640, 480, 320]
 
 const Limits = styled.div`
   margin: 20px;
@@ -45,24 +37,23 @@ const SVGContainer = styled.div`
   background-color: #fff;
 `
 
-const TimeXAxisTest = props => (
+const TimeXAxis2Test = props => (
   <div>
-    {timeBounds.map(([maxTimestamp, period, localOrUTC], i) => {
-      const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
+    {timeBounds.map(([maxDateValue, period], i) => {
       return (
         <div key={i}>
           <Limits>
-            {new Date(maxTimestamp).toGMTString()} [{period}][{localOrUTC}]
+            {maxDateValue.toGMTString()} [{period}]
           </Limits>
           {widths.map(width => {
-            const layout = computeTimeLayout(maxTimestamp, period, localOrUTC)
+            const layout = computeTimeLayout(maxDateValue, period)
             return (
               <SVGContainer key={width} width={width + 48}>
                 <Width>{width}px</Width>
                 <svg width={width + 48} height={48}>
                   <g transform='translate(24, 0)'>
                     <line stroke='#ddd' x1={0} y1={0} x2={width} y2={0} />
-                    <TimeXAxis {...{ width, layout, timeZone }} />
+                    <TimeXAxis {...{ width, layout }} />
                   </g>
                 </svg>
               </SVGContainer>
@@ -74,4 +65,4 @@ const TimeXAxisTest = props => (
   </div>
 )
 
-export default TimeXAxisTest
+export default TimeXAxis2Test

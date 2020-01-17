@@ -1,29 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import { TimeXAggregateYGraph } from '../../src'
 import issue2 from './issue-2.js'
 import issue3 from './issue-3.js'
 
-const minutes = []
-for (let i = 1; i <= 60; ++i) {
-  minutes.push(i * 1000 * 60)
+const hours = []
+for (let i = 1; i <= 23; ++i) {
+  hours.push(i * 1000 * 60 * 60)
 }
 
-const subSampleMinutes1 = [21, 20, 23, 45].map(x => x * 1000 * 60)
-const subSampleMinutes2 = [-10, 5, 10, 11, 30, 35].map(x => x * 1000 * 60)
+const subSampleMinutes1 = [21, 20, 23, 45].map(x => x * 1000 * 60 * 60)
+const subSampleMinutes2 = [-10, 5, 10, 11, 30, 35].map(x => x * 1000 * 60 * 60)
 
 const data1 = [
   {
     label: 'HTTP 2XX',
-    values: minutes.map((x, i) => ({
+    values: hours.map((x, i) => ({
       x,
       y: Math.exp(i / 50) - 0.5
     }))
   },
   {
     label: 'HTTP 5XX',
-    values: minutes.map((x, i) => ({
+    values: hours.map((x, i) => ({
       x,
       y: Math.random() * 2 - 1
     }))
@@ -50,7 +50,7 @@ const data2 = [
 const data3 = [
   {
     label: 'HTTP 2XX',
-    values: minutes.slice(0, 30).map((x, i) => ({
+    values: hours.slice(0, 30).map((x, i) => ({
       x,
       y: Math.exp(i / 50) - 0.5
     }))
@@ -60,7 +60,7 @@ const data3 = [
 const data5 = [
   {
     label: 'HTTP 2XX',
-    values: minutes.map((x, i) => ({
+    values: hours.map((x, i) => ({
       x,
       y: i > 30 ? 6 : 2
     }))
@@ -84,108 +84,122 @@ const GraphContainer = styled.div`
 const width = 640
 const height = 480
 
+class HoverAndSelectionGraph extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectedPath: null,
+      hoverPath: null
+    }
+  }
+
+  render () {
+    return (
+      <TimeXAggregateYGraph
+        {...this.props}
+        onSelect={selectedPath => this.setState({ selectedPath })}
+        onHover={hoverPath => this.setState({ hoverPath })}
+        selectedPath={this.state.selectedPath}
+        hoverPath={this.state.hoverPath}
+      />
+    )
+  }
+}
+
 const TimeXAggregateYGraphTest = props => (
   <div>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={data1}
         title='Basic Example'
         xLabel='Time'
-        period='1h'
-        divisions={12}
-        localOrUTC='utc'
+        period='1d'
+        divisions={24}
         palette={['#2ca02c', '#d62728']}
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={data2}
         title='Subsample Example'
         xLabel='Time'
-        period='1h'
+        period='1d'
         divisions={6}
-        localOrUTC='utc'
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={data3}
         title='Crop to last datapoint'
         xLabel='Time'
-        period='1h'
+        period='1d'
         divisions={6}
-        localOrUTC='utc'
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={data5}
         title='Non-Zero Y min'
         xLabel='Time'
-        period='1h'
+        period='1d'
         divisions={6}
-        localOrUTC='utc'
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={issue2}
-        title='Issue'
+        title='Issue2 '
         xLabel='Time'
-        period='24h'
+        period='1d'
         divisions={24 * 4}
-        localOrUTC='utc'
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={issue3}
-        title='Issue'
+        title='Issue 3'
         xLabel='Time'
-        period='24h'
+        period='1d'
         divisions={24 * 4}
-        localOrUTC='utc'
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={[]}
         title='Empty Data Example'
         xLabel='Time'
-        period='1h'
+        period='1d'
         divisions={6}
-        localOrUTC='utc'
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>
-      <TimeXAggregateYGraph
+      <HoverAndSelectionGraph
         width={width}
         height={height}
         data={emptyValues}
         title='Empty Values Example'
         xLabel='Time'
-        period='1h'
+        period='1d'
         divisions={6}
-        localOrUTC='utc'
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}
       />
     </GraphContainer>

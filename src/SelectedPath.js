@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const SelectedPath2 = ({ width, height, xValue, yValue, xValueFormatter, layout, color }) => {
+const SelectedPath = ({ width, height, xValue, yValue, xValueFormatter, layout, color, hoverSelectStyle }) => {
   const xMin = layout.x.min
   const xMax = layout.x.max
   const yMin = layout.y.min
@@ -13,24 +13,26 @@ const SelectedPath2 = ({ width, height, xValue, yValue, xValueFormatter, layout,
   const xValueString = xValueFormatter(xValue)
   const yValueString = String(yValue)
   const infoWidth = Math.round((xValueString.length + yValueString.length) * 7.3 + 16)
+  const radius = hoverSelectStyle === 'dot' ? 5 : 2
+  const fill = hoverSelectStyle === 'dot' ? 'none' : color
   return (
     <g pointerEvents='none'>
       <line
         stroke={color}
         x1={xPos}
-        y1={yPos + 5}
+        y1={yPos + radius + 3}
         x2={xPos}
         y2={height}
       />
       <line
         stroke={color}
-        x1={xPos - 5}
+        x1={xPos - radius - 3}
         y1={yPos}
         x2={0}
         y2={yPos}
       />
       <g transform={`translate(${xPos},${yPos})`}>
-        <circle stroke={color} fill='none' r={5} />
+        <circle stroke={color} fill={fill} r={radius} />
       </g>
       <g
         transform={`translate(${xPos +
@@ -64,14 +66,15 @@ const SelectedPath2 = ({ width, height, xValue, yValue, xValueFormatter, layout,
   )
 }
 
-SelectedPath2.propTypes = {
+SelectedPath.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   xValue: PropTypes.number.isRequired,
   yValue: PropTypes.number.isRequired,
   xValueFormatter: PropTypes.func.isRequired,
   layout: PropTypes.object.isRequired,
-  color: PropTypes.string.isRequired
+  color: PropTypes.string.isRequired,
+  hoverSelectStyle: PropTypes.oneOf(['circle', 'fine']).isRequired
 }
 
-export default SelectedPath2
+export default SelectedPath

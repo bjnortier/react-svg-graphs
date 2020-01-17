@@ -1,194 +1,127 @@
-import timePeriods from './timePeriods'
+import subMonths from 'date-fns/subMonths'
+import subYears from 'date-fns/subYears'
+import subDays from 'date-fns/subDays'
+import addDays from 'date-fns/addDays'
+import subHours from 'date-fns/subHours'
+import { range } from 'lodash'
 
-export default (max, period, localOrUTC) => {
-  const hr = 3600 * 1000
-  const day = hr * 24
-  const year = day * 365
-  const min = max - timePeriods[period]
-  const getDate = date =>
-    localOrUTC === 'local' ? date.getDate() : date.getUTCDate()
-  const getHours = date =>
-    localOrUTC === 'local' ? date.getHours() : date.getUTCHours()
-  const getMinutes = date =>
-    localOrUTC === 'local' ? date.getMinutes() : date.getUTCMinutes()
-  switch (period) {
-    case '7y': {
-      const tickPeriod = year
-      const max1 = new Date(`${new Date(max).getFullYear() + 1}`).getTime()
-      const min = max - 7 * year
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        numTicks: 6,
-        min,
-        max: max1,
-        tickLabelTest: (tickDate, width) => true,
-        tickLabelFormat: width => 'yy',
-        contextLabelTest: tickDate => tickDate.getFullYear() === 2000,
-        contextLabelFormat: '2000'
-      }
+const endOfMonth = (date) => {
+  const eom = new Date(date)
+  eom.setUTCDate(1)
+  eom.setUTCHours(0)
+  eom.setUTCMinutes(0)
+  eom.setUTCSeconds(0)
+  if (eom.getUTCMonth() === 11) {
+    eom.setUTCMonth(0)
+    eom.setUTCFullYear(eom.getUTCFullYear() + 1)
+  } else {
+    eom.setUTCMonth(eom.getUTCMonth() + 1)
+  }
+  return eom
+}
+
+const endOfDay = (date) => {
+  let eod = new Date(date)
+  eod.setUTCHours(0)
+  eod.setUTCMinutes(0)
+  eod.setUTCSeconds(0)
+  if (!(date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds === 0)) {
+    eod = addDays(eod, 1)
+  }
+  return eod
+}
+
+/**
+ * Number of days since 1970 epoch.
+ */
+const daySinceEpoch = (date) => {
+  var start = new Date(0)
+  var diff = (date - start)
+  var oneDay = 1000 * 60 * 60 * 24
+  return Math.floor(diff / oneDay)
+}
+
+export default (maxValue, period) => {
+  const yearMatch = /([0-9]+)y/.exec(period)
+  const weekMatch = /([0-9]+)w/.exec(period)
+  const dayMatch = /([0-9]+)d/.exec(period)
+  if (yearMatch) {
+    const maxAxisDate = endOfMonth(maxValue)
+    const n = parseInt(yearMatch[1])
+    const minAxisDate = subYears(maxAxisDate, n)
+    const tickDates = range(n * 12 + 1).map(x => subMonths(maxAxisDate, x)).reverse()
+    let tickLabelRem
+    if (n === 1) {
+      tickLabelRem = 1
+    } else if (n === 2) {
+      tickLabelRem = 3
+    } else if (n === 3) {
+      tickLabelRem = 6
+    } else {
+      tickLabelRem = 12
     }
-    case '6y': {
-      const tickPeriod = year
-      const max1 = new Date(`${new Date(max).getFullYear() + 1}`).getTime()
-      const min = max - 6 * year
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        numTicks: 6,
-        min,
-        max: max1,
-        tickLabelTest: (tickDate, width) => true,
-        tickLabelFormat: width => 'yy',
-        contextLabelTest: tickDate => tickDate.getFullYear() === 2000,
-        contextLabelFormat: '2000'
-      }
+    return {
+      tickDates,
+      max: maxAxisDate,
+      min: minAxisDate,
+      tickLabelTest: (tickDate, width) => tickDate.getUTCMonth() % tickLabelRem === 0,
+      tickLabelFormat: width => 'M',
+      contextLabelTest: tickDate => tickDate.getUTCMonth() === 0,
+      contextLabelFormat: 'y'
     }
-    case '1mo': {
-      const tickPeriod = hr * 24
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        numTicks: 15,
-        min,
-        max,
-        tickLabelTest: (tickDate, width) => {
-          if (width < 440) {
-            return getDate(tickDate) % 3 === 1 && getDate(tickDate) < 30
-          } else {
-            return getDate(tickDate) % 2 === 1 && getDate(tickDate) < 30
-          }
-        },
-        tickLabelFormat: width => 'd',
-        contextLabelTest: tickDate => getDate(tickDate) === 1,
-        contextLabelFormat: 'y/M'
-      }
+  } else if (weekMatch) {
+    const maxAxisDate = endOfDay(maxValue)
+    const n = parseInt(weekMatch[1])
+    const minAxisDate = subDays(maxAxisDate, n * 7)
+    const tickDates = range(n * 28 + 1).map(x => subHours(maxAxisDate, x * 24)).reverse()
+    return {
+      tickDates,
+      max: maxAxisDate,
+      min: minAxisDate,
+      tickLabelTest: (tickDate, width) => {
+        if (width >= 480 && n <= 2) {
+          return true
+        } else {
+          return daySinceEpoch(tickDate) % 2 === 0
+        }
+      },
+      tickLabelFormat: width => 'd',
+      contextLabelTest: (tickDate, width) => {
+        if (n > 2) {
+          return daySinceEpoch(tickDate) % 14 === 0
+        } else {
+          return daySinceEpoch(tickDate) % 7 === 0
+        }
+      },
+      contextLabelFormat: 'yyyy/M/d'
     }
-    case '1w': {
-      const tickPeriod = hr * 6
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        numTicks: 15,
-        min,
-        max,
-        tickLabelTest: (tickDate, width) => {
-          if (width < 500) {
-            return (
-              getHours(tickDate) % 24 === 0 &&
-              getDate(tickDate) % 2 === 1 &&
-              getDate(tickDate) < 30
-            )
-          } else {
-            return getHours(tickDate) % 24 === 0
-          }
-        },
-        tickLabelFormat: width => 'd/M',
-        contextLabelTest: tickDate => {
-          return (
-            getHours(tickDate) === 0 &&
-            getDate(tickDate) === 1 &&
-            tickDate.getUTCMonth() === 0
-          )
-        },
-        contextLabelFormat: 'y'
-      }
+  } else if (dayMatch) {
+    const maxAxisDate = endOfDay(maxValue)
+    const n = parseInt(dayMatch[1])
+    const minAxisDate = subDays(maxAxisDate, n)
+    const tickDates = range(n * 24 + 1).map(x => subHours(maxAxisDate, x)).reverse()
+    return {
+      tickDates,
+      max: maxAxisDate,
+      min: minAxisDate,
+      tickLabelTest: (tickDate, width) => {
+        if (width <= 480 && n > 3) {
+          return tickDate.getUTCHours() % 12 === 0
+        } else {
+          return tickDate.getUTCHours() % 6 === 0
+        }
+      },
+      tickLabelFormat: width => 'H',
+      contextLabelTest: (tickDate, width) => {
+        if (width <= 480 && n > 3) {
+          return tickDate.getUTCHours() === 0
+        } else {
+          return tickDate.getUTCHours() === 0 && daySinceEpoch(tickDate) % 2 === 0
+        }
+      },
+      contextLabelFormat: 'yyyy/M/d'
     }
-    case '2d': {
-      const tickPeriod = hr
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        numTicks: 26,
-        min,
-        max,
-        tickLabelTest: (tickDate, width) => {
-          if (width < 400) {
-            return getHours(tickDate) % 6 === 0
-          } else {
-            return getHours(tickDate) % 3 === 0
-          }
-        },
-        tickLabelFormat: width => 'HH',
-        contextLabelTest: tickDate => getHours(tickDate) === 0,
-        contextLabelFormat: 'y/M/d'
-      }
-    }
-    case '1d':
-    case '24h': {
-      const tickPeriod = hr
-      const max1 = Math.ceil(max / hr) * hr
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        min: max1 - 24 * hr,
-        max: max1,
-        tickLabelTest: tickDate => getHours(tickDate) % 3 === 0,
-        tickLabelFormat: width => 'HH',
-        contextLabelTest: tickDate => getHours(tickDate) === 0,
-        contextLabelFormat: 'y/M/d'
-      }
-    }
-    case '12h': {
-      const tickPeriod = hr / 2
-      const max1 = Math.ceil(max / (hr / 2)) * (hr / 2)
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        min: max1 - 12 * hr,
-        max: max1,
-        tickLabelTest: (tickDate, width) => {
-          if (width < 400) {
-            return getHours(tickDate) % 2 === 0 && getMinutes(tickDate) === 0
-          } else {
-            return getHours(tickDate) % 1 === 0 && getMinutes(tickDate) === 0
-          }
-        },
-        tickLabelFormat: width => 'HH',
-        contextLabelTest: tickDate =>
-          getHours(tickDate) === 0 && getMinutes(tickDate) === 0,
-        contextLabelFormat: 'y/M/d'
-      }
-    }
-    case '6h': {
-      const tickPeriod = hr / 4
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        min,
-        max,
-        tickLabelTest: tickDate => getMinutes(tickDate) === 0,
-        tickLabelFormat: width => (width >= 600 ? 'HH:mm' : 'HH'),
-        contextLabelTest: tickDate =>
-          getHours(tickDate) === 0 && getMinutes(tickDate) === 0,
-        contextLabelFormat: 'y/M/d'
-      }
-    }
-    case '3h': {
-      const tickPeriod = hr / 8
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        min,
-        max,
-        tickLabelTest: (tickDate, width) =>
-          width >= 260
-            ? getMinutes(tickDate) % 30 === 0
-            : getMinutes(tickDate) === 0,
-        tickLabelFormat: width => (width >= 260 ? 'H:mm' : 'H'),
-        contextLabelTest: tickDate =>
-          getHours(tickDate) === 0 && getMinutes(tickDate) === 0,
-        contextLabelFormat: 'y/M/d'
-      }
-    }
-    case '1h': {
-      const tickPeriod = hr / 12
-      return {
-        timeAxisTickPeriod: tickPeriod,
-        min,
-        max,
-        tickLabelTest: (tickDate, width) =>
-          width >= 600
-            ? getMinutes(tickDate) % 5 === 0
-            : getMinutes(tickDate) % 15 === 0,
-        tickLabelFormat: width => 'HH:mm',
-        contextLabelTest: tickDate =>
-          getHours(tickDate) === 0 && getMinutes(tickDate) === 0,
-        contextLabelFormat: 'y/M/d'
-      }
-    }
-    default:
-      throw Error(`period not supported: ${period}`)
+  } else {
+    throw Error(`period not supported: ${period}`)
   }
 }

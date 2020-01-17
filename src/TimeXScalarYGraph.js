@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import jstz from 'jstz'
 import { max, flatten } from 'lodash'
 import { format, utcToZonedTime } from 'date-fns-tz'
 
@@ -8,7 +7,6 @@ import TimeXAxis from './TimeXAxis'
 import ScalarValues from './ScalarValues'
 import Graph from './Graph'
 import computeTimeLayout from './util/computeTimeLayout'
-import timePeriods from './util/timePeriods'
 import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXScalarYGraph extends Component {
@@ -20,31 +18,43 @@ class TimeXScalarYGraph extends Component {
       period,
       title,
       xLabel,
-      localOrUTC,
       palette,
-      onHover
+      onHover,
+      onSelect,
+      hoverPath,
+      selectedPath,
+      fill
     } = this.props
     const dataXMax = max(
       flatten(data.map(dataset => dataset.values.map(v => v.x)))
     )
-    const timeZone = localOrUTC === 'local' ? jstz.determine().name() : 'UTC'
     const pattern = timeFormatForPeriod(period)
-    const xInfoFormatter = timestamp => {
-      return format(utcToZonedTime(new Date(timestamp), timeZone), pattern, {
-        timeZone
-      })
+    const xValueFormatter = date => {
+      return format(utcToZonedTime(date, 'UTC'), pattern, { timeZone: 'UTC' })
     }
     return (
       <Graph
-        {...{ width, height, data, title, xLabel, palette, onHover }}
-        computeXLayout={() => computeTimeLayout(dataXMax, period, localOrUTC)}
-        renderXAxis={props => <TimeXAxis {...props} timeZone={timeZone} />}
-        renderValues={props => (
-          <ScalarValues {...props} {...{ xInfoFormatter }} />
-        )}
+        {...{
+          width,
+          height,
+          data,
+          title,
+          xLabel,
+          palette,
+          onHover,
+          onSelect,
+          hoverPath,
+          selectedPath,
+          xValueFormatter,
+          fill,
+          hoverSelectStyle: 'circle'
+        }}
+        computeXLayout={() => computeTimeLayout(new Date(dataXMax), period)}
+        renderXAxis={props => <TimeXAxis {...props} />}
+        renderValues={props => <ScalarValues {...props} />}
       >
         <text style={{ textAnchor: 'end' }} x={width - 64} y={30}>
-          [{timeZone}]
+          [UTC]
         </text>
       </Graph>
     )
@@ -58,13 +68,12 @@ TimeXScalarYGraph.propTypes = {
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   palette: PropTypes.array,
-  period: PropTypes.oneOf(Object.keys(timePeriods)),
-  localOrUTC: PropTypes.oneOf(['local', 'utc']),
-  onHover: PropTypes.func
-}
-
-TimeXAxis.defaultProps = {
-  localOrUTC: 'local'
+  fill: PropTypes.string,
+  period: PropTypes.string.isRequired,
+  onHover: PropTypes.func,
+  onSelect: PropTypes.func,
+  hoverPath: PropTypes.object,
+  selectedPath: PropTypes.object
 }
 
 export default TimeXScalarYGraph

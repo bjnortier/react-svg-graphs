@@ -42,8 +42,7 @@ class GraphWithValue extends Component {
             values={values1}
             width={width}
             height={height}
-            stroke='#2ca02c'
-            fill='#2ca02c11'
+            color='#2ca02c'
             dx={1}
             layout={layout}
             xInfoFormatter={xInfoFormatter}
@@ -52,8 +51,7 @@ class GraphWithValue extends Component {
             values={values2}
             width={width}
             height={height}
-            stroke='#1f77b4'
-            fill='#1f77b411'
+            color='#1f77b4'
             dx={1}
             layout={layout}
             xInfoFormatter={xInfoFormatter}

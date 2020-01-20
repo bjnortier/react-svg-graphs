@@ -41,9 +41,31 @@ const TimeXScalarYGraphTest = props => (
         data={data1}
         width={width}
         height={height}
-        title='Basic Example'
+        title='Basic Example 24h'
+        xLabel='Time'
+        period='24h'
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <HoverAndSelectHandler
+        GraphComponent={TimeXScalarYGraph}
+        data={data1}
+        width={width}
+        height={height}
+        title='Basic Example 1d'
         xLabel='Time'
         period='1d'
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <HoverAndSelectHandler
+        GraphComponent={TimeXScalarYGraph}
+        data={data1}
+        width={width}
+        height={height}
+        title='Basic Example 1w'
+        xLabel='Time'
+        period='1w'
       />
     </GraphContainer>
     <GraphContainer width={width} height={height}>

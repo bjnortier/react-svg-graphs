@@ -146,6 +146,7 @@ class Graph extends Component {
                       yValue: data[hoverPath.datasetIndex].values[hoverPath.valueIndex].y,
                       layout: { x: xLayout, y: yLayout },
                       color: palette[hoverPath.datasetIndex % palette.length],
+                      xValueFormatter,
                       hoverSelectStyle
                     }}
                     />

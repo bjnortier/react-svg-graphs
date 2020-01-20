@@ -1,34 +1,60 @@
 import subMonths from 'date-fns/subMonths'
 import subYears from 'date-fns/subYears'
 import subDays from 'date-fns/subDays'
-import addDays from 'date-fns/addDays'
 import subHours from 'date-fns/subHours'
+import subMinutes from 'date-fns/subMinutes'
+import addDays from 'date-fns/addDays'
+import addHours from 'date-fns/addHours'
+import addMonths from 'date-fns/addMonths'
 import { range } from 'lodash'
 
-const endOfMonth = (date) => {
-  const eom = new Date(date)
+export const endOfMonth = (date) => {
+  let eom = new Date(date)
+  if ((eom.getUTCDate() === 1) &&
+    (eom.getUTCHours() === 0) &&
+      (eom.getUTCMinutes() === 0) &&
+      (eom.getUTCSeconds() === 0) &&
+      (eom.getUTCMilliseconds() === 0)) {
+    return eom
+  }
   eom.setUTCDate(1)
   eom.setUTCHours(0)
   eom.setUTCMinutes(0)
   eom.setUTCSeconds(0)
-  if (eom.getUTCMonth() === 11) {
-    eom.setUTCMonth(0)
-    eom.setUTCFullYear(eom.getUTCFullYear() + 1)
-  } else {
-    eom.setUTCMonth(eom.getUTCMonth() + 1)
-  }
+  eom.setUTCMilliseconds(0)
+  eom = addMonths(eom, 1)
   return eom
 }
 
-const endOfDay = (date) => {
+export const endOfDay = (date) => {
   let eod = new Date(date)
+  if ((eod.getUTCHours() === 0) &&
+      (eod.getUTCMinutes() === 0) &&
+      (eod.getUTCSeconds() === 0) &&
+      (eod.getUTCMilliseconds() === 0)) {
+    return eod
+  }
   eod.setUTCHours(0)
   eod.setUTCMinutes(0)
   eod.setUTCSeconds(0)
-  if (!(date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds === 0)) {
-    eod = addDays(eod, 1)
-  }
+  eod.setUTCMilliseconds(0)
+  eod = addDays(eod, 1)
   return eod
+}
+
+export const endOfHour = (date) => {
+  let eoh = new Date(date)
+  if ((eoh.getUTCMinutes() === 0) &&
+      (eoh.getUTCSeconds() === 0) &&
+      (eoh.getUTCMilliseconds() === 0)) {
+    return eoh
+  } else {
+    eoh.setUTCMinutes(0)
+    eoh.setUTCSeconds(0)
+    eoh.setUTCMilliseconds(0)
+    eoh = addHours(eoh, 1)
+    return eoh
+  }
 }
 
 /**
@@ -45,6 +71,7 @@ export default (maxValue, period) => {
   const yearMatch = /([0-9]+)y/.exec(period)
   const weekMatch = /([0-9]+)w/.exec(period)
   const dayMatch = /([0-9]+)d/.exec(period)
+  const hourMatch = /([0-9]+)h/.exec(period)
   if (yearMatch) {
     const maxAxisDate = endOfMonth(maxValue)
     const n = parseInt(yearMatch[1])
@@ -118,6 +145,32 @@ export default (maxValue, period) => {
         } else {
           return tickDate.getUTCHours() === 0 && daySinceEpoch(tickDate) % 2 === 0
         }
+      },
+      contextLabelFormat: 'yyyy/M/d'
+    }
+  } else if (hourMatch) {
+    const maxAxisDate = endOfHour(maxValue)
+    const n = parseInt(hourMatch[1])
+    const minAxisDate = subHours(maxAxisDate, n)
+    const tickDates = range(n * 2 + 1).map(x => subMinutes(maxAxisDate, x * 30)).reverse()
+    return {
+      tickDates,
+      max: maxAxisDate,
+      min: minAxisDate,
+      tickLabelTest: (tickDate, width) => {
+        if (width >= 480 && n <= 24) {
+          return tickDate.getUTCMinutes() === 0
+        } else if (width >= 320 && n <= 24) {
+          return tickDate.getUTCMinutes() === 0 && tickDate.getUTCHours() % 2 === 0
+        } else {
+          return tickDate.getUTCMinutes() === 0 && tickDate.getUTCHours() % 4 === 0
+        }
+      },
+      tickLabelFormat: () => {
+        return n <= 12 ? 'HH:mm' : 'HH'
+      },
+      contextLabelTest: (tickDate, width) => {
+        return tickDate.getUTCHours() === 0 && tickDate.getUTCMinutes() === 0
       },
       contextLabelFormat: 'yyyy/M/d'
     }

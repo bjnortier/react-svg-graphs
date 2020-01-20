@@ -7,7 +7,6 @@ import TimeXAxis from './TimeXAxis'
 import ScalarValues from './ScalarValues'
 import Graph from './Graph'
 import computeTimeLayout from './util/computeTimeLayout'
-import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXScalarYGraph extends Component {
   render () {
@@ -28,9 +27,8 @@ class TimeXScalarYGraph extends Component {
     const dataXMax = max(
       flatten(data.map(dataset => dataset.values.map(v => v.x)))
     )
-    const pattern = timeFormatForPeriod(period)
     const xValueFormatter = date => {
-      return format(utcToZonedTime(date, 'UTC'), pattern, { timeZone: 'UTC' })
+      return format(utcToZonedTime(date, 'UTC'), 'y/M/d HH:mm', { timeZone: 'UTC' })
     }
     return (
       <Graph

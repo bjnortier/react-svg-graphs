@@ -5,6 +5,10 @@ import computeTimeLayout from '../../src/util/computeTimeLayout'
 import TimeXAxis from '../../src/TimeXAxis'
 
 const timeBounds = [
+  [new Date('2018-01-02T00:30:00Z'), '6h'],
+  [new Date('2018-01-02T00:30:00Z'), '12h'],
+  [new Date('2018-01-02T00:30:00Z'), '24h'],
+  [new Date('2018-01-02T14:30:00Z'), '48h'],
   [new Date('2018-01-02T00:00:00Z'), '1d'],
   [new Date('2018-01-02T05:00:00Z'), '1d'],
   [new Date('2018-01-02T00:00:00Z'), '2d'],

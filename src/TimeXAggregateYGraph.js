@@ -8,7 +8,6 @@ import ContinuousBarValues from './ContinuousBarValues'
 import Graph from './Graph'
 import computeTimeLayout from './util/computeTimeLayout'
 import computeAggregate from './util/computeAggregate'
-import timeFormatForPeriod from './util/timeFormatForPeriod'
 
 class TimeXAggregateYGraph extends Component {
   render () {
@@ -27,7 +26,6 @@ class TimeXAggregateYGraph extends Component {
       hoverPath,
       selectedPath
     } = this.props
-    const pattern = timeFormatForPeriod(period)
 
     const noValues = data.reduce((acc, d) => acc + d.values.length, 0) === 0
     const dataXMax = noValues
@@ -44,10 +42,11 @@ class TimeXAggregateYGraph extends Component {
         values: computeAggregate({ xMin, xMax, divisions, data: d.values })
       }))
 
+    const pattern = 'y/M/d HH:mm'
     const xValueFormatter = timestamp => {
       const from = format(utcToZonedTime(new Date(timestamp - dx / 2), 'UTC'), pattern, { timeZone: 'UTC' })
       const to = format(utcToZonedTime(new Date(timestamp + dx / 2), 'UTC'), pattern, { timeZone: 'UTC' })
-      return `${from}-${to}`
+      return `${from} → ${to}`
     }
     return (
       <Graph

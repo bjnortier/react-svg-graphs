@@ -45,7 +45,8 @@ class Graph extends Component {
       selectedPath,
       xValueFormatter,
       hoverSelectStyle,
-      fill
+      fill,
+      legendType
     } = this.props
 
     const yMin = min(flatten(data.map(d => d.values.map(d => d.y))))
@@ -174,6 +175,7 @@ class Graph extends Component {
                   data={data}
                   maxLegendLength={maxLegendLength}
                   palette={palette}
+                  type={legendType}
                 />
               </g>
               {this.props.children}
@@ -202,7 +204,8 @@ Graph.propTypes = {
   selectedPath: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   fill: PropTypes.string.isRequired,
-  hoverSelectStyle: PropTypes.oneOf(['circle', 'fine']).isRequired
+  hoverSelectStyle: PropTypes.oneOf(['circle', 'fine']).isRequired,
+  legendType: PropTypes.oneOf(['point', 'area']).isRequired
 }
 
 Graph.defaultProps = {

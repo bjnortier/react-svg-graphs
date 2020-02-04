@@ -63,7 +63,8 @@ class TimeXAggregateYGraph extends Component {
           hoverPath,
           selectedPath,
           xValueFormatter,
-          hoverSelectStyle: 'fine'
+          hoverSelectStyle: 'fine',
+          legendType: 'area'
         }}
         computeXLayout={() => computeTimeLayout(new Date(dataXMax), period)}
         renderXAxis={props => <TimeXAxis {...props} />}

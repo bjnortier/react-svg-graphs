@@ -45,7 +45,8 @@ class TimeXScalarYGraph extends Component {
           selectedPath,
           xValueFormatter,
           fill,
-          hoverSelectStyle: 'circle'
+          hoverSelectStyle: 'circle',
+          legendType: 'point'
         }}
         computeXLayout={() => computeTimeLayout(new Date(dataXMax), period)}
         renderXAxis={props => <TimeXAxis {...props} />}

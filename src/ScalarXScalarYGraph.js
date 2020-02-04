@@ -42,7 +42,8 @@ class ScalarXScalarYGraph extends Component {
           onSelect,
           hoverPath,
           selectedPath,
-          hoverSelectStyle: 'circle'
+          hoverSelectStyle: 'circle',
+          legendType: 'point'
         }}
         computeXLayout={contentsWidth =>
           computeScalarLayout('x', [dataXMin, dataXMax], contentsWidth)}

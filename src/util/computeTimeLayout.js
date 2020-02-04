@@ -68,10 +68,10 @@ const daySinceEpoch = (date) => {
 }
 
 export default (maxValue, period) => {
-  const yearMatch = /([0-9]+)y/.exec(period)
-  const weekMatch = /([0-9]+)w/.exec(period)
-  const dayMatch = /([0-9]+)d/.exec(period)
-  const hourMatch = /([0-9]+)h/.exec(period)
+  const yearMatch = /^([0-9]+)y$/.exec(period)
+  const weekMatch = /^([0-9]+)w$/.exec(period)
+  const dayMatch = /^([0-9]+)d$/.exec(period)
+  const hourMatch = /^([0-9]+)h$/.exec(period)
   if (yearMatch) {
     const maxAxisDate = endOfMonth(maxValue)
     const n = parseInt(yearMatch[1])

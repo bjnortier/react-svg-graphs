@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -50,7 +50,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "expect": "^24.1.0",
     "json-loader": "^0.5.7",
-    "mocha": "^5.2.0",
+    "mocha": "^7.2.0",
     "opn": "^5.4.0",
     "prop-types": "^15.6.2",
     "react": "^16.13.0",

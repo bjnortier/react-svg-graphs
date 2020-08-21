@@ -5,6 +5,7 @@ import { TimeXAggregateYGraph, HoverAndSelectHandler } from '../../src'
 import issue2 from './issue-2.js'
 import issue3 from './issue-3.js'
 
+const now = new Date()
 const hours = []
 for (let i = 1; i <= 23; ++i) {
   hours.push(i * 1000 * 60 * 60)
@@ -26,6 +27,16 @@ const data1 = [
     values: hours.map((x, i) => ({
       x,
       y: Math.random() * 2 - 1
+    }))
+  }
+]
+
+const dataCurrentTime = [
+  {
+    label: 'HTTP 2XX',
+    values: hours.map((x, i) => ({
+      x: now.getTime() + x - 28 * 1000 * 3600,
+      y: Math.exp(i / 50) - 0.5
     }))
   }
 ]
@@ -96,6 +107,21 @@ const TimeXAggregateYGraphTest = props => (
         title='Basic Example'
         xLabel='Time'
         period='1d'
+        divisions={24}
+        palette={['#2ca02c', '#d62728']}
+        onHover={hoverInfo => console.log('hover info:', hoverInfo)}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <HoverAndSelectHandler
+        GraphComponent={TimeXAggregateYGraph}
+        width={width}
+        height={height}
+        data={dataCurrentTime}
+        pinToCurrentTime
+        title='Pin to current time Example'
+        xLabel='Time'
+        period='24h'
         divisions={24}
         palette={['#2ca02c', '#d62728']}
         onHover={hoverInfo => console.log('hover info:', hoverInfo)}

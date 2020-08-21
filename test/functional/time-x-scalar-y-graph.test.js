@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { range } from 'lodash'
 
 import { TimeXScalarYGraph, HoverAndSelectHandler } from '../../src'
 
@@ -16,6 +17,16 @@ const data1 = [
     values: [8, 9, 10, 11, 12].map(a => ({
       x: a * 1000 * 3600,
       y: Math.random() * 10
+    }))
+  }
+]
+const now = new Date()
+const currentTimeData = [
+  {
+    label: 'Foo',
+    values: range(-60, 0).map(a => ({
+      x: now.getTime() + a * 1000 * 60 * 15 - 120 * 1000 * 60,
+      y: a + 110
     }))
   }
 ]
@@ -60,6 +71,19 @@ const TimeXScalarYGraphTest = props => (
     <GraphContainer width={width} height={height}>
       <HoverAndSelectHandler
         GraphComponent={TimeXScalarYGraph}
+        data={currentTimeData}
+        width={width}
+        height={height}
+        title='Pin to current time Example'
+        period='24h'
+        pinToCurrentTime
+        xLabel='Time'
+        palette={palette}
+      />
+    </GraphContainer>
+    <GraphContainer width={width} height={height}>
+      <HoverAndSelectHandler
+        GraphComponent={TimeXScalarYGraph}
         data={data1}
         width={width}
         height={height}
@@ -92,6 +116,7 @@ const TimeXScalarYGraphTest = props => (
         palette={palette}
       />
     </GraphContainer>
+
     <GraphContainer width={width} height={height}>
       <TimeXScalarYGraph
         data={data1}

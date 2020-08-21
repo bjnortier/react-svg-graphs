@@ -15,6 +15,7 @@ class TimeXScalarYGraph extends Component {
       height,
       data,
       period,
+      pinToCurrentTime,
       title,
       xLabel,
       palette,
@@ -24,9 +25,11 @@ class TimeXScalarYGraph extends Component {
       selectedPath,
       fill
     } = this.props
-    const dataXMax = max(
-      flatten(data.map(dataset => dataset.values.map(v => v.x)))
-    )
+    const dataXMax = pinToCurrentTime
+      ? new Date().getTime()
+      : max(
+        flatten(data.map(dataset => dataset.values.map(v => v.x)))
+      )
     const xValueFormatter = date => {
       return format(utcToZonedTime(date, 'UTC'), 'y/M/d HH:mm', { timeZone: 'UTC' })
     }
@@ -66,6 +69,7 @@ TimeXScalarYGraph.propTypes = {
   xLabel: PropTypes.string.isRequired,
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
+  pinToCurrentTime: PropTypes.bool.isRequired,
   palette: PropTypes.array,
   fill: PropTypes.string,
   period: PropTypes.string.isRequired,
@@ -75,4 +79,7 @@ TimeXScalarYGraph.propTypes = {
   selectedPath: PropTypes.object
 }
 
+TimeXScalarYGraph.defaultProps = {
+  pinToCurrentTime: false
+}
 export default TimeXScalarYGraph

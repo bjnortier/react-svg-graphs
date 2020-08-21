@@ -17,6 +17,7 @@ class TimeXAggregateYGraph extends Component {
       title,
       xLabel,
       data,
+      pinToCurrentTime,
       period,
       divisions,
       palette,
@@ -28,7 +29,7 @@ class TimeXAggregateYGraph extends Component {
     } = this.props
 
     const noValues = data.reduce((acc, d) => acc + d.values.length, 0) === 0
-    const dataXMax = noValues
+    const dataXMax = noValues || pinToCurrentTime
       ? new Date().getTime()
       : max(flatten(data.map(dataset => dataset.values.map(v => v.x))))
     const layout = computeTimeLayout(new Date(dataXMax), period)
@@ -84,6 +85,7 @@ TimeXAggregateYGraph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
+  pinToCurrentTime: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   xLabel: PropTypes.string.isRequired,
   palette: PropTypes.array,
@@ -96,8 +98,8 @@ TimeXAggregateYGraph.propTypes = {
   selectedPath: PropTypes.object
 }
 
-TimeXAxis.defaultProps = {
-  localOrUTC: 'local'
+TimeXAggregateYGraph.defaultProps = {
+  pinToCurrentTime: false
 }
 
 export default TimeXAggregateYGraph

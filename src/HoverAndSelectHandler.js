@@ -1,27 +1,20 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-class HoverAndSelectHandler extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedPath: null,
-      hoverPath: null
-    }
-  }
+const HoverAndSelectHandler = (props) => {
+  const { GraphComponent } = props
+  const [selectedPath, setSelectedPath] = useState(null)
+  const [hoverPath, setHoverPath] = useState(null)
 
-  render () {
-    const { GraphComponent } = this.props
-    return (
-      <GraphComponent
-        {...this.props}
-        onSelect={selectedPath => this.setState({ selectedPath })}
-        onHover={hoverPath => this.setState({ hoverPath })}
-        selectedPath={this.state.selectedPath}
-        hoverPath={this.state.hoverPath}
-      />
-    )
-  }
+  return (
+    <GraphComponent
+      {...props}
+      onSelect={selectedPath => setSelectedPath(selectedPath)}
+      onHover={hoverPath => setHoverPath(hoverPath)}
+      selectedPath={selectedPath}
+      hoverPath={hoverPath}
+    />
+  )
 }
 
 HoverAndSelectHandler.propTypes = {

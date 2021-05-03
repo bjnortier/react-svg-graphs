@@ -1,6 +1,6 @@
 {
   "name": "react-svg-graphs",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "React SVG Graphs",
   "keywords": [
     "React",
@@ -24,8 +24,8 @@
   "author": "Ben Nortier <ben@bjnortier.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "16.x",
-    "prop-types": "15.x"
+    "prop-types": "15.x",
+    "react": "16.x"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
